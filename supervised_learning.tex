@@ -1,0 +1,516 @@
+\chapter{教師あり学習}
+
+\section{トレーニングセットと仮説関数}
+
+教師あり学習は，特徴量と目的変数の組のデータを用いて学習する．学習に使用するデータをトレーニングセットという．
+
+\begin{defi}[トレーニングセット]
+　\\
+$\{(\bm{x}^{(i)},y^{(i)})\}_{i=1}^m \subset (({\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n) \times {\cal Y})^m$を{\bf トレーニングセット(training set)}という．ここで，$m$は{\bf トレーニングサンプル数(number of training examples)}，${\bm x}^{(i)} \in {\cal X}_1 \times {\cal X}_2\times \cdots \times {\cal X}_n$は$i$番目の$n$個の{\bf 入力変数(input variables)}または{\bf 特徴量(features)}で，${\bm x}^{(i)}=(x_1^{(i)},x_2^{(i)},\ldots,x_n^{(i)})^T$と表す．また，$y^{(i)} \in {\cal Y}$は$i$番目の{\bf 出力変数(output variable)}または{\bf 目的変数(target variable)}である．また，トレーニングセットの$i$番目の要素$({\bm x}^{(i)},y^{(i)})\in ({\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n) \times {\cal Y}$を{\bf トレーニングサンプル(training example)}という．また，入力変数のとる空間${\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n$を{\bf 入力変数空間(space of input values)}，出力変数のとる空間${\cal Y}$を{\bf 出力変数空間(space of output values)}という．
+\end{defi}
+
+\begin{qu}
+次のトレーニングセットにおいて，$x_3^{(4)},y^{(2)}$を答えよ．
+\begin{table}[H]
+\centering
+\begin{tabular}{rrrrrr}
+\hline
+$i$ &$x_1^{(i)}$ &$x_2^{(i)}$ &$x_3^{(i)}$ &$x_4^{(i)}$ & $y^{(i)}$ \\ \hline
+1 & 2104 & 5 & 1 & 45 & 460 \\
+2 & 1416 & 3 & 2 & 40 & 232 \\
+3 & 1534 & 3 & 2 & 30 & 315 \\
+4 & 852  & 2 & 1 & 36 & 178 \\ \hline
+\end{tabular}
+\end{table}
+\end{qu}
+\begin{ans}
+$x_3^{(4)}=1,~y^{(2)}=232$．\qed
+\end{ans}
+
+教師あり学習を使って解きたいタスク$T$は，入力変数から出力変数を予測することであるが，それは言い換えると入力変数を引数として出力変数を出力する写像を設定することである．この写像を仮説関数という．仮説関数を以下で定義する．
+
+\begin{defi}[仮説関数]
+　\\
+入力変数${\bm x}$から出力変数$y$への写像$h:{\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n \to {\cal Y}$，すなわち$h_{\bm \theta}({\bm x})$を{\bf 仮説関数(hypothesis function)}という．ここで，${\bm \theta}$は仮説関数の{\bf パラメータ}である(パラメータは複数あることがほとんどなのでベクトルとしている)．
+\end{defi}
+
+すなわち，教師あり学習とは，仮説関数を設定し，トレーニングセットを用いて仮説関数の最適なパラメータを決定することといえる．
+
+\section{線形回帰}
+
+仮説関数は自らで与える必要があるが，仮説関数の形によって，教師あり学習に特別な名前がつくものがある．例えば，仮説関数を線形関数とし，出力変数空間を${\cal Y}=\mathbb{R}$としたときは線形回帰という．
+
+\begin{defi}[線形回帰]
+　\\
+トレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m \subset (({\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n) \times {\cal Y})^m$について，${\cal Y}=\mathbb{R}$であり，かつ仮説関数が式(\ref{LM})である教師あり学習を，特に{\bf 線形回帰(linear regression)}という．ここで，特徴量${\bm x}^{(i)}$は，常に1の値をとるような特徴量$x_0^{(i)}=1$を付して${\bm x}^{(i)}=(x_0^{(i)},x_1^{(i)},x_2^{(i)},\ldots,x_n^{(i)})^T \in 1 \times {\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n$と置き直すこととする．また，${\bm \theta}=(\theta_0,\theta_1,\ldots,\theta_n)^T \in \mathbb{R}^{n+1}$とする．
+\begin{align}
+h_{{\bm \theta}}({\bm x}^{(i)}) &= \theta_0 x_0^{(i)}+\theta_1 x_1^{(i)} +\theta_2 x_2^{(i)}+\cdots + \theta_n x_n^{(i)} \nonumber \\
+&= \sum_{j=0}^n \theta_j x_j^{(i)}\nonumber \\
+&= {\bm \theta}^T {\bm x}^{(i)} \label{LM}
+\end{align}
+\end{defi}
+
+\begin{qu}
+ある大学生について，1年次の成績で優をとった個数から2年次にいくつ優をとるのか予測したい．そこで，何人かの大学生の1年次の成績の優の個数$x$と2年次の成績の優の個数$y$を集めた．その結果が次表である．このとき，次の問いに答えよ．
+\begin{table}[H]
+\centering
+\begin{tabular}{rr}
+\hline
+$x$    & $y$   \\ \hline
+3 & 4 \\
+2 & 1 \\
+4 & 3 \\
+0  & 1 \\ \hline
+\end{tabular}
+\end{table}
+\begin{enumerate}
+\item $m$はいくつか．
+\item 仮説関数として$h_{{\bm \theta}}(x)=\theta_0+\theta_1 x$を設定し，本トレーニングセットを用いて線形回帰を行なった結果，パラメータは$\theta_0=-1,~\theta_1=2$となった．このとき，1年次の優の個数が6だった大学生の2年次の優の個数を予測せよ．
+\end{enumerate}
+\end{qu}
+\begin{ans}　
+\begin{enumerate}
+\item $m=4$．
+\item $h_{{\bm \theta}}(x)=-1+2x$なので，$h_{{\bm \theta}}(6)=-1+2\cdot 6=11$．
+\end{enumerate}
+\qed	
+\end{ans}
+
+さて，仮説関数のパラメータをどう決めるかという問題がある．パラメータをでたらめに与えても良い予測値を返さないので，経験$E$のトレーニングセットを使って，性能指標$P$を高めるように仮説関数のパラメータをアップデートしていくことが必要になる．この手順を学習アルゴリズムといい，性能指標を測る関数を目的関数という．
+
+\begin{defi}[学習アルゴリズム，目的関数]
+　\\
+性能指標を測る関数$J({\bm \theta})$を{\bf 目的関数}または{\bf コスト関数(cost function)}といい，この目的関数で測った性能指標が良くなるように仮説関数(のパラメータ${\bm \theta}$)をアップデートしていく手順を{\bf 学習アルゴリズム(learning algorithm)}という．
+\end{defi}
+
+回帰問題における性能指標としては，各トレーニングサンプル$({\bm x}^{(i)},y^{(i)})$での仮説関数$h_{{\bm \theta}}({\bm x}^{(i)})$と$y^{(i)}$の二乗誤差平均が考えられる．この二乗誤差平均を計算する目的関数を最小二乗誤差関数という．
+
+\begin{defi}[最小二乗誤差関数]
+　\\
+トレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m \subset ((1 \times {\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n) \times {\cal Y})^m$について，式(\ref{SEF})で表される目的関数$J({\bm \theta})$を{\bf 最小二乗誤差関数(squared error function)}という．
+\begin{align}
+J({\bm \theta}) = \frac{1}{2m}\sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})^2 \label{SEF}
+\end{align}
+\end{defi}
+
+\begin{rem}
+$m$ではなく$2m$で割っているのは，微分したときに出てくる2が消えるようにしているからである．$m$でも特段の問題はない(同じ結果が得られる)．
+\end{rem}
+
+\begin{qu}
+あるトレーニングセット$\{(x^{(i)},y^{(i)})\}_{i=1}^3$をプロットしたところ以下の散布図となった(簡単のため，特徴量$x$に$x_0=1$である特徴量は追加していない）．仮説関数を$h_{\theta}(x)=\theta x$，目的関数$J(\theta)$を最小二乗誤差関数としたとき，$J(0)$を求めよ．
+\end{qu}
+\begin{proof}
+　\\
+目的関数$J(\theta)$は次式となる．
+\begin{align*}
+J(\theta)&=\frac{1}{6}\sum_{i=1}^3 (h_{\theta}(x^{(i)})-y^{(i)})^2 \\
+&=\frac{1}{6}\sum_{i=1}^3 (\theta x^{(i)}-y^{(i)})^2
+\end{align*}
+$\theta =0$を代入し，散布図から$y^{(i)}$を読み取ると，
+\begin{align*}
+J(0)&=\frac{1}{6}\sum_{i=1}^3 (-y^{(i)})^2 \\
+&=\frac{1}{6}((-1)^2+(-2)^2+(-3)^2) \\
+&= \frac{14}{6}
+\end{align*}
+\end{proof}
+
+「性能指標が良くなるように仮説関数のパラメータ${\bm \theta}$をアップデートしていく」とはどういうことか．目的関数が最小二乗誤差関数の場合，その最小二乗誤差がどんどん小さくなっていくことが，性能指標が良くなっていくといえる．すなわち，目的関数を最小にするパラメータ${\bm \theta}$を見つければよい．それを見つけるための手法が学習アルゴリズムである．
+
+学習アルゴリズムの中で一般的なものとして最急降下法がある．最急降下法とは，目的関数$J({\bm \theta})$のグラフ上に適当に点を打ち(すなわちパラメータ${\bm \theta}$として適当に初期値を決め），その点からあたりを見渡してもっとも勾配が急な方向に一定程度進み，進んだ後の点からまたあたりを見渡してもっとも勾配が急な方向に一定程度進み\ldots を繰り返して，どこを見渡しても勾配がないような点を探す方法である．
+
+最急降下法を行うためには，関数上のある点について勾配が急な方向はどの方向であるかを計算しなければならない．勾配が最も急な方向を向くベクトルを勾配ベクトルといい，以下で定義される．
+\begin{defi}[勾配ベクトル]
+　\\
+$k$次元ベクトル${\bm \theta}=(\theta_1,\theta_2,\ldots,\theta_k)^T$からスカラー値に写る関数$f({\bm \theta})$，すなわち$f:{\bm \theta} \in \mathbb{R}^k \to \mathbb{R}$である関数$f({\bm \theta})$において，{\bf 勾配ベクトル}$\nabla_{{\bm \theta}}f=\frac{\partial f}{\partial {\bm \theta}}$は次式で定義される．
+\begin{align}
+\nabla_{{\bm \theta}}f = \frac{\partial f}{\partial {\bm \theta}} = 
+\left( 
+\begin{array}{c}
+\frac{\partial f}{\partial \theta_1} \\
+\frac{\partial f}{\partial \theta_2} \\
+\vdots \\
+\frac{\partial f}{\partial \theta_k}
+\end{array}
+\right)
+\end{align}
+\end{defi}
+
+\begin{qu}
+$f:\mathbb{R}^2 \to \mathbb{R}$の関数$f(x,y)$のある点P$(x,y)$における最大勾配方向が勾配ベクトルの方向と同方向であることを示せ．
+\end{qu}
+\begin{proof}
+　\\
+勾配とは，関数$f$の変化度合いであり，勾配が最大ということは，関数の変化度合いが最も大きいということである．点P$(x,y)$と，そこから微小量$\Delta x$，$\Delta y$だけ動かした点Q$(x+\Delta x,y+\Delta y)$においてそれぞれ関数値を求めて差をとったものを変化度合い$\Delta f$とすると，$\overrightarrow{PQ}=\overrightarrow{OQ}-\overrightarrow{OP}=(\Delta x,\Delta y)$に注意して，以下の通り変形できる．
+\begin{align*}
+\Delta f &= f(x+\Delta x,y+\Delta y)-f(x,y) \\
+&= f(x+\Delta x,y+\Delta y) -f(x,y+\Delta y)+f(x,y+\Delta y) -f(x,y) \\
+&= \frac{f(x+\Delta x,y+\Delta y) -f(x,y+\Delta y)}{\Delta x}\Delta x +\frac{f(x,y+\Delta y) -f(x,y)}{\Delta y}\Delta y \\
+&\fallingdotseq \frac{\partial f}{\partial x}\Delta x +\frac{\partial f}{\partial y}\Delta y \\
+&= \nabla f \cdot (\Delta x,\Delta y) \\
+&= \nabla f \cdot \overrightarrow{PQ}
+\end{align*}
+すなわちこれは，関数の変化度合いは勾配ベクトルと点Pから点Qへの方向ベクトル，すなわち微小量を動かした方向のベクトルの内積となっている．ここで，内積の定義より，
+\begin{align*}
+\Delta f &= |\nabla f||\overrightarrow{PQ}|\cos \theta
+\end{align*}
+となる．ここで，$\theta$は，$\nabla f$と$\overrightarrow{PQ}$のなす角である．関数の変化度合い$\Delta f$が最大となるのは，$\cos \theta =1$，すなわち$\theta =0$となる場合である．これはつまり$\nabla f$と$\overrightarrow{PQ}$が同じ方向を向いているときに関数の変化度合い$\Delta f$が最大となるということである．以上より，点Pから関数の変化度合い$\Delta f$が最大となるように進むためには(点Qをとるためには)，勾配ベクトルの方向に進めばよいということである．
+\end{proof}
+
+これで勾配が最も急な方向が勾配ベクトル方向であることがわかったので，それを用いて最急降下法を以下の通り定義する．
+\begin{defi}[最急降下法]
+　\\
+関数$J({\bm \theta})$を最小とする${\bm \theta}$を次の手順で見つけるアルゴリズムを，{\bf 最急降下法(gradient descent algorithm)}という．ここで，$\alpha (>0)$を{\bf 学習率}といい，勾配が最大の方向にどの程度移動させるかの強さを表す．
+\begin{algorithm}
+\caption{最急降下法}
+\begin{algorithmic}[1]
+\State{トレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$，仮説関数$h_{\bm \theta}({\bm x})$，目的関数$J({\bm \theta)}$を用意}
+\State{$\alpha \gets 初期値$}
+\State{${\bm \theta} \gets 初期値$}
+\While{${\bm \theta}$が収束または有限回繰り返し}
+\State{$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$を代入して$J({\bm \theta)}$を計算}
+\State{$\nabla_{{\bm \theta}}J$を計算}
+
+\State{${\bm \theta} \gets {\bm \theta}-\alpha \nabla_{{\bm \theta}}J$}\Comment{パラメータ$\theta_0,\theta_1\ldots $は同タイミングで更新}
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
+\end{defi}
+
+\begin{qu}
+特徴量が$n$個のトレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$の線形回帰において，目的関数$J({\bm \theta})$を最小二乗誤差関数としたとき，$\nabla_{{\bm \theta}}J$を計算せよ．
+\end{qu}
+\begin{proof}
+　\\
+$\nabla_{{\bm \theta}}J$の$j$番目の要素$\frac{\partial J}{\partial \theta_j}$を計算すると以下となる．
+\begin{align*}
+\frac{\partial J}{\partial \theta_j}&= \frac{1}{2m}\sum_{i=1}^m \frac{\partial }{\partial \theta_j}(h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})^2 \\
+&=\frac{1}{2m}\sum_{i=1}^m 2(h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})\frac{\partial }{\partial \theta_j}h_{{\bm \theta}}({\bm x}^{(i)})\\
+&= \frac{1}{m}\sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})x_j^{(i)}
+\end{align*}
+ここで，$j=0$のときは$\frac{\partial }{\partial \theta_0}h_{{\bm \theta}}({\bm x}^{(i)})=1$に注意してまとめると，
+\begin{align*}
+\nabla_{{\bm \theta}}J =
+\left( 
+\begin{array}{c}
+\frac{1}{m}\sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)}) \\
+\frac{1}{m}\sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})x_1^{(i)} \\
+\frac{1}{m}\sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})x_2^{(i)} \\
+\vdots \\
+\frac{1}{m}\sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})x_j^{(i)} \\
+\vdots \\
+\frac{1}{m}\sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})x_n^{(i)} \\
+\end{array}
+\right)
+\end{align*}
+となる（$\nabla_{{\bm \theta}}J$は$n+1$次元ベクトルであることに注意）．
+\end{proof}
+
+最急降下法がうまく収束しているかを確認する手段としては，ループ1回ごとに$J({\bm \theta})$の値をプロットしていき，値が順調に減少していっているかどうかをみるという方法がある．これをデバッグという．
+
+\begin{defi}[デバッグ]
+　\\
+最急降下法がうまく収束していることを確認するため，横軸に繰り返し回数(number of iterations)，縦軸に目的関数値をとり図示することを{\bf デバッグ(debugging)}という．
+\end{defi}
+
+例えば，以下のような図となれば，最急降下法はうまく収束している．
+
+学習率$\alpha$をどう選ぶかは難しい．小さすぎると収束までにかなりの時間がかかり，大きすぎると収束せずに発散することもある．ほどほどの数値が最も速く収束する．
+
+\begin{qu}
+ある回帰問題の目的関数を最急降下法で最小化する．試しに，学習率$\alpha=0.01,0.1,1$の3パターンで計算してデバッグしたところ，図A,B,Cの通りとなった．それぞれの図について，どの学習率で計算を行なったものと想定されるか答えよ．
+
+\end{qu}
+\begin{proof}
+Aが$\alpha =0.1$，Bが$\alpha =0.01$，Cが$\alpha =1$．
+\end{proof}
+
+特徴量は，与えられたものをそのまま使う必要はなく，それらを組み合わせるなどして自分で新しく作っても良い．うまく特徴量を作り出して，より単純な仮説関数にするという選択肢もある．
+
+\begin{qu}
+今，手元に特徴量$x_1^{(i)}$:間口，$x_2^{(i)}$:奥行き，出力変数$y^{(i)}$:土地の価格がある．このとき，土地の価格を予測する問題を線形回帰で解くことを考えると，仮説関数としてまず$h_{{\bm \theta}}({\bm x}^{(i)})=\theta_0+\theta_1 x_1^{(i)}+\theta_2 x_2^{(i)}$が考えつくが，もっと簡単に仮説関数を定めるにはどうすれば良いか．
+\end{qu}
+\begin{proof}
+新しい特徴量$x_3^{(i)}=x_1^{(i)}x_2^{(i)}$:面積を設定し，仮説関数として$h_{{\bm \theta}}(x^{(i)})=\theta_0+\theta_1 x_3^{(i)}$とする．
+\end{proof}
+
+\section{多項式回帰}
+
+仮説関数として，線形関数を選ぶ必要はない．仮説関数として多項式を設定した場合は多項式回帰と呼ばれる．
+\begin{defi}[多項式回帰]
+　\\
+回帰問題において，仮説関数を多項式とした場合，特に{\bf 多項式回帰(polynomial regression)}という．
+\end{defi}
+
+\begin{qu}
+トレーニングセット$\{(x_1^{(i)},y^{(i)})\}_{i=1}^10$をプロットしたところ，下図となった．これについての回帰問題を解きたい．仮説関数としてどのようなものが考えられるか．
+
+\end{qu}
+\begin{proof}
+新しく特徴量として$x_2^{(i)}=(x_1^{(i)})^2$を設定し，仮説関数として$h_{{\bm \theta}}(x^{(i)})=\theta_0+\theta_1 x_1^{(i)}+\theta_2 x_2^{(i)}=\theta_0+\theta_1 x_1^{(i)}+\theta_2 (x_1^{(i)})^2$とする．
+\end{proof}
+
+複数の特徴量がある場合，各特徴量のとりうる範囲がだいたい同じような範囲にあると，最急降下法の収束速度は速くなる．特徴量を変換してとりうる範囲の調整を行うことを，特徴量スケーリングという．
+
+\begin{defi}[特徴量スケーリング]
+　\\
+トレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$について，${\bm x}^{(i)}$の各特徴量のとりうる範囲を同じような範囲に変換することを{\bf 特徴量スケーリング(feature scalling)}という．特に，特徴量$x_j$の平均$\mu_j$を用いて$\frac{x_j-\mu_j}{s_j}$のようにスケーリングすることを，{\bf 平均標準化(mean normalization)}という．ここで，$s_j$は，特徴量$x_j$の標準偏差または$\max - \min$とする．
+\end{defi}
+\begin{rem}
+特徴量スケーリングの方法は何か定まった方法があるわけではない．例えば，最大値で割るとか，平均を引いて最大と最小の差で割るとか，なんとなく1000分の1するとか，やり方はなんでもよいし，特徴量ごとに異なる方法をとっても良い．大事なことは全ての特徴量をだいたい似たような範囲にもっていくことである．なお，範囲としては，Andrew Ng曰く，各特徴量の取りうる範囲がだいだい$-3〜3$の中の範囲をとるのを目安にしているとのこと．
+\end{rem}
+
+特に，多項式回帰の場合は特徴量のオーダーが他の特徴量と比べて極端に異なることが多いため，特徴量スケーリングがほとんど必須となってくる．
+
+\begin{qu}
+住宅の平米数から住宅価格を予測する回帰問題を解くことを考える．集めたデータの平米数はおおむね1から1000フィートの範囲となっている．平米数と価格をプロットしたところ，以下の仮説関数があてはまりがよさそうと考えた．
+\begin{align*}
+h_{{\bm \theta}}(x^{(i)})=\theta_0+\theta_1 平米数^{(i)}+\theta_2 \sqrt{平米数^{(i)}}
+\end{align*}
+ここで，特徴量スケーリングをしてより適切に回帰問題を解くために，新しく仮説関数を
+\begin{align*}
+h_{{\bm \theta}}(x^{(i)})=\theta_0+\theta_1 x_1^{(i)}+\theta_2 x_2^{(i)}
+\end{align*}
+としたとき，$x_1^{(i)}$と$x_2^{(i)}$はそれぞれどのようにおくのがよいか．ここで，$\sqrt{1000}\fallingdotseq 32$とする．
+\end{qu}
+\begin{proof}
+$x_1^{(i)}=\frac{平米数^{(i)}}{1000}$，$x_2^{(i)}=\frac{\sqrt{平米数^{(i)}}}{32}$．
+\end{proof}
+
+\section{正規方程式}
+
+さて，最急降下法で収束して得られた${\bm \theta}$は，どこを見渡しても勾配がない状態となっている．これは，言い換えると目的関数$J({\bm \theta})$の勾配ベクトルがゼロベクトルとなる点${\bm \theta}$は，方程式$\nabla_{{\bm \theta}}J={\bm 0}$の解である．この方程式は正規方程式という．
+\begin{defi}[正規方程式]
+　\\
+目的関数$J({\bm \theta})$の回帰問題について，次式を{\bf 正規方程式(normal equation formula)}という．
+\begin{align}
+\nabla_{{\bm \theta}}J={\bm 0}
+\end{align}
+\end{defi}
+
+ここから，線形回帰問題において目的関数を最小二乗誤差関数とした場合の正規方程式を導出する．その準備のため，デザイン行列を定義する．
+
+\begin{defi}[デザイン行列]
+　\\
+特徴量が$n$のトレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$において，次式で定義する行列$X \in \mathbb{R}^{m\times (n+1)}$を{\bf デザイン行列(design matrix)}という．デザイン行列は，特徴量${\bm x}^{(i)}$を転置してサンプル数の分縦に並べたもので表される．ここで，特徴量として$x_0=1$が加わっていることに注意する．
+\begin{align}
+X = 
+\left(
+\begin{array}{c}
+{{\bm x}^{(1)}}^T \\
+{{\bm x}^{(2)}}^T \\
+\vdots \\
+{{\bm x}^{(m)}}^T
+\end{array}
+\right)
+=
+\left(
+\begin{array}{ccccc}
+1 & x_1^{(1)} & x_2^{(1)} & \cdots & x_n^{(1)} \\
+1 & x_1^{(2)} & x_2^{(2)} & \cdots & x_n^{(2)} \\
+\vdots & \vdots & \vdots & \vdots & \vdots \\
+1 & x_1^{(m)} & x_2^{(m)} & \cdots & x_n^{(m)} 
+\end{array}
+\right)
+\end{align}
+\end{defi}
+
+\begin{qu}
+次のトレーニングセットにおいて，デザイン行列$X$を答えよ．
+\begin{table}[h]
+\centering
+\begin{tabular}{rrrrrr}
+\hline
+$i$ &$x_1^{(i)}$ &$x_2^{(i)}$ &$x_3^{(i)}$ &$x_4^{(i)}$ & $y^{(i)}$ \\ \hline
+1 & 2104 & 5 & 1 & 45 & 460 \\
+2 & 1416 & 3 & 2 & 40 & 232 \\
+3 & 1534 & 3 & 2 & 30 & 315 \\
+4 & 852  & 2 & 1 & 36 & 178 \\ \hline
+\end{tabular}
+\end{table}
+\end{qu}
+\begin{proof}
+特徴量が4つで，サンプル数が4つなので，$X$は$4\times 5$次元の行列となり，
+\begin{align*}
+X=
+\left(
+\begin{array}{ccccc}
+1 & 2104 & 5 & 1 & 45 \\
+1 & 1416 & 3 & 2 & 40 \\
+1 & 1534 & 3 & 2 & 30 \\
+1 & 852  & 2 & 1 & 36 
+\end{array}
+\right)
+\end{align*}
+\end{proof}
+
+デザイン行列を使うと，線形回帰の仮説関数のベクトルを簡潔に表すことができる．
+
+\begin{qu}
+特徴量が$n$であるトレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$における線形回帰問題を考える．このとき，$(h_{{\bm \theta}}(x^{(1)}),h_{{\bm \theta}}(x^{(2)}),\ldots,h_{{\bm \theta}}(x^{(m)}))^T$をデザイン行列$X$を用いて表せ．
+\end{qu}
+\begin{proof}
+\begin{align}
+\left(
+\begin{array}{c}
+h_{{\bm \theta}}(x^{(1)}) \\
+h_{{\bm \theta}}(x^{(2)}) \\
+\vdots \\
+h_{{\bm \theta}}(x^{(m)})
+\end{array}
+\right)
+&=
+\left(
+\begin{array}{c}
+{\bm \theta}^T 
+\left( 
+\begin{array}{c}
+1 \\
+{\bm x}^{(1)}
+\end{array}
+\right) \\
+{\bm \theta}^T 
+\left( 
+\begin{array}{c}
+1 \\
+{\bm x}^{(2)}
+\end{array}
+\right) \\
+\vdots \\
+{\bm \theta}^T 
+\left( 
+\begin{array}{c}
+1 \\
+{\bm x}^{(m)}
+\end{array}
+\right)
+\end{array}
+\right)
+=
+\left(
+\begin{array}{c}
+\theta_0 +\theta_1 x_1^{(1)}+\theta_2 x_2^{(1)}+\cdots \theta_n x_n^{(1)} \\
+\theta_0 +\theta_1 x_1^{(2)}+\theta_2 x_2^{(2)}+\cdots \theta_n x_n^{(2)} \\
+\vdots \\
+\theta_0 +\theta_1 x_1^{(m)}+\theta_2 x_2^{(m)}+\cdots \theta_n x_n^{(m)} 
+\end{array}
+\right) \nonumber \\
+&=
+\left(
+\begin{array}{ccccc}
+1 & x_1^{(1)} & x_2^{(1)} & \cdots & x_n^{(1)} \\
+1 & x_1^{(2)} & x_2^{(2)} & \cdots & x_n^{(2)} \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+1 & x_1^{(m)} & x_2^{(m)} & \cdots & x_n^{(m)} 
+\end{array}
+\right)
+\left(
+\begin{array}{c}
+\theta_0 \\
+\theta_1 \\
+\vdots \\
+\theta_n
+\end{array}
+\right)
+=X {\bm \theta}
+\end{align}
+\end{proof}
+
+また，この結果を用いて，目的関数を最小二乗誤差関数とした線形回帰問題において，目的関数をより簡潔に表すことができる．
+
+\begin{qu}
+特徴量が$n$であるトレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$における線形回帰問題において，目的関数$J({\bm \theta})$を最小二乗誤差関数とする．このとき，$J({\bm \theta})$をデザイン行列$X$を用いて表せ．
+\end{qu}
+\begin{proof}
+\begin{align}
+J({\bm \theta})&= \frac{1}{2m}\sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})^2 \nonumber \\
+&=\frac{1}{2m}\left(h_{{\bm \theta}}({\bm x}^{(1)})-y^{(1)},h_{{\bm \theta}}({\bm x}^{(2)})-y^{(2)},\ldots,h_{{\bm \theta}}({\bm x}^{(m)})-y^{(m)}\right)
+\left(
+\begin{array}{c}
+h_{{\bm \theta}}({\bm x}^{(1)})-y^{(1)} \\
+h_{{\bm \theta}}({\bm x}^{(2)})-y^{(2)} \\
+\vdots \\
+h_{{\bm \theta}}({\bm x}^{(m)})-y^{(m)}
+\end{array}
+\right) \nonumber
+\end{align}
+となるが，ここで，
+\begin{align}
+\left(
+\begin{array}{c}
+h_{{\bm \theta}}({\bm x}^{(1)})-y^{(1)} \\
+h_{{\bm \theta}}({\bm x}^{(2)})-y^{(2)} \\
+\vdots \\
+h_{{\bm \theta}}({\bm x}^{(m)})-y^{(m)}
+\end{array}
+\right)
+=
+\left(
+\begin{array}{c}
+h_{{\bm \theta}}({\bm x}^{(1)}) \\
+h_{{\bm \theta}}({\bm x}^{(2)}) \\
+\vdots \\
+h_{{\bm \theta}}({\bm x}^{(m)})
+\end{array}
+\right)
+-
+\left(
+\begin{array}{c}
+y^{(1)} \\
+y^{(2)} \\
+\vdots \\
+y^{(m)}
+\end{array}
+\right)
+=X{\bm \theta}-{\bm y} \nonumber
+\end{align}
+より，
+\begin{align}
+J({\bm \theta})&= \frac{1}{2m}(X{\bm \theta}-{\bm y})^T(X{\bm \theta}-{\bm y})
+\end{align}
+\end{proof}
+
+目的関数を簡潔に書けたので，行列の微分の性質を使い，正規方程式を導出する．
+\begin{qu}
+特徴量が$n$であるトレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$における線形回帰問題において，目的関数$J({\bm \theta})$を最小二乗誤差関数とする．このとき，$\nabla_{{\bm \theta}}J={\bm 0}$を簡単に表せ．
+\end{qu}
+\begin{proof}
+$X^TX$は対称行列であることに注意すると，
+\begin{align*}
+\nabla_{{\bm \theta}}J&=\nabla_{{\bm \theta}}\left(\frac{1}{2m}(X{\bm \theta}-{\bm y})^T(X{\bm \theta}-{\bm y})\right) \\
+&=\nabla_{{\bm \theta}}\left(\frac{1}{2m}\left((X{\bm \theta})^T(X{\bm \theta})-(X{\bm \theta})^T{\bm y}-{\bm y}^T(X{\bm \theta})+{\bm y}^T{\bm y}\right)\right)\\
+&=\nabla_{{\bm \theta}}\left(\frac{1}{2m}\left((X{\bm \theta})^T(X{\bm \theta})-2(X{\bm \theta})^T{\bm y}+{\bm y}^T{\bm y}\right)\right)\\
+&=\nabla_{{\bm \theta}}\left(\frac{1}{2m}\left( {\bm \theta}^TX^TX{\bm \theta}-2{\bm \theta}^TX^T{\bm y}+{\bm y}^T{\bm y} \right)\right) \\
+&=\frac{1}{2m}\left(\nabla_{{\bm \theta}}({\bm \theta}^TX^TX{\bm \theta})-2\nabla_{{\bm \theta}}({\bm \theta}^TX^T{\bm y})+\nabla_{{\bm \theta}}({\bm y}^T{\bm y})\right)\\
+&=\frac{1}{2m}\left(2X^TX{\bm \theta}-2X^T{\bm y}\right)
+\end{align*}
+より，$\nabla_{{\bm \theta}}J={\bm 0}$とすると，
+\begin{align}
+X^TX{\bm \theta}=X^T{\bm y}	
+\end{align}
+\end{proof}
+
+正規方程式の導出まで終わった．最後は，これを${\bm \theta}$について解けば終わりである．ここで，$X^TX$が正則であれば，逆行列$(X^TX)^{-1}$を左から掛けることによって解けるが，正則でない場合（非正則，非可逆，特異の場合ともいう），解を持たない（不能）もしくは複数または無数の解（不定）となる．ここで，不能や不定だからそれでお手上げ，というわけにはいかないので，「いい感じの」の解を設定したいとする．この「いい感じ」の解は，$X^TX$の{\bf ムーア・ペンローズ一般逆行列}$(X^TX)^+$を用いて，次式で書ける．
+\begin{align}
+{\bm \theta}=(X^TX)^+ X^T{\bm y}
+\end{align}
+この議論の詳細は，まだ著者が理解できていないため，今の所は割愛する．
+
+では，どのような場合に$X^TX$は非正則なのか．厳密には（著者がまだ理解できていないので）言わないが，Andrew Ng曰く，以下2つの場合を念頭に置いておけばとりあえず良いとのこと．
+\begin{enumerate}
+\item {\bf 特徴量が冗長}：例えば，住宅価格の予測についての特徴量で，縦の長さ，横の長さ，面積の3つを考えた場合，面積は縦の長さと横の長さですでに捉えられているので，面積という特徴量が冗長である．
+\item {\bf データ数より特徴量が多い}($m \leq n$)：$n=100$個の特徴量を，$m=10$サンプルでフィッティングするのは，うまくいくこともあるかもしれないが良いアイデアではない．
+\end{enumerate}
+
+
+教師あり学習の回帰問題について，パラメータを探す方法として最急降下法と正規方程式を解く方法の2種類を取り上げた．それぞれの手法のメリットやデメリットについて，Andrew Ngは以下の通り言及している．
+\begin{itemize}
+\item 最急降下法は，学習率$\alpha $を適切に選択する必要があるため，良さげな数値を何度か試行することが必要となってくる場合がある．一方で，正規方程式はその手間がない．
+\item 最急降下法の場合は，アルゴリズムがちゃんと機能しているか，ちゃんと収束しているかなどを確認しなければならないが，正規方程式はその手間がない．
+\item 正規方程式の場合，特徴量スケーリングを行う必要はない．
+\item 正規方程式は，逆行列を求める必要があるが，逆行列を計算するコストが非常に大きい．具体的には，逆行列の計算コストは特徴量$n$の3乗のオーダーとなる．一方，最急降下法は特徴量$n$本に対する計算を繰り返すだけなので，計算コストは$n$のオーダーと非常に少ない．つまり，最急降下法は特徴量が数百万個あるような場合でも正しく機能する．だいたい$n=10000$が正規方程式ではなく最急降下法を選ぶ目安．
+\end{itemize}
+
+\begin{qu}
+プログラミング課題を後で追記	
+\end{qu}
