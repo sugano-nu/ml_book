@@ -76,6 +76,8 @@ $x$    & $y$   \\ \hline
 \qed	
 \end{ans}
 
+\subsection{目的関数}
+
 さて，仮説関数のパラメータをどう決めるかという問題がある．パラメータをでたらめに与えても良い予測値を返さないので，経験$E$のトレーニングセットを使って，性能指標$P$を高めるように仮説関数のパラメータをアップデートしていくことが必要になる．この手順を学習アルゴリズムといい，性能指標を測る関数を目的関数という．
 
 \begin{defi}[学習アルゴリズム，目的関数]
@@ -99,9 +101,15 @@ $m$ではなく$2m$で割っているのは，微分したときに出てくる2
 
 \begin{qu}
 あるトレーニングセット$\{(x^{(i)},y^{(i)})\}_{i=1}^3$をプロットしたところ以下の散布図となった(簡単のため，特徴量$x$に$x_0=1$である特徴量は追加していない）．仮説関数を$h_{\theta}(x)=\theta x$，目的関数$J(\theta)$を最小二乗誤差関数としたとき，$J(0)$を求めよ．
+\vspace{-10pt}
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=8.0cm]{code/lrfig1.eps}
+\end{center}
+\end{figure}
+\vspace{-25pt}
 \end{qu}
-\begin{proof}
-　\\
+\begin{ans}
 目的関数$J(\theta)$は次式となる．
 \begin{align*}
 J(\theta)&=\frac{1}{6}\sum_{i=1}^3 (h_{\theta}(x^{(i)})-y^{(i)})^2 \\
@@ -113,7 +121,14 @@ J(0)&=\frac{1}{6}\sum_{i=1}^3 (-y^{(i)})^2 \\
 &=\frac{1}{6}((-1)^2+(-2)^2+(-3)^2) \\
 &= \frac{14}{6}
 \end{align*}
-\end{proof}
+\qed
+\end{ans}
+
+\begin{cod}[参考：上記散布図作成(\texttt{lrfig1.py})]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/lrfig1.py}
+\end{cod}
+
+\subsection{最急降下法}
 
 「性能指標が良くなるように仮説関数のパラメータ${\bm \theta}$をアップデートしていく」とはどういうことか．目的関数が最小二乗誤差関数の場合，その最小二乗誤差がどんどん小さくなっていくことが，性能指標が良くなっていくといえる．すなわち，目的関数を最小にするパラメータ${\bm \theta}$を見つければよい．それを見つけるための手法が学習アルゴリズムである．
 
@@ -125,22 +140,19 @@ J(0)&=\frac{1}{6}\sum_{i=1}^3 (-y^{(i)})^2 \\
 $k$次元ベクトル${\bm \theta}=(\theta_1,\theta_2,\ldots,\theta_k)^T$からスカラー値に写る関数$f({\bm \theta})$，すなわち$f:{\bm \theta} \in \mathbb{R}^k \to \mathbb{R}$である関数$f({\bm \theta})$において，{\bf 勾配ベクトル}$\nabla_{{\bm \theta}}f=\frac{\partial f}{\partial {\bm \theta}}$は次式で定義される．
 \begin{align}
 \nabla_{{\bm \theta}}f = \frac{\partial f}{\partial {\bm \theta}} = 
-\left( 
-\begin{array}{c}
-\frac{\partial f}{\partial \theta_1} \\
-\frac{\partial f}{\partial \theta_2} \\
-\vdots \\
+\begin{bmatrix}
+\frac{\partial f}{\partial \theta_1} \\[5pt]
+\frac{\partial f}{\partial \theta_2} \\[3pt]
+\vdots \\[5pt]
 \frac{\partial f}{\partial \theta_k}
-\end{array}
-\right)
+\end{bmatrix}
 \end{align}
 \end{defi}
 
 \begin{qu}
 $f:\mathbb{R}^2 \to \mathbb{R}$の関数$f(x,y)$のある点P$(x,y)$における最大勾配方向が勾配ベクトルの方向と同方向であることを示せ．
 \end{qu}
-\begin{proof}
-　\\
+\begin{ans}
 勾配とは，関数$f$の変化度合いであり，勾配が最大ということは，関数の変化度合いが最も大きいということである．点P$(x,y)$と，そこから微小量$\Delta x$，$\Delta y$だけ動かした点Q$(x+\Delta x,y+\Delta y)$においてそれぞれ関数値を求めて差をとったものを変化度合い$\Delta f$とすると，$\overrightarrow{PQ}=\overrightarrow{OQ}-\overrightarrow{OP}=(\Delta x,\Delta y)$に注意して，以下の通り変形できる．
 \begin{align*}
 \Delta f &= f(x+\Delta x,y+\Delta y)-f(x,y) \\
@@ -154,14 +166,14 @@ $f:\mathbb{R}^2 \to \mathbb{R}$の関数$f(x,y)$のある点P$(x,y)$における
 \begin{align*}
 \Delta f &= |\nabla f||\overrightarrow{PQ}|\cos \theta
 \end{align*}
-となる．ここで，$\theta$は，$\nabla f$と$\overrightarrow{PQ}$のなす角である．関数の変化度合い$\Delta f$が最大となるのは，$\cos \theta =1$，すなわち$\theta =0$となる場合である．これはつまり$\nabla f$と$\overrightarrow{PQ}$が同じ方向を向いているときに関数の変化度合い$\Delta f$が最大となるということである．以上より，点Pから関数の変化度合い$\Delta f$が最大となるように進むためには(点Qをとるためには)，勾配ベクトルの方向に進めばよいということである．
-\end{proof}
+となる．ここで，$\theta$は，$\nabla f$と$\overrightarrow{PQ}$のなす角である．関数の変化度合い$\Delta f$が最大となるのは，$\cos \theta =1$，すなわち$\theta =0$となる場合である．これはつまり$\nabla f$と$\overrightarrow{PQ}$が同じ方向を向いているときに関数の変化度合い$\Delta f$が最大となるということである．以上より，点Pから関数の変化度合い$\Delta f$が最大となるように進むためには(点Qをとるためには)，勾配ベクトルの方向に進めばよいということである．\qed
+\end{ans}
 
 これで勾配が最も急な方向が勾配ベクトル方向であることがわかったので，それを用いて最急降下法を以下の通り定義する．
 \begin{defi}[最急降下法]
 　\\
 関数$J({\bm \theta})$を最小とする${\bm \theta}$を次の手順で見つけるアルゴリズムを，{\bf 最急降下法(gradient descent algorithm)}という．ここで，$\alpha (>0)$を{\bf 学習率}といい，勾配が最大の方向にどの程度移動させるかの強さを表す．
-\begin{algorithm}
+\begin{algorithm}[H]
 \caption{最急降下法}
 \begin{algorithmic}[1]
 \State{トレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$，仮説関数$h_{\bm \theta}({\bm x})$，目的関数$J({\bm \theta)}$を用意}
@@ -178,39 +190,38 @@ $f:\mathbb{R}^2 \to \mathbb{R}$の関数$f(x,y)$のある点P$(x,y)$における
 \end{defi}
 
 \begin{qu}
-特徴量が$n$個のトレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$の線形回帰において，目的関数$J({\bm \theta})$を最小二乗誤差関数としたとき，$\nabla_{{\bm \theta}}J$を計算せよ．
+$x_0^{(i)}=1$も含め特徴量が$n+1$個のトレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$の線形回帰において，目的関数$J({\bm \theta})$を最小二乗誤差関数としたとき，$\nabla_{{\bm \theta}}J$を計算せよ．
 \end{qu}
-\begin{proof}
-　\\
+\begin{ans}
 $\nabla_{{\bm \theta}}J$の$j$番目の要素$\frac{\partial J}{\partial \theta_j}$を計算すると以下となる．
 \begin{align*}
 \frac{\partial J}{\partial \theta_j}&= \frac{1}{2m}\sum_{i=1}^m \frac{\partial }{\partial \theta_j}(h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})^2 \\
 &=\frac{1}{2m}\sum_{i=1}^m 2(h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})\frac{\partial }{\partial \theta_j}h_{{\bm \theta}}({\bm x}^{(i)})\\
 &= \frac{1}{m}\sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})x_j^{(i)}
 \end{align*}
-ここで，$j=0$のときは$\frac{\partial }{\partial \theta_0}h_{{\bm \theta}}({\bm x}^{(i)})=1$に注意してまとめると，
+$j=0$のときは$\frac{\partial }{\partial \theta_0}h_{{\bm \theta}}({\bm x}^{(i)})=1$であることに注意してまとめると，
 \begin{align*}
-\nabla_{{\bm \theta}}J =
-\left( 
-\begin{array}{c}
-\frac{1}{m}\sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)}) \\
-\frac{1}{m}\sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})x_1^{(i)} \\
-\frac{1}{m}\sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})x_2^{(i)} \\
-\vdots \\
-\frac{1}{m}\sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})x_j^{(i)} \\
-\vdots \\
-\frac{1}{m}\sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})x_n^{(i)} \\
-\end{array}
-\right)
+\nabla_{{\bm \theta}}J =\frac{1}{m}
+\begin{bmatrix}
+\sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)}) \\[3pt]
+\sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})x_1^{(i)} \\[3pt]
+\sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})x_2^{(i)} \\[3pt]
+\vdots \\[3pt]
+\sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})x_j^{(i)} \\[3pt]
+\vdots \\[3pt]
+\sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})x_n^{(i)} \\[3pt]
+\end{bmatrix}
 \end{align*}
-となる（$\nabla_{{\bm \theta}}J$は$n+1$次元ベクトルであることに注意）．
-\end{proof}
+となる（$\nabla_{{\bm \theta}}J$は$n+1$次元ベクトルである）．\qed
+\end{ans}
+
+\subsection{デバッグ}
 
 最急降下法がうまく収束しているかを確認する手段としては，ループ1回ごとに$J({\bm \theta})$の値をプロットしていき，値が順調に減少していっているかどうかをみるという方法がある．これをデバッグという．
 
 \begin{defi}[デバッグ]
 　\\
-最急降下法がうまく収束していることを確認するため，横軸に繰り返し回数(number of iterations)，縦軸に目的関数値をとり図示することを{\bf デバッグ(debugging)}という．
+最急降下法において，横軸に繰り返し回数(number of iterations)，縦軸に目的関数値をとり図示することを{\bf デバッグ(debugging)}という．
 \end{defi}
 
 例えば，以下のような図となれば，最急降下法はうまく収束している．
