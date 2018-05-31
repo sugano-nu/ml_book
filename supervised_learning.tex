@@ -200,7 +200,7 @@ $\nabla_{{\bm \theta}}J$の$j$番目の要素$\frac{\partial J}{\partial \theta_
 &= \frac{1}{m}\sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})x_j^{(i)}
 \end{align*}
 $j=0$のときは$\frac{\partial }{\partial \theta_0}h_{{\bm \theta}}({\bm x}^{(i)})=1$であることに注意してまとめると，
-\begin{align*}
+\begin{align}
 \nabla_{{\bm \theta}}J =\frac{1}{m}
 \begin{bmatrix}
 \sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)}) \\[3pt]
@@ -210,9 +210,173 @@ $j=0$のときは$\frac{\partial }{\partial \theta_0}h_{{\bm \theta}}({\bm x}^{(
 \sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})x_j^{(i)} \\[3pt]
 \vdots \\[3pt]
 \sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})x_n^{(i)} \\[3pt]
-\end{bmatrix}
-\end{align*}
+\end{bmatrix}\label{simpleJ}
+\end{align}
 となる（$\nabla_{{\bm \theta}}J$は$n+1$次元ベクトルである）．\qed
+\end{ans}
+
+\subsection{デザイン行列}
+
+最急降下法アルゴリズムは， 式(\ref{simpleJ})を用いて$\nabla_{{\bm \theta}}J$の各要素に対して逐次計算を行っていけば単純に実装できるが，各要素の和の計算を各要素に対して行い，反復してくことは少々ややこしい．行列計算を容易に行えるプログラミング言語で実装する場合には，できるだけ逐次計算をしないように，行列計算やベクトル計算を用いて工夫して実装することが簡潔かつバグも少ない．
+
+デザイン行列を定義し，行列計算により$\nabla_{{\bm \theta}}J$を計算できることを示す．
+
+\begin{defi}[デザイン行列]
+　\\
+$x_0^{(i)}=1$も含め特徴量が$n+1$個のトレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$において，式(\ref{designX})で定義する行列$X \in \mathbb{R}^{m\times (n+1)}$を{\bf デザイン行列(design matrix)}という．デザイン行列は，特徴量${\bm x}^{(i)}$を転置してサンプル数の分縦に並べたもので表される．ここで，特徴量として$x_0=1$が加わっていることに注意する．
+\begin{align}
+X = 
+\begin{bmatrix}
+\mbox{------} & {{\bm x}^{(1)}}^T & \mbox{------} \\
+\mbox{------} & {{\bm x}^{(2)}}^T & \mbox{------} \\
+ & \vdots & \\
+\mbox{------} & {{\bm x}^{(m)}}^T & \mbox{------}
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 & x_1^{(1)} & x_2^{(1)} & \cdots & x_n^{(1)} \\
+1 & x_1^{(2)} & x_2^{(2)} & \cdots & x_n^{(2)} \\
+\vdots & \vdots & \vdots & \vdots & \vdots \\
+1 & x_1^{(m)} & x_2^{(m)} & \cdots & x_n^{(m)} 
+\end{bmatrix} \label{designX}
+\end{align}
+\end{defi}
+
+\begin{qu}
+次のトレーニングセットにおいて，デザイン行列$X$を答えよ．
+\begin{table}[h]
+\centering
+\begin{tabular}{cccccc}
+\hline
+$i$ &$x_1^{(i)}$ &$x_2^{(i)}$ &$x_3^{(i)}$ &$x_4^{(i)}$ & $y^{(i)}$ \\ \hline
+1 & 2104 & 5 & 1 & 45 & 460 \\
+2 & 1416 & 3 & 2 & 40 & 232 \\
+3 & 1534 & 3 & 2 & 30 & 315 \\
+4 & 852  & 2 & 1 & 36 & 178 \\ \hline
+\end{tabular}
+\end{table}
+\end{qu}
+\begin{ans}
+サンプル数が4つで，特徴量が$x_0=1$を含めると5つなので，$X$は$4\times 5$次元の行列となり，
+\begin{align*}
+X=
+\begin{bmatrix}
+1 & 2104 & 5 & 1 & 45 \\
+1 & 1416 & 3 & 2 & 40 \\
+1 & 1534 & 3 & 2 & 30 \\
+1 & 852  & 2 & 1 & 36 
+\end{bmatrix}
+\end{align*}\qed
+\end{ans}
+
+デザイン行列を使うと，線形回帰の仮説関数のベクトルを簡潔に表すことができる．
+
+\begin{qu}
+$x_0^{(i)}=1$も含め特徴量が$n+1$個のトレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$における線形回帰問題を考える．このとき，$(h_{{\bm \theta}}(x^{(1)}),h_{{\bm \theta}}(x^{(2)}),\ldots,h_{{\bm \theta}}(x^{(m)}))^T$を$X$，${\bm \theta}$を用いて表せ．
+\end{qu}
+\begin{ans}
+\begin{align}
+\begin{bmatrix}
+h_{{\bm \theta}}(x^{(1)}) \\
+h_{{\bm \theta}}(x^{(2)}) \\
+\vdots \\
+h_{{\bm \theta}}(x^{(m)})
+\end{bmatrix}
+&=
+\begin{bmatrix}
+{\bm \theta}^T{\bm x}^{(1)} \\
+{\bm \theta}^T {\bm x}^{(2)}\\
+\vdots \\
+{\bm \theta}^T {\bm x}^{(m)}
+\end{bmatrix}\nonumber\\
+&=
+\begin{bmatrix}
+\theta_0 +\theta_1 x_1^{(1)}+\theta_2 x_2^{(1)}+\cdots \theta_n x_n^{(1)} \\
+\theta_0 +\theta_1 x_1^{(2)}+\theta_2 x_2^{(2)}+\cdots \theta_n x_n^{(2)} \\
+\vdots \\
+\theta_0 +\theta_1 x_1^{(m)}+\theta_2 x_2^{(m)}+\cdots \theta_n x_n^{(m)} 
+\end{bmatrix}\nonumber \\
+&=
+\begin{bmatrix}
+1 & x_1^{(1)} & x_2^{(1)} & \cdots & x_n^{(1)} \\
+1 & x_1^{(2)} & x_2^{(2)} & \cdots & x_n^{(2)} \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+1 & x_1^{(m)} & x_2^{(m)} & \cdots & x_n^{(m)} 
+\end{bmatrix}
+\begin{bmatrix}
+\theta_0 \\
+\theta_1 \\
+\vdots \\
+\theta_n
+\end{bmatrix}\nonumber \\
+&=X {\bm \theta}
+\end{align}\qed
+\end{ans}
+
+この結果を用いることで，目的関数を最小二乗誤差関数とした線形回帰問題において，目的関数をより簡潔に表すことができる．
+
+\begin{qu}
+$x_0^{(i)}=1$も含め特徴量が$n+1$個のトレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$における線形回帰問題において，目的関数$J({\bm \theta})$を最小二乗誤差関数とする．このとき，$J({\bm \theta})$を$X$，${\bm \theta}$，${\bm y}$を用いて表せ．ここで，${\bm y}=(y^{(1)},y^{(2)},\ldots,y^{(m)})^T$とする．
+\end{qu}
+\begin{ans}
+\begin{align}
+J({\bm \theta})&= \frac{1}{2m}\sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})^2 \nonumber \\
+&=\frac{1}{2m}
+\begin{bmatrix}
+h_{{\bm \theta}}({\bm x}^{(1)})-y^{(1)},h_{{\bm \theta}}({\bm x}^{(2)})-y^{(2)},\ldots,h_{{\bm \theta}}({\bm x}^{(m)})-y^{(m)}
+\end{bmatrix}
+\begin{bmatrix}
+h_{{\bm \theta}}({\bm x}^{(1)})-y^{(1)} \\
+h_{{\bm \theta}}({\bm x}^{(2)})-y^{(2)} \\
+\vdots \\
+h_{{\bm \theta}}({\bm x}^{(m)})-y^{(m)}
+\end{bmatrix}\nonumber
+\end{align}
+となるが，ここで，
+\begin{align}
+\begin{bmatrix}
+h_{{\bm \theta}}({\bm x}^{(1)})-y^{(1)} \\
+h_{{\bm \theta}}({\bm x}^{(2)})-y^{(2)} \\
+\vdots \\
+h_{{\bm \theta}}({\bm x}^{(m)})-y^{(m)}
+\end{bmatrix}
+=
+\begin{bmatrix}
+h_{{\bm \theta}}({\bm x}^{(1)}) \\
+h_{{\bm \theta}}({\bm x}^{(2)}) \\
+\vdots \\
+h_{{\bm \theta}}({\bm x}^{(m)})
+\end{bmatrix}
+-
+\begin{bmatrix}
+y^{(1)} \\
+y^{(2)} \\
+\vdots \\
+y^{(m)}
+\end{bmatrix}
+=X{\bm \theta}-{\bm y} \nonumber
+\end{align}
+より，
+\begin{align}
+J({\bm \theta})&= \frac{1}{2m}(X{\bm \theta}-{\bm y})^T(X{\bm \theta}-{\bm y})
+\end{align}\qed
+\end{ans}
+
+これで目的関数を簡潔に書けたので，最後にそれを微分して$\nabla_{{\bm \theta}}J$を求める．
+\begin{qu}
+$x_0^{(i)}=1$も含め特徴量が$n+1$個のトレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$における線形回帰問題において，目的関数$J({\bm \theta})$を最小二乗誤差関数とする．このとき，$\nabla_{{\bm \theta}}J$を$m$，$X$，${\bm \theta}$，${\bm y}$で表せ．
+\end{qu}
+\begin{ans}
+$X^TX$は対称行列であることに注意すると，
+\begin{align}
+\nabla_{{\bm \theta}}J&=\nabla_{{\bm \theta}}\left(\frac{1}{2m}(X{\bm \theta}-{\bm y})^T(X{\bm \theta}-{\bm y})\right) \nonumber\\
+&=\nabla_{{\bm \theta}}\left(\frac{1}{2m}\left((X{\bm \theta})^T(X{\bm \theta})-(X{\bm \theta})^T{\bm y}-{\bm y}^T(X{\bm \theta})+{\bm y}^T{\bm y}\right)\right)\nonumber\\
+&=\nabla_{{\bm \theta}}\left(\frac{1}{2m}\left((X{\bm \theta})^T(X{\bm \theta})-2(X{\bm \theta})^T{\bm y}+{\bm y}^T{\bm y}\right)\right)\nonumber\\
+&=\nabla_{{\bm \theta}}\left(\frac{1}{2m}\left( {\bm \theta}^TX^TX{\bm \theta}-2{\bm \theta}^TX^T{\bm y}+{\bm y}^T{\bm y} \right)\right) \nonumber\\
+&=\frac{1}{2m}\left(\nabla_{{\bm \theta}}({\bm \theta}^TX^TX{\bm \theta})-2\nabla_{{\bm \theta}}({\bm \theta}^TX^T{\bm y})+\nabla_{{\bm \theta}}({\bm y}^T{\bm y})\right)\nonumber\\
+&=\frac{1}{2m}\left(2X^TX{\bm \theta}-2X^T{\bm y}\right)\nonumber \\
+&=\frac{1}{m}\left(X^TX{\bm \theta}-X^T{\bm y}\right)
+\end{align}\qed
 \end{ans}
 
 \subsection{デバッグ}
