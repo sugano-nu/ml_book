@@ -1,6 +1,9 @@
-\section{行列}
+数学的に厳密ではない箇所があるが，ご容赦いただきたい．後で追記する予定．
+\section{行列の定義}
 
-\begin{defi}[行列]　\\
+まずは行列を定義する．
+
+\begin{defi}[行列]
 実数の長方形配列を{\bf 行列(matrix)}と呼ぶ．すなわち，行列は一般的な形として以下のように配列された実数$a_{11},a_{12},\ldots,a_{1n},\ldots,a_{m1},a_{m2},\ldots,a_{mn} \in \mathbb{R}$の集まりである．
 \begin{align*}
 \begin{bmatrix}
@@ -10,35 +13,282 @@ a_{21} & a_{22} & \cdots & a_{2n} \\
 a_{m1} & a_{m2} & \cdots & a_{mn} 
 \end{bmatrix}	
 \end{align*}
-なお，上記のように$m$個の行と$n$個の列からなる行列を$m\times n$行列と呼び，$m$と$n$をこの行列の{\bf 次元(dimension)}と呼ぶ．
+なお，上記のように$m$個の行と$n$個の列からなる行列を$m\times n$行列と呼び，$m$と$n$をこの行列の{\bf 次元(dimension)}と呼ぶ．行列の第$i$行と第$j$列にある$a_{ij}$をその行列の第$ij${\bf 要素(element)}または{\bf 成分(entry)}と呼ぶ．たびたび，行列はその成分$a_{ij}$として$A=\{a_{ij}\}$と表記する．なお，行列に対して，単なる数のことを，{\bf スカラー(scalar)}と呼ぶ．
+\end{defi}
+
+\begin{rem}
+断りのない限り，行列の成分は実数に限定する．	
+\end{rem}
+
+\section{基礎演算}
+
+定義した行列に対して，相等，和・差，積(スカラー積と行列の積)，そして転置という行列特有の操作を導入する．
+
+\begin{defi}[行列の相等]
+同じ次元を持つ2つの行列$A$,$B$について，もし$A$の全ての要素が$B$のその対応する各要素に等しいならば，行列は{\bf 等しい(equal)}といい，$A=B$と書く．
+\end{defi}
+
+\begin{defi}[スカラー乗法]
+任意のスカラー$k$と任意の$m\times n$行列$A=\{a_{ij}\}$に対して，$k$と$A$の{\bf スカラー積(scalar product)}を，その第$ij$要素が$ka_{ij}$である$m\times n$行列と定義し，$kA$と書く．特に，$-1$と$A$のスカラー積$(-1)A$を，$A$の{\bf 負(negative)}と呼び，$-A$と略記する．
 \end{defi}
 
 \begin{theo}
+任意のスカラー$c,k$，任意の行列$A$に対して次式が成り立つ．
 \begin{align}
-{\bm a}^T{\bm b}&= {\bm b}^T{\bm a}	\\
-(k{\bm a})^T{\bm b}&= k{\bm a}^T{\bm b} \\
-({\bm a}+{\bm b})^T({\bm c}+{\bm d})&= {\bm a}^T{\bm c}+{\bm b}^T{\bm c}+{\bm a}^T{\bm d}+{\bm b}^T{\bm d}
+c(kA)=(ck)A=(kc)A=k(cA)	
 \end{align}
 \end{theo}
+\begin{pro}
+省略(任意の$ij$成分に対して成り立つことを示せばよい)．	\qed
+\end{pro}
 
-\begin{theo}
-\begin{align}
-(A+B)^T&= A^T+B^T \\
-(AB)^T&=B^TA^T	
-\end{align}
-\end{theo}
-
-\begin{defi}
-$X^T=X$を満たす行列を{\bf 対称行列}という．	
+\begin{defi}[行列の加法と減法]
+同じ行の数$m$と同じ列の数$n$をもつ任意の行列$A=\{a_{ij}\},B=\{b_{ij}\}$に対して，$A$と$B$の{\bf 和(sum)}を，その第$ij$要素が$a_{ij}+b_{ij}$である$m\times n$行列と定義し，$A+B$と書く．また，和$A+(-B)$，すなわちその第$ij$要素が$a_{ij}-b_{ij}$である$m\times n$行列を$A-B$と書くこととし，この行列を$A$と$B$の{\bf 差(difference)}と呼ぶ．同じ数の行と列をもつ行列は加法あるいは減法に対して{\bf 共形的(conformal)}であるという．
 \end{defi}
 
-\begin{theo}[1次形式，2次形式の勾配ベクトル]
+\begin{theo}
+任意のスカラー$c,k$，任意の共形的である行列$A,B,C$に対して次式が成り立つ．
 \begin{align}
-\nabla_{{\bm x}}({\bm a}^T {\bm x})&=\nabla_{{\bm x}}({\bm x}^T {\bm a})={\bm a}\\
-\nabla_{{\bm x}}({\bm x}^T A{\bm x})&=(A+A^T){\bm x}
+&A+B=B+A \label{koukan}\\
+& A+(B+C)=(A+B)+C \\
+& c(A+B)=cA+cB \\
+& (c+k)A=cA+kA
 \end{align}
 \end{theo}
+\begin{pro}
+略(任意の$ij$成分に対して成り立つことを示せばよい)．	\qed
+\end{pro}
+
+\begin{defi}[行列の積]
+$m\times n$行列$A$と$p\times q$行列$B$について，$p=n$，すなわち$A$の列と$B$の行の数が等しいとき，行列の{\bf 積(matrix product)}$AB$は，$AB=\{c_{ij}\}$としたとき，その第$ij$要素$c_{ij}$が次式で表される$m\times q$行列と定義する．
+\begin{align}
+c_{ij}=\sum_{k=1}^n a_{ik}b_{kj}	 \label{prod}
+\end{align}
+なお，$AB$は，$A$による$B$への{\bf 前からの乗法(premultiplication)}または$B$の$A$による{\bf 後ろからの乗法(postmultiplication)}と呼ぶ．
+\end{defi}
 
 \begin{theo}
-$X^TX$は対称行列である．
+任意のスカラー$c$，任意の$m\times n$行列$A$，$n\times q$行列$B$，$q\times t$行列$C$に対して次式が成り立つ．
+\begin{align}
+&A(BC)=(AB)C \\
+&A(B+C)=AB+AC \label{bun1}\\
+&(A+B)C=AC+BC \label{bun2}\\
+&cAB=(cA)B=A(cB)
+\end{align}
 \end{theo}
+\begin{pro}
+略(任意の$ij$成分に対して成り立つことを示せばよい)．	\qed
+\end{pro}
+
+\begin{qu}
+任意の$m\times n$行列$A,B$，$n\times q$行列$C,D$に対して次式が成り立つことを示せ．
+\begin{align}
+(A+B)(C+D)=AC+AD+BC+BD
+\end{align}
+\end{qu}
+\begin{ans}
+式(\ref{bun1})において$(A+B)$を$A$だとして適用し，その後に式(\ref{bun2})を順に適用して展開したあと，式(\ref{koukan})で交換操作をすることで示せる．
+\begin{align*}
+(A+B)(C+D)&= (A+B)C+(A+B)D\\
+&= AC+BC+AD+BD \\
+&= AC+AD+BC+BD
+\end{align*}\qed
+\end{ans}
+
+
+\begin{defi}[転置]
+$m\times n$行列$A$の{\bf 転置(transposition)}は記号$A^T$で表し，各$ij$要素が$A$の第$ji$要素である$n\times m$行列を意味する．すなわち，行列の転置は行を列として，列を行として書き直すことで作る．
+\end{defi}
+
+\begin{theo}
+任意の行列$A$に対して，次式が成り立つ．
+\begin{align}
+(A^T)^T=A \label{trans2}
+\end{align}
+また，加法に関して共形的である任意の行列$A,B$に対して，次式が成り立つ．
+\begin{align}
+(A+B)^T=A^T+B^T	
+\end{align}
+また，積が定義される任意の行列$A,B$に対して，次式が成り立つ．
+\begin{align}
+(AB)^T=B^TA^T \label{transprod}
+\end{align}
+\end{theo}
+\begin{pro}
+任意の$ij$成分に対して成り立つことを示せばよいので省略するが，式(\ref{transprod})のみ示す．$m\times n$行列$A=\{a_{ij}\}$，$n\times q$行列$B=\{b_{ij}\}$とする．$q\times m$行列$(AB)^T=\{d_{ij}\}$の第$ij$成分は，$m\times q$行列$AB=\{c_{ij}\}$の第$ji$成分であるため，式(\ref{prod})より
+\begin{align*}
+d_{ij}=c_{ji}=\sum_{k=1}^n a_{jk}b_{ki}
+\end{align*}
+となる．一方，$q\times n$行列$B^T=\{b'_{ij}\}$，$n\times m$行列$A^T=\{a'_{ij}\}$としたとき，$q\times m$行列$B^TA^T=\{d'_{ij}\}$の第$ij$成分は，式(\ref{prod})より
+\begin{align*}
+d'_{ij}=\sum_{k=1}^n b'_{ik}a'_{kj}
+\end{align*}
+となるが，$b'_{ik}=b_{ki},a'_{kj}=a_{jk}$であるため，結局，
+\begin{align*}
+d'_{ij}=\sum_{k=1}^n b'_{ik}a'_{kj}=\sum_{k=1}^n b_{ki}a_{jk}=\sum_{k=1}^n a_{jk}b_{ki}=d_{ij}
+\end{align*}\qed
+\end{pro}
+
+\section{正方行列，ベクトル}
+行列の中でも，特別な名前がつけられているものがある．ここでは正方行列と対称行列，ベクトルを定義する．
+
+\begin{defi}[正方行列]
+行の数と列の数が同じ行列を{\bf 正方行列(square matrix)}と呼び，$n\times n$正方行列における$n$を{\bf 次数(order)}という．また，$n\times n$正方行列において$a_{11},a_{22},\ldots,a_{nn}$を（第1，第2，等の）{\bf 対角要素(diagonal element)}と呼び，対角要素以外の要素を{\bf 非対角要素(off-diagonal element)}と呼ぶ．
+\end{defi}
+
+\begin{defi}[対称行列]
+$A^T=A$である行列$A$，すなわち第$ij$要素が第$ji$要素と等しい行列を{\bf 対称行列(symmetric matrix)}という．
+\end{defi}
+
+\begin{theo}
+任意の行列$X$に対して，$X^TX$は対称行列である．	
+\end{theo}
+\begin{pro}
+式(\ref{transprod})，式(\ref{trans2})より，$(X^TX)^T=X^T(X^T)^T=X^TX$．\qed	
+\end{pro}
+
+\begin{defi}[ベクトル]
+ただ1個の列をもつ行列，すなわち以下の行列を{\bf 列ベクトル(column vector)}と呼ぶ．
+\begin{align*}
+\begin{bmatrix}
+a_{1} \\
+a_{2} \\
+\vdots \\
+a_{m} 
+\end{bmatrix}	
+\end{align*}
+同様に，ただ1個の行をもつ行列を{\bf 行ベクトル(row vector)}と呼ぶ．なお，上記のように$m$個の要素からなるベクトルを$m$次元ベクトルと呼ぶ．たびたび，ベクトルはその第$i$成分$a_{i}$として${\bm a}=\{a_{i}\}$と表記する．また，上記の列ベクトルを文章中で書く場合，行ベクトルと転置を用いて${\bm a}=(a_1,a_2,\ldots,a_m)^T$とすることが多い．
+\end{defi}
+
+\section{分割ベクトル}
+行列はベクトルを横だったり縦だったりにくっつけたものともいえる．行列においてその要素をベクトルに分割したものを分割ベクトルという．
+
+\begin{defi}[分割ベクトル]
+任意の$m\times n$行列$A=\{a_{ij}\}$を$m$個の行ベクトル${\bm a}_i=(a_{i1},a_{i2},\ldots,a_{in})~(i=1,2,\ldots,m)$で分割したとき，その行ベクトル${\bm a}_1,{\bm a}_2,\ldots,{\bm a}_m$を{\bf 分割行ベクトル(partitioned row vector)}という．また，$n$個の列ベクトル${\bm a}'_j=(a_{1j},a_{2j},\ldots,a_{mj})^T~(j=1,2,\ldots,n)$で分割した時，その列ベクトル${\bm a}'_1,{\bm a}'_2,\ldots,{\bm a}'_n$を{\bf 分割列ベクトル(partitioned column vector)}という．これらを用いて，$A$は次式で表記される．
+\begin{align}
+A=
+\begin{bmatrix}
+\mbox{------} & {\bm a}_1 & \mbox{------} \\
+\mbox{------} & {\bm a}_2 & \mbox{------} \\
+ & \vdots & \\
+\mbox{------} & {\bm a}_m & \mbox{------}
+\end{bmatrix}	
+=
+\begin{bmatrix}
+| & | & \cdots & | \\[-2pt]
+| & | & \cdots & | \\
+{\bm a}'_1 & {\bm a}'_2 & \cdots & {\bm a}'_n \\
+| & | & \cdots & |	\\[-2pt]
+| & | & \cdots & |
+\end{bmatrix}
+\end{align}
+\end{defi}
+
+\begin{rem}
+行ベクトルは基本的に定義して使わないため，行ベクトルへの分割をするときは，$m$個の列ベクトル${\bm a}_i=(a_{i1},a_{i2},\ldots,a_{in})^T~(i=1,2,\ldots,m)$を定義して次式で表記することが多い．
+\begin{align}
+A=
+\begin{bmatrix}
+\mbox{------} & {\bm a}_1^T & \mbox{------} \\
+\mbox{------} & {\bm a}_2^T & \mbox{------} \\
+ & \vdots & \\
+\mbox{------} & {\bm a}_m^T & \mbox{------}
+\end{bmatrix}	
+\end{align}
+\end{rem}
+
+\begin{theo}
+$m\times n$行列$A$，$n\times q$行列$B$とする．このとき，行列の積$AB$は分割ベクトルを用いて次式で計算できる．
+\begin{align}
+AB=
+\begin{bmatrix}
+\mbox{------} & {\bm a}_1^T & \mbox{------} \\
+\mbox{------} & {\bm a}_2^T & \mbox{------} \\
+ & \vdots & \\
+\mbox{------} & {\bm a}_m^T & \mbox{------}
+\end{bmatrix}
+\begin{bmatrix}
+| & | & \cdots & | \\[-2pt]
+| & | & \cdots & | \\
+{\bm b}_1 & {\bm b}_2 & \cdots & {\bm b}_q \\
+| & | & \cdots & |	\\[-2pt]
+| & | & \cdots & |
+\end{bmatrix}
+=
+\begin{bmatrix}
+{\bm a}_1^T {\bm b}_1 & {\bm a}_1^T {\bm b}_2 & \cdots & {\bm a}_1^T {\bm b}_q \\
+{\bm a}_2^T {\bm b}_1 & {\bm a}_2^T {\bm b}_2 & \cdots & {\bm a}_2^T {\bm b}_q \\
+\vdots & \vdots & \vdots & \vdots \\
+{\bm a}_m^T {\bm b}_1 & {\bm a}_m^T {\bm b}_2 & \cdots & {\bm a}_m^T {\bm b}_q 
+\end{bmatrix}
+\end{align}
+\end{theo}
+\begin{pro}
+式(\ref{prod})より，$AB$の任意の第$ij$成分$c_{ij}$について以下が成り立つことから示される．
+\begin{align*}
+c_{ij} = \sum_{k=1}^n a_{ik}b_{kj}=a_{i1}b_{1j}+a_{i2}b_{2j}+\cdots+a_{in}b_{nj}=
+\begin{bmatrix}
+a_{i1} & a_{i2} & \cdots & a_{in}
+\end{bmatrix}
+\begin{bmatrix}
+b_{1j} \\
+b_{2j} \\
+\vdots \\
+b_{nj}
+\end{bmatrix}
+={\bm a}_i^T {\bm b}_j
+\end{align*}
+\qed	
+\end{pro}
+
+\section{内積，ノルム，角度}
+ここでは，内積，(通常の)ノルム，角度を定義する．
+
+\begin{defi}[内積]
+2個の$n$次元列ベクトル${\bm a}=(a_1,a_2,\ldots,a_n)^T$，${\bm b}=(b_1,b_2,\ldots,b_n)^T$に対して，{\bf 内積(inner product)}${\bm a}\cdot {\bm b}$は次式で定義される．	
+\begin{align}
+{\bm a}\cdot {\bm b} = a_1b_1+a_2b_2+\cdots+a_nb_n = {\bm a}^T {\bm b} \label{IP}
+\end{align}
+\end{defi}
+\begin{rem}
+本書では${\bm a}\cdot {\bm b}$という表記はあまり使用せず，${\bm a}^T{\bm b}$を使用する．	
+\end{rem}
+
+\begin{theo}
+内積について次式が成り立つ．
+\begin{align}
+&{\bm a}^T{\bm b}= {\bm b}^T{\bm a}	\\
+&{\bm a}^T{\bm a} \geq 0~~(等号成立は{\bm a}={\bm 0}のとき)\\
+&(k{\bm a})^T{\bm b}= k{\bm a}^T{\bm b} \\
+&({\bm a}+{\bm b})^T({\bm c}+{\bm d})= {\bm a}^T{\bm c}+{\bm b}^T{\bm c}+{\bm a}^T{\bm d}+{\bm b}^T{\bm d}
+\end{align}
+\end{theo}
+\begin{pro}
+略．\qed	
+\end{pro}
+
+\begin{defi}[(通常の)ノルム]
+$n$次元列ベクトル${\bm a}=(a_1,a_2,\ldots,a_n)$に対して，{\bf (通常の)ノルム((usual) norm)}$||{\bm a}||$は次式で定義される．
+\begin{align}
+	||{\bm a}||=\sqrt{{\bm a}^T{\bm a}}=\sqrt{a_1^2+a_2^2+\cdots +a_n^2}
+\end{align}
+\end{defi}
+
+\begin{theo}
+通常のノルムについて次式が成り立つ．
+\begin{align}
+&||{\bm a}|| \geq 0~~(等号成立は{\bm a}={\bm 0}のとき)\\
+&||k{\bm a}|| = |k|||{\bm a}||	
+\end{align}
+\end{theo}
+\begin{pro}
+略．\qed	
+\end{pro}
+
+\begin{defi}[角度]
+2つの${\bm 0}$でない$n$次元列ベクトル${\bm x},{\bm y}$に対して，そのなす角度$\theta~(0\leq \theta \leq \pi)$を，その余弦を用いて次式で定義する．
+\begin{align}
+\cos \theta = \frac{{\bm x}^T{\bm y}}{||{\bm x}||||{\bm y}||}	
+\end{align}	
+\end{defi}
+

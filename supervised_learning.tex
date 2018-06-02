@@ -5,7 +5,6 @@
 教師あり学習は，特徴量と目的変数の組のデータを用いて学習する．学習に使用するデータをトレーニングセットという．
 
 \begin{defi}[トレーニングセット]
-　\\
 $\{(\bm{x}^{(i)},y^{(i)})\}_{i=1}^m \subset (({\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n) \times {\cal Y})^m$を{\bf トレーニングセット(training set)}という．ここで，$m$は{\bf トレーニングサンプル数(number of training examples)}，${\bm x}^{(i)} \in {\cal X}_1 \times {\cal X}_2\times \cdots \times {\cal X}_n$は$i$番目の$n$個の{\bf 入力変数(input variables)}または{\bf 特徴量(features)}で，${\bm x}^{(i)}=(x_1^{(i)},x_2^{(i)},\ldots,x_n^{(i)})^T$と表す．また，$y^{(i)} \in {\cal Y}$は$i$番目の{\bf 出力変数(output variable)}または{\bf 目的変数(target variable)}である．また，トレーニングセットの$i$番目の要素$({\bm x}^{(i)},y^{(i)})\in ({\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n) \times {\cal Y}$を{\bf トレーニングサンプル(training example)}という．また，入力変数のとる空間${\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n$を{\bf 入力変数空間(space of input values)}，出力変数のとる空間${\cal Y}$を{\bf 出力変数空間(space of output values)}という．
 \end{defi}
 
@@ -30,7 +29,6 @@ $x_3^{(4)}=1,~y^{(2)}=232$．\qed
 教師あり学習を使って解きたいタスク$T$は，入力変数から出力変数を予測することであるが，それは言い換えると入力変数を引数として出力変数を出力する写像を設定することである．この写像を仮説関数という．仮説関数を以下で定義する．
 
 \begin{defi}[仮説関数]
-　\\
 入力変数${\bm x}$から出力変数$y$への写像$h:{\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n \to {\cal Y}$，すなわち$h_{\bm \theta}({\bm x})$を{\bf 仮説関数(hypothesis function)}という．ここで，${\bm \theta}$は仮説関数の{\bf パラメータ}である(パラメータは複数あることがほとんどなのでベクトルとしている)．
 \end{defi}
 
@@ -41,7 +39,6 @@ $x_3^{(4)}=1,~y^{(2)}=232$．\qed
 仮説関数は自らで与える必要があるが，仮説関数の形によって，教師あり学習に特別な名前がつくものがある．例えば，仮説関数を線形関数とし，出力変数空間を${\cal Y}=\mathbb{R}$としたときは線形回帰という．
 
 \begin{defi}[線形回帰]
-　\\
 トレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m \subset (({\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n) \times {\cal Y})^m$について，${\cal Y}=\mathbb{R}$であり，かつ仮説関数が式(\ref{LM})である教師あり学習を，特に{\bf 線形回帰(linear regression)}という．ここで，特徴量${\bm x}^{(i)}$は，常に1の値をとるような特徴量$x_0^{(i)}=1$を付して${\bm x}^{(i)}=(x_0^{(i)},x_1^{(i)},x_2^{(i)},\ldots,x_n^{(i)})^T \in 1 \times {\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n$と置き直すこととする．また，${\bm \theta}=(\theta_0,\theta_1,\ldots,\theta_n)^T \in \mathbb{R}^{n+1}$とする．
 \begin{align}
 h_{{\bm \theta}}({\bm x}^{(i)}) &= \theta_0 x_0^{(i)}+\theta_1 x_1^{(i)} +\theta_2 x_2^{(i)}+\cdots + \theta_n x_n^{(i)} \nonumber \\
@@ -81,14 +78,12 @@ $x$    & $y$   \\ \hline
 さて，仮説関数のパラメータをどう決めるかという問題がある．パラメータをでたらめに与えても良い予測値を返さないので，経験$E$のトレーニングセットを使って，性能指標$P$を高めるように仮説関数のパラメータをアップデートしていくことが必要になる．この手順を学習アルゴリズムといい，性能指標を測る関数を目的関数という．
 
 \begin{defi}[学習アルゴリズム，目的関数]
-　\\
 性能指標を測る関数$J({\bm \theta})$を{\bf 目的関数}または{\bf コスト関数(cost function)}といい，この目的関数で測った性能指標が良くなるように仮説関数(のパラメータ${\bm \theta}$)をアップデートしていく手順を{\bf 学習アルゴリズム(learning algorithm)}という．
 \end{defi}
 
 回帰問題における性能指標としては，各トレーニングサンプル$({\bm x}^{(i)},y^{(i)})$での仮説関数$h_{{\bm \theta}}({\bm x}^{(i)})$と$y^{(i)}$の二乗誤差平均が考えられる．この二乗誤差平均を計算する目的関数を最小二乗誤差関数という．
 
 \begin{defi}[最小二乗誤差関数]
-　\\
 トレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m \subset ((1 \times {\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n) \times {\cal Y})^m$について，式(\ref{SEF})で表される目的関数$J({\bm \theta})$を{\bf 最小二乗誤差関数(squared error function)}という．
 \begin{align}
 J({\bm \theta}) = \frac{1}{2m}\sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})^2 \label{SEF}
@@ -105,6 +100,8 @@ $m$ではなく$2m$で割っているのは，微分したときに出てくる2
 \begin{figure}[H]
 \begin{center}
 \includegraphics[width=8.0cm]{code/lrfig1.eps}
+\vspace{-10pt}
+\caption{\texttt{lrfig1.eps}}
 \end{center}
 \end{figure}
 \vspace{-25pt}
@@ -124,7 +121,7 @@ J(0)&=\frac{1}{6}\sum_{i=1}^3 (-y^{(i)})^2 \\
 \qed
 \end{ans}
 
-\begin{cod}[参考：上記散布図作成(\texttt{lrfig1.py})]　
+\begin{cod}[\texttt{lrfig1.eps}作成プログラム(\texttt{lrfig1.py})]　
 \lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/lrfig1.py}
 \end{cod}
 
@@ -136,7 +133,6 @@ J(0)&=\frac{1}{6}\sum_{i=1}^3 (-y^{(i)})^2 \\
 
 最急降下法を行うためには，関数上のある点について勾配が急な方向はどの方向であるかを計算しなければならない．勾配が最も急な方向を向くベクトルを勾配ベクトルといい，以下で定義される．
 \begin{defi}[勾配ベクトル]
-　\\
 $k$次元ベクトル${\bm \theta}=(\theta_1,\theta_2,\ldots,\theta_k)^T$からスカラー値に写る関数$f({\bm \theta})$，すなわち$f:{\bm \theta} \in \mathbb{R}^k \to \mathbb{R}$である関数$f({\bm \theta})$において，{\bf 勾配ベクトル}$\nabla_{{\bm \theta}}f=\frac{\partial f}{\partial {\bm \theta}}$は次式で定義される．
 \begin{align}
 \nabla_{{\bm \theta}}f = \frac{\partial f}{\partial {\bm \theta}} = 
@@ -162,16 +158,15 @@ $f:\mathbb{R}^2 \to \mathbb{R}$の関数$f(x,y)$のある点P$(x,y)$における
 &= \nabla f \cdot (\Delta x,\Delta y) \\
 &= \nabla f \cdot \overrightarrow{PQ}
 \end{align*}
-すなわちこれは，関数の変化度合いは勾配ベクトルと点Pから点Qへの方向ベクトル，すなわち微小量を動かした方向のベクトルの内積となっている．ここで，内積の定義より，
+すなわちこれは，関数の変化度合いは勾配ベクトルと点Pから点Qへの方向ベクトル，すなわち微小量を動かした方向のベクトルの内積となっている．ここで，角度の定義より，
 \begin{align*}
-\Delta f &= |\nabla f||\overrightarrow{PQ}|\cos \theta
+\Delta f &= ||\nabla f||||\overrightarrow{PQ}||\cos \theta
 \end{align*}
 となる．ここで，$\theta$は，$\nabla f$と$\overrightarrow{PQ}$のなす角である．関数の変化度合い$\Delta f$が最大となるのは，$\cos \theta =1$，すなわち$\theta =0$となる場合である．これはつまり$\nabla f$と$\overrightarrow{PQ}$が同じ方向を向いているときに関数の変化度合い$\Delta f$が最大となるということである．以上より，点Pから関数の変化度合い$\Delta f$が最大となるように進むためには(点Qをとるためには)，勾配ベクトルの方向に進めばよいということである．\qed
 \end{ans}
 
 これで勾配が最も急な方向が勾配ベクトル方向であることがわかったので，それを用いて最急降下法を以下の通り定義する．
 \begin{defi}[最急降下法]
-　\\
 関数$J({\bm \theta})$を最小とする${\bm \theta}$を次の手順で見つけるアルゴリズムを，{\bf 最急降下法(gradient descent algorithm)}という．ここで，$\alpha (>0)$を{\bf 学習率}といい，勾配が最大の方向にどの程度移動させるかの強さを表す．
 \begin{algorithm}[H]
 \caption{最急降下法}
@@ -222,7 +217,6 @@ $j=0$のときは$\frac{\partial }{\partial \theta_0}h_{{\bm \theta}}({\bm x}^{(
 デザイン行列を定義し，行列計算により$\nabla_{{\bm \theta}}J$を計算できることを示す．
 
 \begin{defi}[デザイン行列]
-　\\
 $x_0^{(i)}=1$も含め特徴量が$n+1$個のトレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$において，式(\ref{designX})で定義する行列$X \in \mathbb{R}^{m\times (n+1)}$を{\bf デザイン行列(design matrix)}という．デザイン行列は，特徴量${\bm x}^{(i)}$を転置してサンプル数の分縦に並べたもので表される．ここで，特徴量として$x_0=1$が加わっていることに注意する．
 \begin{align}
 X = 
@@ -300,7 +294,7 @@ h_{{\bm \theta}}(x^{(m)})
 \begin{bmatrix}
 1 & x_1^{(1)} & x_2^{(1)} & \cdots & x_n^{(1)} \\
 1 & x_1^{(2)} & x_2^{(2)} & \cdots & x_n^{(2)} \\
-\vdots & \vdots & \vdots & \ddots & \vdots \\
+\vdots & \vdots & \vdots & \vdots & \vdots \\
 1 & x_1^{(m)} & x_2^{(m)} & \cdots & x_n^{(m)} 
 \end{bmatrix}
 \begin{bmatrix}
@@ -323,7 +317,7 @@ $x_0^{(i)}=1$も含め特徴量が$n+1$個のトレーニングセット$\{({\bm
 J({\bm \theta})&= \frac{1}{2m}\sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})^2 \nonumber \\
 &=\frac{1}{2m}
 \begin{bmatrix}
-h_{{\bm \theta}}({\bm x}^{(1)})-y^{(1)},h_{{\bm \theta}}({\bm x}^{(2)})-y^{(2)},\ldots,h_{{\bm \theta}}({\bm x}^{(m)})-y^{(m)}
+h_{{\bm \theta}}({\bm x}^{(1)})-y^{(1)} & h_{{\bm \theta}}({\bm x}^{(2)})-y^{(2)} & \cdots & h_{{\bm \theta}}({\bm x}^{(m)})-y^{(m)}
 \end{bmatrix}
 \begin{bmatrix}
 h_{{\bm \theta}}({\bm x}^{(1)})-y^{(1)} \\
@@ -362,7 +356,17 @@ J({\bm \theta})&= \frac{1}{2m}(X{\bm \theta}-{\bm y})^T(X{\bm \theta}-{\bm y})
 \end{align}\qed
 \end{ans}
 
-これで目的関数を簡潔に書けたので，最後にそれを微分して$\nabla_{{\bm \theta}}J$を求める．
+これで目的関数を簡潔に書けたので，最後にそれを微分して$\nabla_{{\bm \theta}}J$を求める．ここで，1次形式，2次形式の勾配ベクトルを使用するので事前に述べておく．
+\begin{theo}[1次形式，2次形式の勾配ベクトル]
+\begin{align}
+\nabla_{{\bm x}}({\bm a}^T {\bm x})&=\nabla_{{\bm x}}({\bm x}^T {\bm a})={\bm a}\\
+\nabla_{{\bm x}}({\bm x}^T A{\bm x})&=(A+A^T){\bm x}
+\end{align}
+\end{theo}
+\begin{pro}
+略(具体的に計算してみよ)．\qed	
+\end{pro}
+
 \begin{qu}
 $x_0^{(i)}=1$も含め特徴量が$n+1$個のトレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$における線形回帰問題において，目的関数$J({\bm \theta})$を最小二乗誤差関数とする．このとき，$\nabla_{{\bm \theta}}J$を$m$，$X$，${\bm \theta}$，${\bm y}$で表せ．
 \end{qu}
