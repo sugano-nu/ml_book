@@ -1,0 +1,73 @@
+\section{標準モジュール}
+
+\subsection{\texttt{print}関数}
+
+Pythonにはあらかじめ入っている関数がいくつかある．最も基本的な関数が\texttt{print}関数である．
+
+\begin{gram}　
+\begin{itemize}
+\item \texttt{print([object])}: \texttt{[object]}の表示結果を返す．\texttt{print}関数は少々特殊で，表示結果を変数に代入するということはできない(代入文を書いても表示結果が出るだけで，その変数には\texttt{None}が格納される)．\texttt{[str]}の場合，\texttt{[str]}の中に\verb|\n|を書くと，そこで改行されて表示される(\texttt{[str]}自身から\verb|\n|がなくなるわけではないので注意)．
+\end{itemize}
+\end{gram}
+
+\begin{cod}[\texttt{py1.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/py1.py}
+\vspace{-7pt}
+\begin{lstlisting}
+~~~Hello world!~~~
+---Hello
+world!---
+\end{lstlisting}
+\end{cod}
+\vspace{-10pt}
+
+\begin{cod}[\texttt{py2.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/py2.py}
+\vspace{-7pt}
+\begin{lstlisting}
+---
+10
+---
+None
+\end{lstlisting}
+\end{cod}
+\vspace{-10pt}
+
+\subsection{\texttt{type}関数}
+
+Pythonは多種多様な型を持つため，最初のうちは型をいろいろ確認しながらやるのが良い．
+
+\begin{gram}　
+\begin{itemize}
+\item \texttt{type([object])}: \texttt{[object]}の型を返す．\texttt{type([object])}の返り値自体も\texttt{type}型を持つ．
+\end{itemize}
+\end{gram}
+
+\begin{cod}[\texttt{py3.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/py3.py}
+\vspace{-7pt}
+\begin{lstlisting}
+<class 'str'>
+<class 'type'>
+\end{lstlisting}
+\end{cod}
+\vspace{-10pt}
+
+\subsection{\texttt{format}メソッド}
+
+特に\texttt{print}文を使うときに便利な\texttt{format}メソッドを紹介する．これは\texttt{str}オブジェクトに作用し，文字列中に任意の変数等の中身を文字列として挿入できるものである．
+
+\begin{gram}　
+\begin{itemize}
+\item \texttt{[str].format([object],[object],\ldots)}: \texttt{[str]}の中に記入した\texttt{\{\}}に，\texttt{[object]}の中身を文字列として代入する．なお，\texttt{\{\}}は何個あってもよく，\texttt{\{\}}には\texttt{[object],[object],\ldots}の順にそれぞれ代入されていく．
+\end{itemize}
+\end{gram}
+
+\begin{cod}[\texttt{py4.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/py4.py}
+\vspace{-7pt}
+\begin{lstlisting}
+p={'x': 3, 'y': 5}, type=<class 'dict'>
+\end{lstlisting}
+\end{cod}
+\vspace{-10pt}

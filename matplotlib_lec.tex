@@ -1,6 +1,6 @@
 \section{matplotlib}
 
-\subsection{figureオブジェクトとaxesオブジェクト}
+\subsection{\texttt{figure}オブジェクトと\texttt{axes}オブジェクト}
 一つ一つのグラフの本体は，matplotlibでは\texttt{axes}オブジェクトとして表され，\texttt{axes}オブジェクトは，\texttt{figure}オブジェクトの中で管理される．イメージとしては、\texttt{figure}オブジェクトは白のキャンバスであり，そこにグラフの素である\texttt{axes}オブジェクトを置いていく．空の\texttt{axes}オブジェクトは，デフォルトの軸だけがセットされている．
 
 \begin{gram}　
@@ -28,7 +28,7 @@
 \end{cod}
 \vspace{-20pt}
 
-\subsection{2次元の散布図}
+\subsection{2次元の散布図\texttt{scatter()}}
 
 2次元の散布図は，\texttt{[axes].scatter()}で描画することができる．散布図の場合は一つ一つの点がどれくらいの数値なのかがわかりにくいので，\texttt{[axes].grid()}でグリッド補助線を追加する．また，各点についてどっちが$x$でどっちが$y$かわからないので横軸と縦軸に\texttt{[axes].set\_xlabel([str])}，\texttt{[axes].set\_ylabel([str])}でラベルをつける．
 \begin{gram}　

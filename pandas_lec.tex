@@ -1,0 +1,46 @@
+\section{pandas}
+
+\subsection{\texttt{DataFrame}オブジェクト}
+
+機械学習の元となるデータは基本的に表形式データであるため，まずそれを読み込むところから始まる．pandasの\texttt{DataFrame}オブジェクトは，表形式データを格納できる．カンマ区切りのテキストファイル(\texttt{txt,csv})は，\texttt{pd.read\_csv()}で読み込める．
+
+\begin{gram}　
+\begin{itemize}
+\item \texttt{pd.read\_csv([str], names=[list])}: \texttt{[str]}で指定したファイルパスのデータを読み込み\texttt{DataFrame}オブジェクトに格納する．\texttt{name}は，列名をつけるときに指定する．
+\end{itemize}
+\end{gram}
+
+\begin{cod}[\texttt{pd1.py}]
+ここで読み込む\texttt{ex1data1\_test.txt}は，以下のようなデータである(5行2列，カンマ区切り，列名ヘッダーなし)．左はpopulation of city in 10,000s，右はprofit in \$10,000sであるため，読み込む際に列名をつけている．
+\lstinputlisting{data/ex1data1_test.txt}
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/pd1.py}
+\vspace{-10pt}
+\begin{lstlisting}
+df=
+   population   profit
+0      6.1101  17.5920
+1      5.5277   9.1302
+2      8.5186  13.6620
+3      7.0032  11.8540
+4      5.8598   6.8233
+type=<class 'pandas.core.frame.DataFrame'>
+\end{lstlisting}
+\end{cod}
+\vspace{-10pt}
+
+読み込んだ\texttt{DataFrame}から，列\texttt{column}を取り出したいときは，\texttt{[DataFrame][column].values}メソッドを使う．\texttt{ndarray}オブジェクトで取り出されるので，その後matplotlibにデータを渡しやすい．
+
+\begin{gram}　
+\begin{itemize}
+\item \texttt{[DataFrame][column].values}: \texttt{[DataFrame]}の\texttt{column}列を\texttt{ndarray}オブジェクトとして抜き出す．
+\end{itemize}
+\end{gram}
+
+\begin{cod}[\texttt{pd2.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/pd2.py}
+\vspace{-10pt}
+\begin{lstlisting}
+population=[6.1101 5.5277 8.5186 7.0032 5.8598],type=<class 'numpy.ndarray'>
+\end{lstlisting}
+\end{cod}
+\vspace{-10pt}

@@ -1,6 +1,6 @@
 \section{numpy}
 
-\subsection{ndarrayオブジェクト}
+\subsection{\texttt{ndarray}オブジェクト}
 
 \texttt{ndarray}オブジェクトは，\texttt{list}オブジェクトから作成できる．\texttt{list}オブジェクトと\texttt{ndarray}の見た目には，要素間にカンマがあるかないかの違いがある．
 
@@ -14,9 +14,9 @@
 \lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/num1.py}
 \vspace{-7pt}
 \begin{lstlisting}
-x=[1 2 3]
-y=[4 5 6 7]
-mylist=[4, 5, 6, 7]
+x=[1 2 3],type=<class 'numpy.ndarray'>
+y=[ 4.1  5.9 -6.3  7. ],type=<class 'numpy.ndarray'>
+mylist=[4.1, 5.9, -6.3, 7.0],type=<class 'list'>
 \end{lstlisting}
 \end{cod}
 \vspace{-10pt}
@@ -25,7 +25,7 @@ mylist=[4, 5, 6, 7]
 
 \begin{gram}　
 \begin{itemize}
-\item \texttt{np.arange(a,b,c)}: $a$から$b$の手前まで，$c$ずつ増加していく\texttt{ndarray}オブジェクトを作成する．
+\item \texttt{np.arange([int1],[int2],[int3])}: \texttt{[int1]}から\texttt{[int2]}の手前まで，\texttt{[int3]}ずつ増加していく\texttt{ndarray}オブジェクトを作成する．
 \item \texttt{np.arange(a)}: $0$から$a$の手前まで，$1$ずつ増加していく\texttt{ndarray}オブジェクトを作成する．
 \item \texttt{np.random.randn(a)}: 標準正規分布に従う乱数から発生する$a$個の要素の\texttt{ndarray}オブジェクトを作成する．
 \end{itemize}
