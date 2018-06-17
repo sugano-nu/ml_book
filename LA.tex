@@ -160,87 +160,6 @@ a_{m}
 同様に，ただ1個の行をもつ行列を{\bf 行ベクトル(row vector)}と呼ぶ．なお，上記のように$m$個の要素からなるベクトルを$m$次元ベクトルと呼ぶ．たびたび，ベクトルはその第$i$成分$a_{i}$として${\bm a}=\{a_{i}\}$と表記する．また，上記の列ベクトルを文章中で書く場合，行ベクトルと転置を用いて${\bm a}=(a_1,a_2,\ldots,a_m)^T$とすることが多い．
 \end{defi}
 
-\section{分割ベクトル}
-行列はベクトルを横だったり縦だったりにくっつけたものともいえる．行列においてその要素をベクトルに分割したものを分割ベクトルという．
-
-\begin{defi}[分割ベクトル]
-任意の$m\times n$行列$A=\{a_{ij}\}$を$m$個の行ベクトル${\bm a}_i=(a_{i1},a_{i2},\ldots,a_{in})~(i=1,2,\ldots,m)$で分割したとき，その行ベクトル${\bm a}_1,{\bm a}_2,\ldots,{\bm a}_m$を{\bf 分割行ベクトル(partitioned row vector)}という．また，$n$個の列ベクトル${\bm a}'_j=(a_{1j},a_{2j},\ldots,a_{mj})^T~(j=1,2,\ldots,n)$で分割した時，その列ベクトル${\bm a}'_1,{\bm a}'_2,\ldots,{\bm a}'_n$を{\bf 分割列ベクトル(partitioned column vector)}という．これらを用いて，$A$は次式で表記される．
-\begin{align}
-A=
-\begin{bmatrix}
-\mbox{------} & {\bm a}_1 & \mbox{------} \\
-\mbox{------} & {\bm a}_2 & \mbox{------} \\
- & \vdots & \\
-\mbox{------} & {\bm a}_m & \mbox{------}
-\end{bmatrix}	
-=
-\begin{bmatrix}
-| & | & \cdots & | \\[-2pt]
-| & | & \cdots & | \\
-{\bm a}'_1 & {\bm a}'_2 & \cdots & {\bm a}'_n \\
-| & | & \cdots & |	\\[-2pt]
-| & | & \cdots & |
-\end{bmatrix}
-\end{align}
-\end{defi}
-
-\begin{rem}
-行ベクトルは基本的に定義して使わないため，行ベクトルへの分割をするときは，$m$個の列ベクトル${\bm a}_i=(a_{i1},a_{i2},\ldots,a_{in})^T~(i=1,2,\ldots,m)$を定義して次式で表記することが多い．
-\begin{align}
-A=
-\begin{bmatrix}
-\mbox{------} & {\bm a}_1^T & \mbox{------} \\
-\mbox{------} & {\bm a}_2^T & \mbox{------} \\
- & \vdots & \\
-\mbox{------} & {\bm a}_m^T & \mbox{------}
-\end{bmatrix}	
-\end{align}
-\end{rem}
-
-\begin{theo}
-$m\times n$行列$A$，$n\times q$行列$B$とする．このとき，行列の積$AB$は分割ベクトルを用いて次式で計算できる．
-\begin{align}
-AB=
-\begin{bmatrix}
-\mbox{------} & {\bm a}_1^T & \mbox{------} \\
-\mbox{------} & {\bm a}_2^T & \mbox{------} \\
- & \vdots & \\
-\mbox{------} & {\bm a}_m^T & \mbox{------}
-\end{bmatrix}
-\begin{bmatrix}
-| & | & \cdots & | \\[-2pt]
-| & | & \cdots & | \\
-{\bm b}_1 & {\bm b}_2 & \cdots & {\bm b}_q \\
-| & | & \cdots & |	\\[-2pt]
-| & | & \cdots & |
-\end{bmatrix}
-=
-\begin{bmatrix}
-{\bm a}_1^T {\bm b}_1 & {\bm a}_1^T {\bm b}_2 & \cdots & {\bm a}_1^T {\bm b}_q \\
-{\bm a}_2^T {\bm b}_1 & {\bm a}_2^T {\bm b}_2 & \cdots & {\bm a}_2^T {\bm b}_q \\
-\vdots & \vdots & \vdots & \vdots \\
-{\bm a}_m^T {\bm b}_1 & {\bm a}_m^T {\bm b}_2 & \cdots & {\bm a}_m^T {\bm b}_q 
-\end{bmatrix}
-\end{align}
-\end{theo}
-\begin{pro}
-式(\ref{prod})より，$AB$の任意の第$ij$成分$c_{ij}$について以下が成り立つことから示される．
-\begin{align*}
-c_{ij} = \sum_{k=1}^n a_{ik}b_{kj}=a_{i1}b_{1j}+a_{i2}b_{2j}+\cdots+a_{in}b_{nj}=
-\begin{bmatrix}
-a_{i1} & a_{i2} & \cdots & a_{in}
-\end{bmatrix}
-\begin{bmatrix}
-b_{1j} \\
-b_{2j} \\
-\vdots \\
-b_{nj}
-\end{bmatrix}
-={\bm a}_i^T {\bm b}_j
-\end{align*}
-\qed	
-\end{pro}
-
 \section{内積，ノルム，角度}
 ここでは，内積，(通常の)ノルム，角度を定義する．
 
@@ -290,5 +209,143 @@ $n$次元列ベクトル${\bm a}=(a_1,a_2,\ldots,a_n)$に対して，{\bf (通�
 \begin{align}
 \cos \theta = \frac{{\bm x}^T{\bm y}}{||{\bm x}||||{\bm y}||}	
 \end{align}	
+\end{defi}
+
+\section{分割ベクトル}
+行列はベクトルを横だったり縦だったりにくっつけたものともいえる．行列においてその要素をベクトルに分割したものを分割ベクトルという．
+
+\begin{defi}[分割ベクトル]
+任意の$m\times n$行列$A=\{a_{ij}\}$を行方向に分割した場合，すなわち$m$個の列ベクトル${\bm a}_i=(a_{i1},a_{i2},\ldots,a_{in})^T~(i=1,2,\ldots,m)$で分割したとき，その列ベクトル${\bm a}_1,{\bm a}_2,\ldots,{\bm a}_m$を{\bf 分割行ベクトル(partitioned row vector)}という．また，列方向に分割した場合，すなわち$n$個の列ベクトル${\bm a}'_j=(a_{1j},a_{2j},\ldots,a_{mj})^T~(j=1,2,\ldots,n)$で分割した時，その列ベクトル${\bm a}'_1,{\bm a}'_2,\ldots,{\bm a}'_n$を{\bf 分割列ベクトル(partitioned column vector)}という．これらを用いて，$A$は次式で表記される．
+\begin{align}
+A=
+\begin{bmatrix}
+\mbox{------} & {\bm a}_1^T & \mbox{------} \\
+\mbox{------} & {\bm a}_2^T & \mbox{------} \\
+ & \vdots & \\
+\mbox{------} & {\bm a}_m^T & \mbox{------}
+\end{bmatrix}	
+=
+\begin{bmatrix}
+| & | & \cdots & | \\[-2pt]
+| & | & \cdots & | \\
+{\bm a}'_1 & {\bm a}'_2 & \cdots & {\bm a}'_n \\
+| & | & \cdots & |	\\[-2pt]
+| & | & \cdots & |
+\end{bmatrix}
+\end{align}
+\end{defi}
+
+\begin{theo}
+$m\times n$行列$A=\{a_{ij}\}$と$n$次元ベクトル${\bm x}=(x_1,x_2,\ldots,x_n)$との積$A{\bm x}$は，分割行ベクトル${\bm a}=(a_{i1},a_{i2},\ldots,a_{in})^T~(i=1,2,\ldots,m)$または分割列ベクトル${\bm a}'_j=(a_{1j},a_{2j},\ldots,a_{mj})^T~(j=1,2,\ldots,n)$を用いてそれぞれ以下で表すことができる．
+\begin{align}
+A{\bm x}&=
+\begin{bmatrix}
+\mbox{------} & {\bm a}_1^T & \mbox{------} \\
+\mbox{------} & {\bm a}_2^T & \mbox{------} \\
+ & \vdots & \\
+\mbox{------} & {\bm a}_m^T & \mbox{------}
+\end{bmatrix}
+\begin{bmatrix}
+| \\[-2pt]
+| \\
+{\bm x} \\
+| \\[-2pt]
+|
+\end{bmatrix}
+=
+\begin{bmatrix}
+{\bm a}_1^T {\bm x} \\
+{\bm a}_2^T {\bm x} \\
+\vdots \\
+{\bm a}_m^T {\bm x}  
+\end{bmatrix}
+=
+\begin{bmatrix}
+{\bm x}^T {\bm a}_1 \\
+{\bm x}^T {\bm a}_2 \\
+\vdots \\
+{\bm x}^T {\bm a}_m  
+\end{bmatrix}\label{tenkai1}\\
+&=
+\begin{bmatrix}
+| & | & \cdots & | \\[-2pt]
+| & | & \cdots & | \\
+{\bm a}'_1 & {\bm a}'_2 & \cdots & {\bm a}'_n \\
+| & | & \cdots & |	\\[-2pt]
+| & | & \cdots & |
+\end{bmatrix}
+\begin{bmatrix}
+| \\[-2pt]
+| \\
+{\bm x} \\
+| \\[-2pt]
+|
+\end{bmatrix}
+={\bm a}'_1x_1+{\bm a}'_2x_2+\cdots +{\bm a}'_nx_n \label{tenkai2}
+\end{align}
+\end{theo}
+\begin{pro}
+$A{\bm x}$を書き下すことで容易に示すことができる．式(\ref{tenkai1})は内積の定義，性質よりすぐ分かる．式(\ref{tenkai2})は和を分解していく操作をすると示される．
+\begin{align*}
+A{\bm x}&=
+\begin{bmatrix}
+a_{11}x_1+a_{12}x_2+\cdots +a_{1n}x_n \\
+a_{21}x_1+a_{22}x_2+\cdots +a_{2n}x_n \\
+\vdots \\
+a_{m1}x_1+a_{m2}x_2+\cdots +a_{mn}x_n
+\end{bmatrix}
+=
+\begin{bmatrix}
+{\bm a}_1^T {\bm x} \\
+{\bm a}_2^T {\bm x} \\
+\vdots \\
+{\bm a}_m^T {\bm x}  
+\end{bmatrix}
+=
+\begin{bmatrix}
+{\bm x}^T {\bm a}_1 \\
+{\bm x}^T {\bm a}_2 \\
+\vdots \\
+{\bm x}^T {\bm a}_m  
+\end{bmatrix}\nonumber\\
+&=
+\begin{bmatrix}
+a_{11} \\
+a_{21} \\
+\vdots \\
+a_{m1}  
+\end{bmatrix}
+x_1+
+\begin{bmatrix}
+a_{12} \\
+a_{22} \\
+\vdots \\
+a_{m2}  
+\end{bmatrix}
+x_2+\cdots+
+\begin{bmatrix}
+a_{1n} \\
+a_{2n} \\
+\vdots \\
+a_{mn}  
+\end{bmatrix}
+x_n={\bm a}'_1x_1+{\bm a}'_2x_2+\cdots +{\bm a}'_nx_n
+\end{align*}
+\qed	
+\end{pro}
+
+\section{線形形式，二次形式}
+行列やベクトルを演算した結果としてスカラー値を返す関数はいくらでもあるが，その中に重要な関数がいくつかある．代表的なものとして線形形式，二次形式がある．
+
+\begin{defi}[線形形式]
+${\bm a}=(a_1,a_2,\ldots,a_n)^T$を任意の$n$次元列ベクトルとする．このとき，任意の$n$次元列ベクトル${\bm x}=(x_1,x_2,\ldots,x_n)^T$に対してスカラー値${\bm a}^T{\bm x}$を返す関数を，${\bm x}$に関する{\bf 線形形式(linear form)}と呼ぶ．ここで，習慣的に${\bm a}$を{\bf 係数ベクトル(coefficient vector)}と呼ぶ．
+\end{defi}
+
+\begin{defi}[二次形式]
+$A=\{a_{ij}\}$を任意の$n\times n$行列とする．このとき，任意の$n$次元列ベクトル${\bm x}=(x_1,x_2,\ldots,x_n)^T$に対してスカラー値${\bm x}^TA{\bm x}$を返す関数を，${\bm x}$に関する{\bf 二次形式(quadratic form)}と呼ぶ．ここで，習慣的に$A$を{\bf 二次形式の行列(matrix of quadratic form)}と呼ぶ．${\bm x}^TA{\bm x}$は次式で展開される．2つ目の式は，$a_{ii}$を起点にそれ自身の項，行方向に見た項，列方向に見た項，それ以外の項に分けた形で，$x_i$での微分をする場合等に役立つ．
+\begin{align}
+{\bm x}^TA{\bm x}&= \sum_{i=1}^n\sum_{j=1}^n a_{ij}x_ix_j\\
+&=a_{ii}x_i^2+\sum_{\substack{j=1\\j\neq i}}^n a_{ij}x_ix_j+\sum_{\substack{k=1\\k\neq i}}^n a_{ki}x_kx_i+\sum_{\substack{j,k\\j\neq i\\k\neq i}}a_{kj}x_kx_j \label{quadform}
+\end{align}
 \end{defi}
 

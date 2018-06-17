@@ -269,6 +269,7 @@ X=
 $x_0^{(i)}=1$も含め特徴量が$n+1$個のトレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$における線形回帰問題を考える．このとき，$(h_{{\bm \theta}}(x^{(1)}),h_{{\bm \theta}}(x^{(2)}),\ldots,h_{{\bm \theta}}(x^{(m)}))^T$を$X$，${\bm \theta}$を用いて表せ．
 \end{qu}
 \begin{ans}
+式(\ref{tenkai1})より，以下となる．
 \begin{align}
 \begin{bmatrix}
 h_{{\bm \theta}}(x^{(1)}) \\
@@ -276,35 +277,37 @@ h_{{\bm \theta}}(x^{(2)}) \\
 \vdots \\
 h_{{\bm \theta}}(x^{(m)})
 \end{bmatrix}
-&=
+=
 \begin{bmatrix}
 {\bm \theta}^T{\bm x}^{(1)} \\
 {\bm \theta}^T {\bm x}^{(2)}\\
 \vdots \\
 {\bm \theta}^T {\bm x}^{(m)}
-\end{bmatrix}\nonumber\\
-&=
+\end{bmatrix}
+=
 \begin{bmatrix}
-\theta_0 +\theta_1 x_1^{(1)}+\theta_2 x_2^{(1)}+\cdots \theta_n x_n^{(1)} \\
-\theta_0 +\theta_1 x_1^{(2)}+\theta_2 x_2^{(2)}+\cdots \theta_n x_n^{(2)} \\
+{{\bm x}^{(1)}}^T{\bm \theta} \\
+{{\bm x}^{(2)}}^T{\bm \theta} \\
 \vdots \\
-\theta_0 +\theta_1 x_1^{(m)}+\theta_2 x_2^{(m)}+\cdots \theta_n x_n^{(m)} 
-\end{bmatrix}\nonumber \\
-&=
+{{\bm x}^{(m)}}^T{\bm \theta}
+\end{bmatrix}
+=
 \begin{bmatrix}
-1 & x_1^{(1)} & x_2^{(1)} & \cdots & x_n^{(1)} \\
-1 & x_1^{(2)} & x_2^{(2)} & \cdots & x_n^{(2)} \\
-\vdots & \vdots & \vdots & \vdots & \vdots \\
-1 & x_1^{(m)} & x_2^{(m)} & \cdots & x_n^{(m)} 
+\mbox{------} & {{\bm x}^{(1)}}^T & \mbox{------} \\
+\mbox{------} & {{\bm x}^{(2)}}^T & \mbox{------} \\
+ & \vdots & \\
+\mbox{------} & {{\bm x}^{(m)}}^T & \mbox{------}
 \end{bmatrix}
 \begin{bmatrix}
-\theta_0 \\
-\theta_1 \\
-\vdots \\
-\theta_n
-\end{bmatrix}\nonumber \\
-&=X {\bm \theta}
-\end{align}\qed
+| \\[-2pt]
+| \\
+{\bm \theta} \\
+| \\[-2pt]
+|
+\end{bmatrix}
+=X {\bm \theta}
+\end{align}
+\qed
 \end{ans}
 
 この結果を用いることで，目的関数を最小二乗誤差関数とした線形回帰問題において，目的関数をより簡潔に表すことができる．
@@ -356,15 +359,24 @@ J({\bm \theta})&= \frac{1}{2m}(X{\bm \theta}-{\bm y})^T(X{\bm \theta}-{\bm y})
 \end{align}\qed
 \end{ans}
 
-これで目的関数を簡潔に書けたので，最後にそれを微分して$\nabla_{{\bm \theta}}J$を求める．ここで，1次形式，2次形式の勾配ベクトルを使用するので事前に述べておく．
-\begin{theo}[1次形式，2次形式の勾配ベクトル]
+これで目的関数を簡潔に書けたので，最後にそれを微分して$\nabla_{{\bm \theta}}J$を求める．ここで，線形形式，二次形式の勾配ベクトルを使用するので事前に述べておく．
+\begin{theo}[線形形式，二次形式の勾配ベクトル]
+$n$次元列ベクトル${\bm x}，{\bm a}$，$n\times n$行列$A$に対して，次式が成り立つ．
 \begin{align}
 \nabla_{{\bm x}}({\bm a}^T {\bm x})&=\nabla_{{\bm x}}({\bm x}^T {\bm a})={\bm a}\\
 \nabla_{{\bm x}}({\bm x}^T A{\bm x})&=(A+A^T){\bm x}
 \end{align}
 \end{theo}
 \begin{pro}
-略(具体的に計算してみよ)．\qed	
+線形形式の勾配ベクトルの証明は略．二次形式の勾配ベクトルは式(\ref{quadform})から計算すると楽である．式(\ref{quadform})において，$x_i$における偏微分を計算すると以下となる．変形の最後は，$A=\{a_{ij}\}$の転置行列を$A^T=\{a'_{ij}\}$としたとき，$a_{ki}=a'_{ik}$であることを使用している．
+\begin{align*}
+\frac{\partial }{\partial x_i}({\bm x}^T A{\bm x})&=\frac{\partial }{\partial x_i}\left(a_{ii}x_i^2+\sum_{\substack{j=1\\j\neq i}}^n a_{ij}x_ix_j+\sum_{\substack{k=1\\k\neq i}}^n a_{ki}x_kx_i+\sum_{\substack{j,k\\j\neq i\\k\neq i}}a_{kj}x_kx_j\right) 	\\
+&=2a_{ii}x_i+\sum_{\substack{j=1\\j\neq i}}^n a_{ij}x_j+\sum_{\substack{k=1\\k\neq i}}^n a_{ki}x_k\\
+&=\sum_{j=1}^na_{ij}x_j+\sum_{k=1}^na_{ki}x_k\\
+&=\sum_{j=1}^na_{ij}x_j+\sum_{k=1}^na'_{ik}x_k
+\end{align*}
+第1項について，$x_1〜x_n$についての結果を列ベクトルとして並べると，式(\ref{tenkai1})の形が現れ，その結果は$A{\bm x}$となる．第2項についても同様であり，その結果は$A^T{\bm x}$となる．以上より，$\nabla_{{\bm x}}({\bm x}^T A{\bm x})=A{\bm x}+A^T{\bm x}=(A+A^T){\bm x}$である．
+\qed	
 \end{pro}
 
 \begin{qu}
@@ -379,7 +391,7 @@ $X^TX$は対称行列であることに注意すると，
 &=\nabla_{{\bm \theta}}\left(\frac{1}{2m}\left( {\bm \theta}^TX^TX{\bm \theta}-2{\bm \theta}^TX^T{\bm y}+{\bm y}^T{\bm y} \right)\right) \nonumber\\
 &=\frac{1}{2m}\left(\nabla_{{\bm \theta}}({\bm \theta}^TX^TX{\bm \theta})-2\nabla_{{\bm \theta}}({\bm \theta}^TX^T{\bm y})+\nabla_{{\bm \theta}}({\bm y}^T{\bm y})\right)\nonumber\\
 &=\frac{1}{2m}\left(2X^TX{\bm \theta}-2X^T{\bm y}\right)\nonumber \\
-&=\frac{1}{m}\left(X^TX{\bm \theta}-X^T{\bm y}\right)
+&=\frac{1}{m}\left(X^TX{\bm \theta}-X^T{\bm y}\right) \label{LRglad}
 \end{align}\qed
 \end{ans}
 
@@ -392,26 +404,46 @@ $X^TX$は対称行列であることに注意すると，
 最急降下法において，横軸に繰り返し回数(number of iterations)，縦軸に目的関数値をとり図示することを{\bf デバッグ(debugging)}という．
 \end{defi}
 
-例えば，以下のような図となれば，最急降下法はうまく収束している．
+\section{正規方程式}
 
-学習率$\alpha$をどう選ぶかは難しい．小さすぎると収束までにかなりの時間がかかり，大きすぎると収束せずに発散することもある．ほどほどの数値が最も速く収束する．
-
-\begin{qu}
-ある回帰問題の目的関数を最急降下法で最小化する．試しに，学習率$\alpha=0.01,0.1,1$の3パターンで計算してデバッグしたところ，図A,B,Cの通りとなった．それぞれの図について，どの学習率で計算を行なったものと想定されるか答えよ．
-
-\end{qu}
-\begin{proof}
-Aが$\alpha =0.1$，Bが$\alpha =0.01$，Cが$\alpha =1$．
-\end{proof}
-
-特徴量は，与えられたものをそのまま使う必要はなく，それらを組み合わせるなどして自分で新しく作っても良い．うまく特徴量を作り出して，より単純な仮説関数にするという選択肢もある．
+さて，最急降下法で収束して得られた${\bm \theta}$は，どこを見渡しても勾配がない状態となっている．これは，言い換えると目的関数$J({\bm \theta})$の勾配ベクトルがゼロベクトルとなる点${\bm \theta}$は，方程式$\nabla_{{\bm \theta}}J={\bm 0}$の解である．この方程式は正規方程式という．
+\begin{defi}[正規方程式]
+　\\
+目的関数$J({\bm \theta})$の回帰問題について，次式を{\bf 正規方程式(normal equation formula)}という．
+\begin{align}
+\nabla_{{\bm \theta}}J={\bm 0}
+\end{align}
+\end{defi}
 
 \begin{qu}
-今，手元に特徴量$x_1^{(i)}$:間口，$x_2^{(i)}$:奥行き，出力変数$y^{(i)}$:土地の価格がある．このとき，土地の価格を予測する問題を線形回帰で解くことを考えると，仮説関数としてまず$h_{{\bm \theta}}({\bm x}^{(i)})=\theta_0+\theta_1 x_1^{(i)}+\theta_2 x_2^{(i)}$が考えつくが，もっと簡単に仮説関数を定めるにはどうすれば良いか．
+特徴量が$n$であるトレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$における線形回帰問題において，目的関数$J({\bm \theta})$を最小二乗誤差関数とする．このとき，$\nabla_{{\bm \theta}}J={\bm 0}$を簡単に表せ．
 \end{qu}
-\begin{proof}
-新しい特徴量$x_3^{(i)}=x_1^{(i)}x_2^{(i)}$:面積を設定し，仮説関数として$h_{{\bm \theta}}(x^{(i)})=\theta_0+\theta_1 x_3^{(i)}$とする．
-\end{proof}
+\begin{ans}
+式(\ref{LRglad})より，
+\begin{align}
+X^TX{\bm \theta}=X^T{\bm y}	
+\end{align}\qed
+\end{ans}
+正規方程式の導出まで終わった．最後は，これを${\bm \theta}$について解けば終わりである．ここで，$X^TX$が正則であれば，逆行列$(X^TX)^{-1}$を左から掛けることによって解けるが，正則でない場合（非正則，非可逆，特異の場合ともいう），解を持たない（不能）もしくは複数または無数の解（不定）となる．ここで，不能や不定だからそれでお手上げ，というわけにはいかないので，「いい感じの」の解を設定したいとする．この「いい感じ」の解は，$X^TX$の{\bf ムーア・ペンローズ一般逆行列}$(X^TX)^+$を用いて，次式で書ける．
+\begin{align}
+{\bm \theta}=(X^TX)^+ X^T{\bm y}
+\end{align}
+この議論の詳細は，まだ著者が理解できていないため，今の所は割愛する．
+
+では，どのような場合に$X^TX$は非正則なのか．厳密には（著者がまだ理解できていないので）言わないが，Andrew Ng曰く，以下2つの場合を念頭に置いておけばとりあえず良いとのこと．
+\begin{enumerate}
+\item {\bf 特徴量が冗長}：例えば，住宅価格の予測についての特徴量で，縦の長さ，横の長さ，面積の3つを考えた場合，面積は縦の長さと横の長さですでに捉えられているので，面積という特徴量が冗長である．
+\item {\bf データ数より特徴量が多い}($m \leq n$)：$n=100$個の特徴量を，$m=10$サンプルでフィッティングするのは，うまくいくこともあるかもしれないが良いアイデアではない．
+\end{enumerate}
+
+
+教師あり学習の回帰問題について，パラメータを探す方法として最急降下法と正規方程式を解く方法の2種類を取り上げた．それぞれの手法のメリットやデメリットについて，Andrew Ngは以下の通り言及している．
+\begin{itemize}
+\item 最急降下法は，学習率$\alpha $を適切に選択する必要があるため，良さげな数値を何度か試行することが必要となってくる場合がある．一方で，正規方程式はその手間がない．
+\item 最急降下法の場合は，アルゴリズムがちゃんと機能しているか，ちゃんと収束しているかなどを確認しなければならないが，正規方程式はその手間がない．
+\item 正規方程式の場合，特徴量スケーリングを行う必要はない．
+\item 正規方程式は，逆行列を求める必要があるが，逆行列を計算するコストが非常に大きい．具体的には，逆行列の計算コストは特徴量$n$の3乗のオーダーとなる．一方，最急降下法は特徴量$n$本に対する計算を繰り返すだけなので，計算コストは$n$のオーダーと非常に少ない．つまり，最急降下法は特徴量が数百万個あるような場合でも正しく機能する．だいたい$n=10000$が正規方程式ではなく最急降下法を選ぶ目安．
+\end{itemize}
 
 \section{多項式回帰}
 
@@ -456,240 +488,11 @@ h_{{\bm \theta}}(x^{(i)})=\theta_0+\theta_1 x_1^{(i)}+\theta_2 x_2^{(i)}
 $x_1^{(i)}=\frac{平米数^{(i)}}{1000}$，$x_2^{(i)}=\frac{\sqrt{平米数^{(i)}}}{32}$．
 \end{proof}
 
-\section{正規方程式}
-
-さて，最急降下法で収束して得られた${\bm \theta}$は，どこを見渡しても勾配がない状態となっている．これは，言い換えると目的関数$J({\bm \theta})$の勾配ベクトルがゼロベクトルとなる点${\bm \theta}$は，方程式$\nabla_{{\bm \theta}}J={\bm 0}$の解である．この方程式は正規方程式という．
-\begin{defi}[正規方程式]
-　\\
-目的関数$J({\bm \theta})$の回帰問題について，次式を{\bf 正規方程式(normal equation formula)}という．
-\begin{align}
-\nabla_{{\bm \theta}}J={\bm 0}
-\end{align}
-\end{defi}
-
-ここから，線形回帰問題において目的関数を最小二乗誤差関数とした場合の正規方程式を導出する．その準備のため，デザイン行列を定義する．
-
-\begin{defi}[デザイン行列]
-　\\
-特徴量が$n$のトレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$において，次式で定義する行列$X \in \mathbb{R}^{m\times (n+1)}$を{\bf デザイン行列(design matrix)}という．デザイン行列は，特徴量${\bm x}^{(i)}$を転置してサンプル数の分縦に並べたもので表される．ここで，特徴量として$x_0=1$が加わっていることに注意する．
-\begin{align}
-X = 
-\left(
-\begin{array}{c}
-{{\bm x}^{(1)}}^T \\
-{{\bm x}^{(2)}}^T \\
-\vdots \\
-{{\bm x}^{(m)}}^T
-\end{array}
-\right)
-=
-\left(
-\begin{array}{ccccc}
-1 & x_1^{(1)} & x_2^{(1)} & \cdots & x_n^{(1)} \\
-1 & x_1^{(2)} & x_2^{(2)} & \cdots & x_n^{(2)} \\
-\vdots & \vdots & \vdots & \vdots & \vdots \\
-1 & x_1^{(m)} & x_2^{(m)} & \cdots & x_n^{(m)} 
-\end{array}
-\right)
-\end{align}
-\end{defi}
+特徴量は，与えられたものをそのまま使う必要はなく，それらを組み合わせるなどして自分で新しく作っても良い．うまく特徴量を作り出して，より単純な仮説関数にするという選択肢もある．
 
 \begin{qu}
-次のトレーニングセットにおいて，デザイン行列$X$を答えよ．
-\begin{table}[h]
-\centering
-\begin{tabular}{rrrrrr}
-\hline
-$i$ &$x_1^{(i)}$ &$x_2^{(i)}$ &$x_3^{(i)}$ &$x_4^{(i)}$ & $y^{(i)}$ \\ \hline
-1 & 2104 & 5 & 1 & 45 & 460 \\
-2 & 1416 & 3 & 2 & 40 & 232 \\
-3 & 1534 & 3 & 2 & 30 & 315 \\
-4 & 852  & 2 & 1 & 36 & 178 \\ \hline
-\end{tabular}
-\end{table}
+今，手元に特徴量$x_1^{(i)}$:間口，$x_2^{(i)}$:奥行き，出力変数$y^{(i)}$:土地の価格がある．このとき，土地の価格を予測する問題を線形回帰で解くことを考えると，仮説関数としてまず$h_{{\bm \theta}}({\bm x}^{(i)})=\theta_0+\theta_1 x_1^{(i)}+\theta_2 x_2^{(i)}$が考えつくが，もっと簡単に仮説関数を定めるにはどうすれば良いか．
 \end{qu}
 \begin{proof}
-特徴量が4つで，サンプル数が4つなので，$X$は$4\times 5$次元の行列となり，
-\begin{align*}
-X=
-\left(
-\begin{array}{ccccc}
-1 & 2104 & 5 & 1 & 45 \\
-1 & 1416 & 3 & 2 & 40 \\
-1 & 1534 & 3 & 2 & 30 \\
-1 & 852  & 2 & 1 & 36 
-\end{array}
-\right)
-\end{align*}
+新しい特徴量$x_3^{(i)}=x_1^{(i)}x_2^{(i)}$:面積を設定し，仮説関数として$h_{{\bm \theta}}(x^{(i)})=\theta_0+\theta_1 x_3^{(i)}$とする．
 \end{proof}
-
-デザイン行列を使うと，線形回帰の仮説関数のベクトルを簡潔に表すことができる．
-
-\begin{qu}
-特徴量が$n$であるトレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$における線形回帰問題を考える．このとき，$(h_{{\bm \theta}}(x^{(1)}),h_{{\bm \theta}}(x^{(2)}),\ldots,h_{{\bm \theta}}(x^{(m)}))^T$をデザイン行列$X$を用いて表せ．
-\end{qu}
-\begin{proof}
-\begin{align}
-\left(
-\begin{array}{c}
-h_{{\bm \theta}}(x^{(1)}) \\
-h_{{\bm \theta}}(x^{(2)}) \\
-\vdots \\
-h_{{\bm \theta}}(x^{(m)})
-\end{array}
-\right)
-&=
-\left(
-\begin{array}{c}
-{\bm \theta}^T 
-\left( 
-\begin{array}{c}
-1 \\
-{\bm x}^{(1)}
-\end{array}
-\right) \\
-{\bm \theta}^T 
-\left( 
-\begin{array}{c}
-1 \\
-{\bm x}^{(2)}
-\end{array}
-\right) \\
-\vdots \\
-{\bm \theta}^T 
-\left( 
-\begin{array}{c}
-1 \\
-{\bm x}^{(m)}
-\end{array}
-\right)
-\end{array}
-\right)
-=
-\left(
-\begin{array}{c}
-\theta_0 +\theta_1 x_1^{(1)}+\theta_2 x_2^{(1)}+\cdots \theta_n x_n^{(1)} \\
-\theta_0 +\theta_1 x_1^{(2)}+\theta_2 x_2^{(2)}+\cdots \theta_n x_n^{(2)} \\
-\vdots \\
-\theta_0 +\theta_1 x_1^{(m)}+\theta_2 x_2^{(m)}+\cdots \theta_n x_n^{(m)} 
-\end{array}
-\right) \nonumber \\
-&=
-\left(
-\begin{array}{ccccc}
-1 & x_1^{(1)} & x_2^{(1)} & \cdots & x_n^{(1)} \\
-1 & x_1^{(2)} & x_2^{(2)} & \cdots & x_n^{(2)} \\
-\vdots & \vdots & \vdots & \ddots & \vdots \\
-1 & x_1^{(m)} & x_2^{(m)} & \cdots & x_n^{(m)} 
-\end{array}
-\right)
-\left(
-\begin{array}{c}
-\theta_0 \\
-\theta_1 \\
-\vdots \\
-\theta_n
-\end{array}
-\right)
-=X {\bm \theta}
-\end{align}
-\end{proof}
-
-また，この結果を用いて，目的関数を最小二乗誤差関数とした線形回帰問題において，目的関数をより簡潔に表すことができる．
-
-\begin{qu}
-特徴量が$n$であるトレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$における線形回帰問題において，目的関数$J({\bm \theta})$を最小二乗誤差関数とする．このとき，$J({\bm \theta})$をデザイン行列$X$を用いて表せ．
-\end{qu}
-\begin{proof}
-\begin{align}
-J({\bm \theta})&= \frac{1}{2m}\sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})^2 \nonumber \\
-&=\frac{1}{2m}\left(h_{{\bm \theta}}({\bm x}^{(1)})-y^{(1)},h_{{\bm \theta}}({\bm x}^{(2)})-y^{(2)},\ldots,h_{{\bm \theta}}({\bm x}^{(m)})-y^{(m)}\right)
-\left(
-\begin{array}{c}
-h_{{\bm \theta}}({\bm x}^{(1)})-y^{(1)} \\
-h_{{\bm \theta}}({\bm x}^{(2)})-y^{(2)} \\
-\vdots \\
-h_{{\bm \theta}}({\bm x}^{(m)})-y^{(m)}
-\end{array}
-\right) \nonumber
-\end{align}
-となるが，ここで，
-\begin{align}
-\left(
-\begin{array}{c}
-h_{{\bm \theta}}({\bm x}^{(1)})-y^{(1)} \\
-h_{{\bm \theta}}({\bm x}^{(2)})-y^{(2)} \\
-\vdots \\
-h_{{\bm \theta}}({\bm x}^{(m)})-y^{(m)}
-\end{array}
-\right)
-=
-\left(
-\begin{array}{c}
-h_{{\bm \theta}}({\bm x}^{(1)}) \\
-h_{{\bm \theta}}({\bm x}^{(2)}) \\
-\vdots \\
-h_{{\bm \theta}}({\bm x}^{(m)})
-\end{array}
-\right)
--
-\left(
-\begin{array}{c}
-y^{(1)} \\
-y^{(2)} \\
-\vdots \\
-y^{(m)}
-\end{array}
-\right)
-=X{\bm \theta}-{\bm y} \nonumber
-\end{align}
-より，
-\begin{align}
-J({\bm \theta})&= \frac{1}{2m}(X{\bm \theta}-{\bm y})^T(X{\bm \theta}-{\bm y})
-\end{align}
-\end{proof}
-
-目的関数を簡潔に書けたので，行列の微分の性質を使い，正規方程式を導出する．
-\begin{qu}
-特徴量が$n$であるトレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$における線形回帰問題において，目的関数$J({\bm \theta})$を最小二乗誤差関数とする．このとき，$\nabla_{{\bm \theta}}J={\bm 0}$を簡単に表せ．
-\end{qu}
-\begin{proof}
-$X^TX$は対称行列であることに注意すると，
-\begin{align*}
-\nabla_{{\bm \theta}}J&=\nabla_{{\bm \theta}}\left(\frac{1}{2m}(X{\bm \theta}-{\bm y})^T(X{\bm \theta}-{\bm y})\right) \\
-&=\nabla_{{\bm \theta}}\left(\frac{1}{2m}\left((X{\bm \theta})^T(X{\bm \theta})-(X{\bm \theta})^T{\bm y}-{\bm y}^T(X{\bm \theta})+{\bm y}^T{\bm y}\right)\right)\\
-&=\nabla_{{\bm \theta}}\left(\frac{1}{2m}\left((X{\bm \theta})^T(X{\bm \theta})-2(X{\bm \theta})^T{\bm y}+{\bm y}^T{\bm y}\right)\right)\\
-&=\nabla_{{\bm \theta}}\left(\frac{1}{2m}\left( {\bm \theta}^TX^TX{\bm \theta}-2{\bm \theta}^TX^T{\bm y}+{\bm y}^T{\bm y} \right)\right) \\
-&=\frac{1}{2m}\left(\nabla_{{\bm \theta}}({\bm \theta}^TX^TX{\bm \theta})-2\nabla_{{\bm \theta}}({\bm \theta}^TX^T{\bm y})+\nabla_{{\bm \theta}}({\bm y}^T{\bm y})\right)\\
-&=\frac{1}{2m}\left(2X^TX{\bm \theta}-2X^T{\bm y}\right)
-\end{align*}
-より，$\nabla_{{\bm \theta}}J={\bm 0}$とすると，
-\begin{align}
-X^TX{\bm \theta}=X^T{\bm y}	
-\end{align}
-\end{proof}
-
-正規方程式の導出まで終わった．最後は，これを${\bm \theta}$について解けば終わりである．ここで，$X^TX$が正則であれば，逆行列$(X^TX)^{-1}$を左から掛けることによって解けるが，正則でない場合（非正則，非可逆，特異の場合ともいう），解を持たない（不能）もしくは複数または無数の解（不定）となる．ここで，不能や不定だからそれでお手上げ，というわけにはいかないので，「いい感じの」の解を設定したいとする．この「いい感じ」の解は，$X^TX$の{\bf ムーア・ペンローズ一般逆行列}$(X^TX)^+$を用いて，次式で書ける．
-\begin{align}
-{\bm \theta}=(X^TX)^+ X^T{\bm y}
-\end{align}
-この議論の詳細は，まだ著者が理解できていないため，今の所は割愛する．
-
-では，どのような場合に$X^TX$は非正則なのか．厳密には（著者がまだ理解できていないので）言わないが，Andrew Ng曰く，以下2つの場合を念頭に置いておけばとりあえず良いとのこと．
-\begin{enumerate}
-\item {\bf 特徴量が冗長}：例えば，住宅価格の予測についての特徴量で，縦の長さ，横の長さ，面積の3つを考えた場合，面積は縦の長さと横の長さですでに捉えられているので，面積という特徴量が冗長である．
-\item {\bf データ数より特徴量が多い}($m \leq n$)：$n=100$個の特徴量を，$m=10$サンプルでフィッティングするのは，うまくいくこともあるかもしれないが良いアイデアではない．
-\end{enumerate}
-
-
-教師あり学習の回帰問題について，パラメータを探す方法として最急降下法と正規方程式を解く方法の2種類を取り上げた．それぞれの手法のメリットやデメリットについて，Andrew Ngは以下の通り言及している．
-\begin{itemize}
-\item 最急降下法は，学習率$\alpha $を適切に選択する必要があるため，良さげな数値を何度か試行することが必要となってくる場合がある．一方で，正規方程式はその手間がない．
-\item 最急降下法の場合は，アルゴリズムがちゃんと機能しているか，ちゃんと収束しているかなどを確認しなければならないが，正規方程式はその手間がない．
-\item 正規方程式の場合，特徴量スケーリングを行う必要はない．
-\item 正規方程式は，逆行列を求める必要があるが，逆行列を計算するコストが非常に大きい．具体的には，逆行列の計算コストは特徴量$n$の3乗のオーダーとなる．一方，最急降下法は特徴量$n$本に対する計算を繰り返すだけなので，計算コストは$n$のオーダーと非常に少ない．つまり，最急降下法は特徴量が数百万個あるような場合でも正しく機能する．だいたい$n=10000$が正規方程式ではなく最急降下法を選ぶ目安．
-\end{itemize}
-
-\begin{qu}
-プログラミング課題を後で追記	
-\end{qu}
