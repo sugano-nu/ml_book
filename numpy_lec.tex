@@ -1,12 +1,12 @@
 \section{numpy}
 
-\subsection{\texttt{ndarray}オブジェクト}
+\subsection{任意の\texttt{ndarray}オブジェクトの作成(\texttt{array}関数)}
 
-\texttt{ndarray}オブジェクトは，\texttt{list}オブジェクトから作成できる．\texttt{list}オブジェクトと\texttt{ndarray}の見た目には，要素間にカンマがあるかないかの違いがある．
+\texttt{<ndarray>}は，\texttt{<list>}から作成できる．\texttt{<list>}と\texttt{<ndarray>}の見た目には，要素間にカンマがあるかないかの違いがある．
 
 \begin{gram}　
 \begin{itemize}
-\item \texttt{np.array([list])}: \texttt{list}オブジェクトから\texttt{ndarray}オブジェクトを作成する．
+\item \texttt{np.array(<list>)}: \texttt{<list>}から\texttt{<ndarray>}を作成する．
 \end{itemize}
 \end{gram}
 
@@ -21,13 +21,15 @@ mylist=[4.1, 5.9, -6.3, 7.0],type=<class 'list'>
 \end{cod}
 \vspace{-10pt}
 
-\texttt{ndarray}オブジェクトをリスト直打ちで作成するのは，大きい配列を作ろうとする場合は不便であるが，規則的な配列であれば，別のプログラムで書くことができる．
+\subsection{規則的な\texttt{ndarray}オブジェクトの作成(\texttt{arange}関数など)}
+\texttt{<ndarray>}をリスト直打ちで作成するのは，大きい配列を作ろうとする場合は不便であるが，規則的な配列であれば，別のプログラムで書くことができる．
 
 \begin{gram}　
 \begin{itemize}
-\item \texttt{np.arange([int1],[int2],[int3])}: \texttt{[int1]}から\texttt{[int2]}の手前まで，\texttt{[int3]}ずつ増加していく\texttt{ndarray}オブジェクトを作成する．
-\item \texttt{np.arange(a)}: $0$から$a$の手前まで，$1$ずつ増加していく\texttt{ndarray}オブジェクトを作成する．
-\item \texttt{np.random.randn(a)}: 標準正規分布に従う乱数から発生する$a$個の要素の\texttt{ndarray}オブジェクトを作成する．
+\item \texttt{np.arange(a,b,c)}: \texttt{a}から\texttt{b}の手前まで，\texttt{c}ずつ増加していく\texttt{<ndarray>}を作成する．
+\item \texttt{np.arange(a)}: $0$から\texttt{a}の手前まで，$1$ずつ増加していく\texttt{<ndarray>}を作成する．
+\item \texttt{np.arange(a,b)}: \texttt{a}から\texttt{b}の手前まで，$1$ずつ増加していく\texttt{<ndarray>}を作成する．
+\item \texttt{np.random.randn(a)}: 標準正規分布に従う乱数から発生する\texttt{a}個の要素の\texttt{<ndarray>}を作成する．
 \end{itemize}
 \end{gram}
 
@@ -35,9 +37,11 @@ mylist=[4.1, 5.9, -6.3, 7.0],type=<class 'list'>
 \lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/num2.py}
 \vspace{-10pt}
 \begin{lstlisting}
-x=[ 0  2  4  6  8 10 12 14 16 18 20 22 24 26 28]
-y=[0 1 2 3 4 5 6 7 8 9]
-z=[ 0.41391684 -0.27481322 -0.29993306 -0.64974345  0.63441892  0.66554782 -0.52705262  1.1350932  -0.6862161   1.15003734]
+w=[ 0  2  4  6  8 10 12 14 16 18 20 22 24 26 28]
+x=[0 1 2 3 4 5 6 7 8 9]
+y=[-10  -9  -8  -7  -6  -5  -4  -3  -2  -1   0]
+z=[ 0.0259179   0.49422254  1.0009598  -0.42038568  0.27521985  1.64888587
+  0.02695996 -0.13054361 -1.24832705  0.49654017]
 \end{lstlisting}
 \end{cod}
 \vspace{-10pt}

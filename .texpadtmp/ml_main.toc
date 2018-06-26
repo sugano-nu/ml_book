@@ -11,22 +11,27 @@
 \contentsline {subsection}{\numberline {2.1.2}\texttt {type}関数}{10}
 \contentsline {subsection}{\numberline {2.1.3}\texttt {format}メソッド}{11}
 \contentsline {section}{\numberline {2.2}numpy}{11}
-\contentsline {subsection}{\numberline {2.2.1}\texttt {ndarray}オブジェクト}{11}
+\contentsline {subsection}{\numberline {2.2.1}任意の\texttt {ndarray}オブジェクトの作成(\texttt {array}関数)}{11}
+\contentsline {subsection}{\numberline {2.2.2}規則的な\texttt {ndarray}オブジェクトの作成(\texttt {arange}関数など)}{12}
 \contentsline {section}{\numberline {2.3}pandas}{12}
-\contentsline {subsection}{\numberline {2.3.1}\texttt {DataFrame}オブジェクト}{12}
-\contentsline {section}{\numberline {2.4}matplotlib}{13}
-\contentsline {subsection}{\numberline {2.4.1}\texttt {figure}オブジェクトと\texttt {axes}オブジェクト}{13}
-\contentsline {subsection}{\numberline {2.4.2}2次元の散布図\texttt {scatter()}}{14}
-\contentsline {chapter}{\numberline {第3章}機械学習の概念}{16}
-\contentsline {section}{\numberline {3.1}機械学習の定義}{16}
-\contentsline {section}{\numberline {3.2}教師あり学習と教師なし学習}{17}
-\contentsline {chapter}{\numberline {第4章}教師あり学習}{18}
-\contentsline {section}{\numberline {4.1}トレーニングセットと仮説関数}{18}
-\contentsline {section}{\numberline {4.2}線形回帰}{19}
-\contentsline {subsection}{\numberline {4.2.1}目的関数}{19}
-\contentsline {subsection}{\numberline {4.2.2}最急降下法}{21}
-\contentsline {subsection}{\numberline {4.2.3}デザイン行列}{23}
-\contentsline {subsection}{\numberline {4.2.4}デバッグ}{26}
-\contentsline {section}{\numberline {4.3}正規方程式}{26}
-\contentsline {section}{\numberline {4.4}多項式回帰}{27}
-\contentsline {chapter}{参考文献}{29}
+\contentsline {subsection}{\numberline {2.3.1}カンマ区切りテキストを\texttt {DataFrame}オブジェクトに格納(\texttt {read\_csv}関数)}{12}
+\contentsline {subsection}{\numberline {2.3.2}列の追加}{13}
+\contentsline {subsection}{\numberline {2.3.3}\texttt {<DataFrame>}の一部分の取り出し}{14}
+\contentsline {subsection}{\numberline {2.3.4}\texttt {<Series>}と1列しか持たない\texttt {<DataFrame>}の違い}{16}
+\contentsline {subsection}{\numberline {2.3.5}\texttt {values}メソッド}{17}
+\contentsline {section}{\numberline {2.4}matplotlib}{18}
+\contentsline {subsection}{\numberline {2.4.1}\texttt {figure}オブジェクトと\texttt {axes}オブジェクトの作成}{18}
+\contentsline {subsection}{\numberline {2.4.2}2次元の散布図を描画する（\texttt {scatter}関数）}{19}
+\contentsline {chapter}{\numberline {第3章}機械学習の概念}{21}
+\contentsline {section}{\numberline {3.1}機械学習の定義}{21}
+\contentsline {section}{\numberline {3.2}教師あり学習と教師なし学習}{22}
+\contentsline {chapter}{\numberline {第4章}教師あり学習}{23}
+\contentsline {section}{\numberline {4.1}トレーニングセットと仮説関数}{23}
+\contentsline {section}{\numberline {4.2}線形回帰}{24}
+\contentsline {subsection}{\numberline {4.2.1}目的関数}{24}
+\contentsline {subsection}{\numberline {4.2.2}最急降下法}{26}
+\contentsline {subsection}{\numberline {4.2.3}デザイン行列}{28}
+\contentsline {subsection}{\numberline {4.2.4}デバッグ}{31}
+\contentsline {subsection}{\numberline {4.2.5}正規方程式}{31}
+\contentsline {section}{\numberline {4.3}多項式回帰}{32}
+\contentsline {chapter}{参考文献}{34}

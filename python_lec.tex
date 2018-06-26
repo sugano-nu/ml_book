@@ -6,7 +6,7 @@ Pythonにはあらかじめ入っている関数がいくつかある．最も�
 
 \begin{gram}　
 \begin{itemize}
-\item \texttt{print([object])}: \texttt{[object]}の表示結果を返す．\texttt{print}関数は少々特殊で，表示結果を変数に代入するということはできない(代入文を書いても表示結果が出るだけで，その変数には\texttt{None}が格納される)．\texttt{[str]}の場合，\texttt{[str]}の中に\verb|\n|を書くと，そこで改行されて表示される(\texttt{[str]}自身から\verb|\n|がなくなるわけではないので注意)．
+\item \texttt{print(<object>)}: \texttt{<object>}の表示結果を返す．\texttt{print}関数は少々特殊で，表示結果を変数に代入するということはできない(代入文を書いても表示結果が出るだけで，その変数には\texttt{None}が格納される)．\texttt{<str>}の場合，\texttt{<str>}の中に\verb|\n|を書くと，そこで改行されて表示される(\texttt{<str>}自身から\verb|\n|がなくなるわけではないので注意)．
 \end{itemize}
 \end{gram}
 
@@ -39,7 +39,7 @@ Pythonは多種多様な型を持つため，最初のうちは型をいろい�
 
 \begin{gram}　
 \begin{itemize}
-\item \texttt{type([object])}: \texttt{[object]}の型を返す．\texttt{type([object])}の返り値自体も\texttt{type}型を持つ．
+\item \texttt{type(<object>)}: \texttt{<object>}の型を返す．\texttt{type(<object>)}の返り値自体も\texttt{type}型を持つ．
 \end{itemize}
 \end{gram}
 
@@ -55,11 +55,11 @@ Pythonは多種多様な型を持つため，最初のうちは型をいろい�
 
 \subsection{\texttt{format}メソッド}
 
-特に\texttt{print}文を使うときに便利な\texttt{format}メソッドを紹介する．これは\texttt{str}オブジェクトに作用し，文字列中に任意の変数等の中身を文字列として挿入できるものである．
+特に\texttt{print}文を使うときに便利な\texttt{format}メソッドを紹介する．これは\texttt{<str>}に作用し，文字列中に任意の変数等の中身を文字列として挿入できるものである．
 
 \begin{gram}　
 \begin{itemize}
-\item \texttt{[str].format([object],[object],\ldots)}: \texttt{[str]}の中に記入した\texttt{\{\}}に，\texttt{[object]}の中身を文字列として代入する．なお，\texttt{\{\}}は何個あってもよく，\texttt{\{\}}には\texttt{[object],[object],\ldots}の順にそれぞれ代入されていく．
+\item \texttt{<str>.format(<object>,<object>,\ldots)}: \texttt{<str>}の中に記入した\texttt{\{\}}に，\texttt{<object>}の中身を文字列として代入する．なお，\texttt{\{\}}は何個あってもよく，\texttt{\{\}}には\texttt{<object>,<object>,\ldots}の順にそれぞれ代入されていく．
 \end{itemize}
 \end{gram}
 

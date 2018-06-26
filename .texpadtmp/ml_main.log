@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.8.1-180226-2.6 (utf8.euc) (TeX Live 2018) (preloaded format=platex 2018.5.28)  17 JUN 2018 16:23
+This is e-pTeX, Version 3.14159265-p3.8.1-180226-2.6 (utf8.euc) (TeX Live 2018) (preloaded format=platex 2018.5.28)  27 JUN 2018 02:56
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -362,13 +362,13 @@ LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
 (Font)              scaled to size 4.805pt on input line 2.
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 32.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 33.
 LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 32.
+(Font)              scaled to size 9.60999pt on input line 33.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 32.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 33.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 32.
+(Font)              scaled to size 9.60999pt on input line 33.
  [2
 
 ])
@@ -437,33 +437,33 @@ LaTeX Font Warning: Font shape `OMS/cmtt/m/n' undefined
 (Font)              using `OMS/cmsy/m/n' instead
 (Font)              for symbol `textbraceleft' on input line 62.
 
-(./code/py4.py)) (./numpy_lec.tex (./code/num1.py [11]) (./code/num2.py)
-Underfull \hbox (badness 10000) in paragraph at lines 40--41
-[][][][][][][][][][][][][][][][][][][][][]
+(./code/py4.py)) (./numpy_lec.tex (./code/num1.py [11]) (./code/num2.py)) (./pandas_lec.tex [12] (./data/ex1data1_test.txt) (./code/pd1.py) (./code/pd3.py [13]) (./code/pd4.py [14]) [15] (./code/pd5.py) [16]
+Underfull \hbox (badness 1895) in paragraph at lines 168--169
+\OT1/cmtt/m/n/10 or Series>.values \JY1/mc/m/n/10 メソ ッドを使う ． \OT1/cmtt/m/n/10 <DataFrame>\JY1/mc/m/n/10 の場合は\OT1/cmtt/m/n/10 <2d[]ndarray>\JY1/mc/m/n/10 ， \OT1/cmtt/m/n/10 <Series>\JY1/mc/m/n/10 の場合
  []
 
-) (./pandas_lec.tex [12] (./data/ex1data1_test.txt) (./code/pd1.py) (./code/pd2.py)) (./matplotlib_lec.tex [13] (./code/fig1.py)
+(./code/pd2.py) [17]) (./matplotlib_lec.tex (./code/fig1.py)
 File: code/fig1.eps Graphic file (type eps)
 <code/fig1.eps>
- [14] (./code/fig2.py)
+ [18] (./code/fig2.py [19])
 File: code/fig2.eps Graphic file (type eps)
 <code/fig2.eps>
-) [15]
+) [20]
 第3章
-(./introduction.tex [16
+(./introduction.tex [21
 
-]) (./supervised_learning.tex [17]
+]) (./supervised_learning.tex [22]
 第4章
-[18
+[23
 
-] [19]
+] [24]
 File: code/lrfig1.eps Graphic file (type eps)
 <code/lrfig1.eps>
- [20] (./code/lrfig1.py) [21] [22]
+ [25] (./code/lrfig1.py) [26] [27]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[23] [24] [25] [26]
+[28] [29] [30] [31]
 LaTeX Font Info:    Font shape `JT1/mc/m/it' in size <10> not available
 (Font)              Font shape `JT1/mc/m/n' tried instead on input line 461.
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
@@ -472,12 +472,12 @@ LaTeX Font Info:    Font shape `JY1/mc/m/it' in size <10> not available
 (Font)              Font shape `JY1/mc/m/n' tried instead on input line 461.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
 (Font)              scaled to size 9.60999pt on input line 461.
- [27]) (./reference.tex [28]
+ [32]) (./reference.tex [33]
 Overfull \hbox (4.82687pt too wide) in paragraph at lines 2--3
 []\OT1/cmr/m/n/10 Andrew Ng, ``Ma-chine Learn-ing'', Stan-ford Uni-ver-sity, https://www.coursera.org/learn/machine-
  []
 
-) [29
+) [34
 
 ] (/Users/kotaro/Documents/ML/ml_book/.texpadtmp/ml_main.aux)
 
@@ -485,12 +485,12 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 6071 strings out of 494499
- 80431 string characters out of 6171360
- 196230 words of memory out of 5000000
- 9725 multiletter control sequences out of 15000+600000
+ 6103 strings out of 494499
+ 80761 string characters out of 6171360
+ 213230 words of memory out of 5000000
+ 9748 multiletter control sequences out of 15000+600000
  28303 words of font info for 129 fonts, out of 8000000 for 9000
  112 hyphenation exceptions out of 8191
- 39i,20n,40p,1053b,1874s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 39i,20n,40p,1053b,1892s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on /Users/kotaro/Documents/ML/ml_book/.texpadtmp/ml_main.dvi (29 pages, 159472 bytes).
+Output written on /Users/kotaro/Documents/ML/ml_book/.texpadtmp/ml_main.dvi (34 pages, 202780 bytes).
