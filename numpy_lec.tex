@@ -1,12 +1,14 @@
 \section{numpy}
 
-\subsection{任意の\texttt{ndarray}オブジェクトの作成(\texttt{array}関数)}
+\subsection{任意の\texttt{ndarray}オブジェクトの作成}
 
-\texttt{<ndarray>}は，\texttt{<list>}から作成できる．\texttt{<list>}と\texttt{<ndarray>}の見た目には，要素間にカンマがあるかないかの違いがある．
+\texttt{<ndarray>}は\texttt{<list>}から作成できる．普通の\texttt{<list>}の場合は1次元の\texttt{<ndarray>}(以下\texttt{<1d\_ndarray>}と書く)，入れ子の\texttt{<list>}の場合は2次元の\texttt{<ndarray>}(以下\texttt{<2d\_ndarray>}と書く)となる．ここで，\texttt{<1d\_ndarray>}の\texttt{<shape>}は，要素が1つのタプルで返ってくるので注意．
 
 \begin{gram}　
 \begin{itemize}
 \item \texttt{np.array(<list>)}: \texttt{<list>}から\texttt{<ndarray>}を作成する．
+\item \texttt{<ndarray>.shape}: \texttt{<ndarray>}の行数と列数を\texttt{(行数, 列数)}の形のタプルで出力する．ここで，\texttt{<1d\_ndarray>}の場合は要素が1つのタプルで出力され，行や列という概念がそもそもないことに注意．
+
 \end{itemize}
 \end{gram}
 
@@ -14,22 +16,125 @@
 \lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/num1.py}
 \vspace{-7pt}
 \begin{lstlisting}
-x=[1 2 3],type=<class 'numpy.ndarray'>
-y=[ 4.1  5.9 -6.3  7. ],type=<class 'numpy.ndarray'>
-mylist=[4.1, 5.9, -6.3, 7.0],type=<class 'list'>
+array_1d=
+[1 3 5 9]
+shape=(4,)
+type=<class 'numpy.ndarray'>
+
+array_2d=
+[[ 1  3  5]
+ [ 2  4  6]
+ [ 3  6  9]
+ [ 5 10 15]]
+shape=(4, 3)
+type=<class 'numpy.ndarray'>
 \end{lstlisting}
 \end{cod}
 \vspace{-10pt}
 
-\subsection{規則的な\texttt{ndarray}オブジェクトの作成(\texttt{arange}関数など)}
-\texttt{<ndarray>}をリスト直打ちで作成するのは，大きい配列を作ろうとする場合は不便であるが，規則的な配列であれば，別のプログラムで書くことができる．
+\subsection{\texttt{<ndarray>}の一部分の取り出し}
+
+\texttt{<ndarray>}はスライスで要素の一部取り出しができる．ここで，\texttt{<2d\_ndarray>}から1行または1列だけ抜き出したときは，\texttt{<2d\_ndarray>}ではなく\texttt{<1d\_ndarray>}に変わってしまうので注意する(例えば，\texttt{<2d\_ndarray>}のある行に代入するような場合，\texttt{<1d\_ndarray>}を代入する必要がある)．また，要素1つだけ取り出した場合は\texttt{<ndarray>}ではなく普通の数値になることも注意する．
 
 \begin{gram}　
 \begin{itemize}
-\item \texttt{np.arange(a,b,c)}: \texttt{a}から\texttt{b}の手前まで，\texttt{c}ずつ増加していく\texttt{<ndarray>}を作成する．
-\item \texttt{np.arange(a)}: $0$から\texttt{a}の手前まで，$1$ずつ増加していく\texttt{<ndarray>}を作成する．
-\item \texttt{np.arange(a,b)}: \texttt{a}から\texttt{b}の手前まで，$1$ずつ増加していく\texttt{<ndarray>}を作成する．
-\item \texttt{np.random.randn(a)}: 標準正規分布に従う乱数から発生する\texttt{a}個の要素の\texttt{<ndarray>}を作成する．
+\item \texttt{<1d\_ndarray>[a:b:c]}: \texttt{<1d\_ndarray>}からスライス\texttt{a:b:c}で抜き出す．抜き出した結果は，要素が1つの場合は数値，複数ある場合は\texttt{<1d\_ndarray>}となる．
+\item \texttt{<2d\_ndarray>[a:b:c, d:e:f]}: \texttt{<2d\_ndarray>}から行方向についてスライス\texttt{a:b:c}，列方向についてスライス\texttt{d:e:f}で抜き出す．抜き出した結果は，要素が1つの場合は数値，1列または1行だけの場合は\texttt{<1d\_ndarray>}，それ以外の場合は\texttt{<2d\_ndarray>}となる．なお，\texttt{d:e:f}を省略して行だけの指定で抜き出しをすることが可能だが，\texttt{d:e:f}を省略することはできない．列だけの指定で抜き出したい場合は\texttt{<2d\_ndarray>[:, d:e:f]}という指定とする必要がある．
+\end{itemize}
+\end{gram}
+
+\begin{cod}[\texttt{num5.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/num5.py}
+\vspace{-7pt}
+\begin{lstlisting}
+array_1d[1::2]=[2 4]
+array_2d[::2,::2]=[[1 3]
+ [7 9]]
+array_2d[3]=[10 11 12],shape=(3,)
+array_2d[:,1]=[ 2  5  8 11],shape=(4,)
+\end{lstlisting}
+\end{cod}
+\vspace{-10pt}
+
+\subsection{\texttt{<1d\_ndarray>}と列ベクトル・行ベクトルとしての\texttt{<2d\_ndarray>}}
+
+\texttt{<1d\_ndarray>}には列や行といった概念はないため，\texttt{<1d\_ndarray>}をそのまま列ベクトルや行ベクトルとして線形代数計算に使うことはできない(うまく動くときもあるが，そうではない場合のほうが多い)．よって，列ベクトルや行ベクトルは必ず\texttt{<2d\_ndarray>}で定義する必要がある(普通のリストではなく入れ子リストを与える必要がある)．
+
+なお，\texttt{<1d\_ndarray>}を列ベクトルとしての\texttt{<2d\_ndarray>}に変換するには，\texttt{np.c\_[<1d\_ndarray>]}を使用する．また，\texttt{<1d\_ndarray>}を行ベクトルとしての\texttt{<2d\_ndarray>}に変換するには，一旦\texttt{np.c\_[<1d\_ndarray>]}で列ベクトルを作った上で，\texttt{<2d\_ndarray>}を転置させるメソッド\texttt{<2d\_ndarray>.T}を使用する．
+
+\begin{gram}　
+\begin{itemize}
+\item \texttt{np.c\_[<1d\_ndarray>]}: \texttt{<1d\_ndarray>}から列ベクトルとしての\texttt{<2d\_ndarray>}を作成する．
+\item \texttt{<2d\_ndarray>.T}: \texttt{<2d\_ndarray>}を転置する(\texttt{<1d\_ndarray>}に使用しても何も起こらないので注意．また，列ベクトルとしての\texttt{<2d\_ndarray>}を転置しても\texttt{<1d\_ndarray>}にはならずに単に行ベクトルとしての\texttt{<2d\_ndarray>}になることに注意)．
+\end{itemize}
+\end{gram}
+
+\begin{cod}[\texttt{num3.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/num3.py}
+\vspace{-7pt}
+\begin{lstlisting}
+array_1d=
+[1 3 5 9]
+shape=(4,)
+type=<class 'numpy.ndarray'>
+
+array_cv=
+[[1]
+ [3]
+ [5]
+ [9]]
+shape=(4, 1)
+type=<class 'numpy.ndarray'>
+
+array_cv=
+[[1 3 5 9]]
+shape=(1, 4)
+type=<class 'numpy.ndarray'>
+
+array_1d_modc=
+[[1]
+ [3]
+ [5]
+ [9]]
+shape=(4, 1)
+type=<class 'numpy.ndarray'>
+
+array_1d_modr=
+[[1 3 5 9]]
+shape=(1, 4)
+type=<class 'numpy.ndarray'>
+\end{lstlisting}
+\end{cod}
+\vspace{-10pt}
+
+\subsection{スカラーと1要素の\texttt{<1d\_ndarray>}と1要素の\texttt{<2d\_ndarray>}}
+
+numpyでは，1要素しかない\texttt{<1d\_ndarray>}や\texttt{<2d\_ndarray>}の概念がスカラーとは別に存在するため，これらは区別される．numpyで計算を行うとき，結果がスカラーだと思いきや1要素の\texttt{<2d\_ndarray>}だったりして，その後の計算エラーになってしまう場合等があるため注意する．
+
+\begin{cod}[\texttt{num4.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/num4.py}
+\vspace{-7pt}
+\begin{lstlisting}
+scalar=3, type=<class 'int'>
+array_1d_scl=[3], type=<class 'numpy.ndarray'>, shape=(1,)
+array_2d_scl=[[3]], type=<class 'numpy.ndarray'>, shape=(1, 1)
+array_1d_scl[0]=3, type=<class 'numpy.int64'>
+array_2d_scl[0]=[3], type=<class 'numpy.ndarray'>, shape=(1,)
+array_2d_scl[0,0]=3, type=<class 'numpy.int64'>
+\end{lstlisting}
+\end{cod}
+\vspace{-10pt}
+
+\subsection{規則的な\texttt{<1d\_ndarray>}の作成}
+\texttt{<1d\_ndarray>}をリスト直打ちで作成するのは，大きい配列を作ろうとする場合は不便であるが，規則的な配列であれば，別のプログラムで書くことができる．
+
+\begin{gram}　
+\begin{itemize}
+\item \texttt{np.zeros(a)}: 要素が全て0である\texttt{a}個の要素を持つ\texttt{<1d\_ndarray>}を作成する．
+\item \texttt{np.arange(a,b,c)}: \texttt{a}から\texttt{b}の手前まで，\texttt{c}ずつ増加していく\texttt{<1d\_ndarray>}を作成する．
+\item \texttt{np.arange(a)}: $0$から\texttt{a}の手前まで，$1$ずつ増加していく\texttt{<1d\_ndarray>}を作成する．
+\item \texttt{np.arange(a,b)}: \texttt{a}から\texttt{b}の手前まで，$1$ずつ増加していく\texttt{<1d\_ndarray>}を作成する．
+\item \texttt{np.random.randn(a)}: 標準正規分布に従う乱数から発生する\texttt{a}個の要素の\texttt{<1d\_ndarray>}を作成する．
 \end{itemize}
 \end{gram}
 
@@ -37,11 +142,49 @@ mylist=[4.1, 5.9, -6.3, 7.0],type=<class 'list'>
 \lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/num2.py}
 \vspace{-10pt}
 \begin{lstlisting}
+v=[0. 0. 0. 0. 0.]
 w=[ 0  2  4  6  8 10 12 14 16 18 20 22 24 26 28]
 x=[0 1 2 3 4 5 6 7 8 9]
 y=[-10  -9  -8  -7  -6  -5  -4  -3  -2  -1   0]
-z=[ 0.0259179   0.49422254  1.0009598  -0.42038568  0.27521985  1.64888587
-  0.02695996 -0.13054361 -1.24832705  0.49654017]
+z=[-0.38558831  1.20391439  1.18496279  1.50358118  0.93103295 -0.02233168
+  0.04894498  0.20757944 -2.67874618 -1.90888007]
 \end{lstlisting}
 \end{cod}
 \vspace{-10pt}
+
+\section{線形代数計算}
+
+基本的には数値と\texttt{<2d\_ndarray>}で計算する．四則演算等について，その計算が定義されるのであれば通常の数値のように式を書けば問題ないが，掛け算記号は，線形代数計算においてはアダマール積であるため，行列積を行うときは\texttt{<2d\_ndarray>.dot(<2d\_ndarray>)}で行う必要がある．なお，線形代数計算の結果スカラーになる場合でも，数値ではなく1要素しかない\texttt{<2d\_ndarray>}で結果が保持されることに注意する．
+
+\begin{gram}　
+\begin{itemize}
+\item \texttt{<A\_2d\_ndarray>.dot(<B\_2d\_ndarray>)}: 行列積$AB$を計算する．
+\item \texttt{<A\_2d\_ndarray>$*$<B\_2d\_ndarray>}: アダマール積$A*B$を計算する．
+\end{itemize}
+\end{gram}
+
+\begin{cod}[\texttt{num6.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/num6.py}
+\vspace{-10pt}
+\begin{lstlisting}
+F=
+[[  78  156  234  312]
+ [ 177  354  531  708]
+ [ 276  552  828 1104]
+ [ 375  750 1125 1500]]
+G=
+[[9040]]
+H=
+[[ -6  10]
+ [ 12 -12]
+ [-10   6]]
+\end{lstlisting}
+\end{cod}
+\vspace{-10pt}
+
+
+
+
+
+
+

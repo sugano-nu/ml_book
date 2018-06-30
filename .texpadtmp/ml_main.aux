@@ -18,6 +18,7 @@
 \newlabel{tenkai2}{{1.26}{8}}
 \@writefile{toc}{\contentsline {section}{\numberline {1.6}線形形式，二次形式}{8}}
 \newlabel{quadform}{{1.28}{9}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.7}行列の特殊な積}{9}}
 \@writefile{toc}{\contentsline {chapter}{\numberline {第2章}Python}{10}}
 \@writefile{lof}{\addvspace {10\jsc@mpt }}
 \@writefile{lot}{\addvspace {10\jsc@mpt }}
@@ -29,56 +30,66 @@
 \@writefile{lol}{\contentsline {lstlisting}{code/py3.py}{11}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1.3}\texttt  {format}メソッド}{11}}
 \@writefile{lol}{\contentsline {lstlisting}{code/py4.py}{11}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.2}numpy}{11}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.1}任意の\texttt  {ndarray}オブジェクトの作成(\texttt  {array}関数)}{11}}
-\@writefile{lol}{\contentsline {lstlisting}{code/num1.py}{11}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.2}規則的な\texttt  {ndarray}オブジェクトの作成(\texttt  {arange}関数など)}{12}}
-\@writefile{lol}{\contentsline {lstlisting}{code/num2.py}{12}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.3}pandas}{12}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.1}カンマ区切りテキストを\texttt  {DataFrame}オブジェクトに格納(\texttt  {read\_csv}関数)}{12}}
-\@writefile{lol}{\contentsline {lstlisting}{data/ex1data1\textunderscore test.txt}{13}}
-\@writefile{lol}{\contentsline {lstlisting}{code/pd1.py}{13}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}列の追加}{13}}
-\@writefile{lol}{\contentsline {lstlisting}{code/pd3.py}{14}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.3}\texttt  {<DataFrame>}の一部分の取り出し}{14}}
-\@writefile{lol}{\contentsline {lstlisting}{code/pd4.py}{14}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.4}\texttt  {<Series>}と1列しか持たない\texttt  {<DataFrame>}の違い}{16}}
-\@writefile{lol}{\contentsline {lstlisting}{code/pd5.py}{16}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.5}\texttt  {values}メソッド}{17}}
-\@writefile{lol}{\contentsline {lstlisting}{code/pd2.py}{17}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.4}matplotlib}{18}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.1}\texttt  {figure}オブジェクトと\texttt  {axes}オブジェクトの作成}{18}}
-\@writefile{lol}{\contentsline {lstlisting}{code/fig1.py}{18}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.1}{\ignorespaces \texttt  {fig1.eps}}}{19}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.2}2次元の散布図を描画する（\texttt  {scatter}関数）}{19}}
-\@writefile{lol}{\contentsline {lstlisting}{code/fig2.py}{19}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.2}{\ignorespaces \texttt  {fig2.eps}}}{20}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {第3章}機械学習の概念}{21}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.2}関数の作成}{11}}
+\@writefile{lol}{\contentsline {lstlisting}{code/py5.py}{11}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.3}numpy}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.1}任意の\texttt  {ndarray}オブジェクトの作成}{12}}
+\@writefile{lol}{\contentsline {lstlisting}{code/num1.py}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}\texttt  {<ndarray>}の一部分の取り出し}{13}}
+\@writefile{lol}{\contentsline {lstlisting}{code/num5.py}{13}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.3}\texttt  {<1d\_ndarray>}と列ベクトル・行ベクトルとしての\texttt  {<2d\_ndarray>}}{13}}
+\@writefile{lol}{\contentsline {lstlisting}{code/num3.py}{14}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.4}スカラーと1要素の\texttt  {<1d\_ndarray>}と1要素の\texttt  {<2d\_ndarray>}}{15}}
+\@writefile{lol}{\contentsline {lstlisting}{code/num4.py}{15}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.5}規則的な\texttt  {<1d\_ndarray>}の作成}{16}}
+\@writefile{lol}{\contentsline {lstlisting}{code/num2.py}{16}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.4}線形代数計算}{16}}
+\@writefile{lol}{\contentsline {lstlisting}{code/num6.py}{17}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.5}pandas}{17}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.1}カンマ区切りテキストを\texttt  {DataFrame}オブジェクトに格納(\texttt  {read\_csv}関数)}{17}}
+\@writefile{lol}{\contentsline {lstlisting}{data/ex1data1\textunderscore test.txt}{18}}
+\@writefile{lol}{\contentsline {lstlisting}{code/pd1.py}{18}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.2}列の追加}{18}}
+\@writefile{lol}{\contentsline {lstlisting}{code/pd3.py}{18}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.3}\texttt  {<DataFrame>}の一部分の取り出し}{19}}
+\@writefile{lol}{\contentsline {lstlisting}{code/pd4.py}{19}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.4}\texttt  {<Series>}と1列しか持たない\texttt  {<DataFrame>}の違い}{21}}
+\@writefile{lol}{\contentsline {lstlisting}{code/pd5.py}{21}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.5}\texttt  {values}メソッド}{22}}
+\@writefile{lol}{\contentsline {lstlisting}{code/pd2.py}{22}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.6}matplotlib}{23}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.6.1}\texttt  {figure}オブジェクトと\texttt  {axes}オブジェクトの作成}{23}}
+\@writefile{lol}{\contentsline {lstlisting}{code/fig1.py}{23}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.1}{\ignorespaces \texttt  {fig1.eps}}}{24}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.6.2}2次元の散布図を描画する（\texttt  {scatter}関数）}{24}}
+\@writefile{lol}{\contentsline {lstlisting}{code/fig2.py}{24}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.2}{\ignorespaces \texttt  {fig2.eps}}}{25}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {第3章}機械学習の概念}{26}}
 \@writefile{lof}{\addvspace {10\jsc@mpt }}
 \@writefile{lot}{\addvspace {10\jsc@mpt }}
-\@writefile{toc}{\contentsline {section}{\numberline {3.1}機械学習の定義}{21}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.2}教師あり学習と教師なし学習}{22}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {第4章}教師あり学習}{23}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.1}機械学習の定義}{26}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}教師あり学習と教師なし学習}{27}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {第4章}教師あり学習}{28}}
 \@writefile{lof}{\addvspace {10\jsc@mpt }}
 \@writefile{lot}{\addvspace {10\jsc@mpt }}
-\@writefile{toc}{\contentsline {section}{\numberline {4.1}トレーニングセットと仮説関数}{23}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.2}線形回帰}{24}}
-\newlabel{LM}{{4.1}{24}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}目的関数}{24}}
-\newlabel{SEF}{{4.2}{25}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces \texttt  {lrfig1.eps}}}{25}}
-\@writefile{lol}{\contentsline {lstlisting}{code/lrfig1.py}{26}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}最急降下法}{26}}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces 最急降下法}}{27}}
-\newlabel{simpleJ}{{4.4}{28}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.3}デザイン行列}{28}}
-\newlabel{designX}{{4.5}{28}}
-\newlabel{LRglad}{{4.10}{30}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.1}トレーニングセットと仮説関数}{28}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}線形回帰}{29}}
+\newlabel{LM}{{4.1}{29}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}目的関数}{29}}
+\newlabel{SEF}{{4.2}{30}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces \texttt  {lrfig1.eps}}}{30}}
+\@writefile{lol}{\contentsline {lstlisting}{code/lrfig1.py}{31}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}最急降下法}{31}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces 最急降下法}}{32}}
+\newlabel{simpleJ}{{4.4}{33}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.3}デザイン行列}{33}}
+\newlabel{designX}{{4.5}{33}}
+\newlabel{LRglad}{{4.10}{35}}
 \citation{AndrewML}
 \citation{AndrewML}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.4}デバッグ}{31}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.5}正規方程式}{31}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.3}多項式回帰}{32}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.4}デバッグ}{36}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.5}正規方程式}{36}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}多項式回帰}{37}}
 \bibcite{AndrewML}{1}
 \bibcite{UmichPy1}{2}
 \bibcite{UmichNPPD}{3}
@@ -87,4 +98,5 @@
 \bibcite{Jake}{6}
 \bibcite{Vecwaka}{7}
 \bibcite{Harville}{8}
-\@writefile{toc}{\contentsline {chapter}{参考文献}{34}}
+\bibcite{rao}{9}
+\@writefile{toc}{\contentsline {chapter}{参考文献}{39}}

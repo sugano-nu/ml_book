@@ -32,12 +32,12 @@ low_num=5, col_num=2
 
 \subsection{列の追加}
 
-機械学習では，新たに特徴量をデータに追加することが頻繁に行われる．全ての行の数値が同じ列を追加するには，新しい列を指定して数値を代入する文を書く．また，行数と要素数が等しい場合は，新しい列を指定して\texttt{<ndarray>}や\texttt{<list>}を代入する文を書くことでその配列を追加することができる．
+機械学習では，新たに特徴量をデータに追加することが頻繁に行われる．全ての行の数値が同じ列を追加するには，新しい列を指定して数値を代入する文を書く．また，行数と要素数が等しい場合は，新しい列を指定して\texttt{<1d\_ndarray>}や\texttt{<list>}を代入する文を書くことでその配列を追加することができる．
 
 \begin{gram}　
 \begin{itemize}
 \item \texttt{<DataFrame>[<str>] = a}: \texttt{<DataFrame>}の新しい列\texttt{<str>}の全要素に\texttt{a}を代入する．
-\item \texttt{<DataFrame>[<str>] = <ndarray or list>}: \texttt{<DataFrame>}の新しい列\texttt{<str>}に\texttt{<ndarray or list>}を代入する．
+\item \texttt{<DataFrame>[<str>] = <1d\_ndarray or list>}: \texttt{<DataFrame>}の新しい列\texttt{<str>}に\texttt{<1d\_ndarray or list>}を代入する(列ベクトルとしての\texttt{<2d\_ndarray>}でも問題ないが，行ベクトルとしての\texttt{<2d\_ndarray>}はエラーとなるので注意)．
 \end{itemize}
 \end{gram}
 \begin{cod}[\texttt{pd3.py}]　
@@ -124,7 +124,7 @@ type=<class 'pandas.core.frame.DataFrame'>
 \vspace{-10pt}
 
 \subsection{\texttt{<Series>}と1列しか持たない\texttt{<DataFrame>}の違い}
-\texttt{<Series>}と\texttt{<DataFrame>}の関係は，numpyでいう1次元配列と2次元配列の関係と同じである．よって，1列しか持たない\texttt{<DataFrame>}と\texttt{<Series>}は\texttt{shape}の持ち方などが異なる．なお，\texttt{<Series>}を\texttt{<DataFrame>}に変換する場合は，\texttt{pd.DataFrame(<Series>)}とすればよい．
+\texttt{<Series>}と\texttt{<DataFrame>}の関係は，\texttt{<1d\_ndarray>}と\texttt{<2d\_ndarray>}と同じである．すなわち，1列しか持たない\texttt{<DataFrame>}と\texttt{<Series>}は\texttt{shape}が異なる．なお，\texttt{<Series>}を\texttt{<DataFrame>}に変換する場合は，\texttt{pd.DataFrame(<Series>)}とすればよい．
 
 \begin{gram}　
 \begin{itemize}
