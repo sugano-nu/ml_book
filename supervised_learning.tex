@@ -32,7 +32,7 @@ $x_3^{(4)}=1,~y^{(2)}=232$．\qed
 入力変数${\bm x}$から出力変数$y$への写像$h:{\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n \to {\cal Y}$，すなわち$h_{\bm \theta}({\bm x})$を{\bf 仮説関数(hypothesis function)}という．ここで，${\bm \theta}$は仮説関数の{\bf パラメータ}である(パラメータは複数あることがほとんどなのでベクトルとしている)．
 \end{defi}
 
-すなわち，教師あり学習とは，仮説関数を設定し，トレーニングセットを用いて仮説関数の最適なパラメータを決定することといえる．
+すなわち，教師あり学習とは，仮説関数を設定し，トレーニングセットを用いて仮説関数の最適なパラメータを決定することといえる．最適なパラメータを決定できれば，そのパラメータをセットした仮説関数にデータを流し込むことで，そのデータに対する予測値を計算できる．
 
 \section{線形回帰}
 
@@ -238,7 +238,7 @@ X =
 
 \begin{qu}
 次のトレーニングセットにおいて，デザイン行列$X$を答えよ．
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \begin{tabular}{cccccc}
 \hline
@@ -263,7 +263,37 @@ X=
 \end{align*}\qed
 \end{ans}
 
-デザイン行列を使うと，線形回帰の仮説関数のベクトルを簡潔に表すことができる．
+
+\begin{qu}\label{qu_lr1}
+\texttt{ex1data1\_test.txt}(5行2列，カンマ区切り，列名ヘッダーなし，1列目はpopulation of city in 10,000s，2列目はprofit in \$10,000sであるデータ)から，デザイン行列$X$と目的変数${\bm y}$をそれぞれ\texttt{<2d\_ndarray>}で作成せよ．ここで，目的変数はprofit in \$10,000sとし，デザイン行列には$x_0^{(i)}=1$の項も付け加えよ．
+\end{qu}
+\begin{ans}
+表形式データは，行方向にデータが並び，列方向が特徴量が並ぶものが多いので，デザイン行列は表形式データそのものとして与えてあげればよい．また，目的変数は1列のデータであるが，\texttt{<DataFrame>}から1列だけ読み込む場合は\texttt{<1d\_ndarray>}になってしまうので，列ベクトルとしての\texttt{<2d\_ndarray>}に変換する．
+\begin{cod}[\texttt{lr1.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/lr1.py}
+\vspace{-10pt}
+\begin{lstlisting}
+X=
+[[1.     6.1101]
+ [1.     5.5277]
+ [1.     8.5186]
+ [1.     7.0032]
+ [1.     5.8598]]
+type=<class 'numpy.ndarray'>,shape=(5, 2)
+y=
+[[17.592 ]
+ [ 9.1302]
+ [13.662 ]
+ [11.854 ]
+ [ 6.8233]]
+type=<class 'numpy.ndarray'>,shape=(5, 1)
+\end{lstlisting}
+\end{cod}
+\vspace{-10pt}
+\qed
+\end{ans}
+
+デザイン行列を使うと，予測値である線形回帰の仮説関数のベクトルを簡潔に表すことができ，1発の線形代数計算で予測値を計算できる．
 
 \begin{qu}
 $x_0^{(i)}=1$も含め特徴量が$n+1$個のトレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$における線形回帰問題を考える．このとき，$(h_{{\bm \theta}}({\bm x}^{(1)}),h_{{\bm \theta}}({\bm x}^{(2)}),\ldots,h_{{\bm \theta}}({\bm x}^{(m)}))^T$を$X$，${\bm \theta}$を用いて表せ．
@@ -305,10 +335,36 @@ h_{{\bm \theta}}({\bm x}^{(m)})
 | \\[-2pt]
 |
 \end{bmatrix}
-=X {\bm \theta}
+=X {\bm \theta} \label{lr_hypo}
 \end{align}
 \qed
 \end{ans}
+
+\begin{qu}\label{qu_lr2}
+(問題\ref{qu_lr1}の続き) 仮説関数のパラメータを$\bm{\theta}=(1,2)^T$とする．このとき，問題\ref{qu_lr1}で作成したデザイン行列$X$に対して予測値である仮説関数ベクトル$(h_{{\bm \theta}}({\bm x}^{(1)}),h_{{\bm \theta}}({\bm x}^{(2)}),\ldots,h_{{\bm \theta}}({\bm x}^{(m)}))^T$を計算し，問題\ref{qu_lr1}で作成した目的変数${\bm y}$と並べて表示せよ．なお，仮説関数は関数として定義せよ．
+\end{qu}
+\begin{ans}
+式(\ref{lr_hypo})を実装すれば良い．
+\begin{cod}[\texttt{lr2.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/lr2.py}
+\vspace{-10pt}
+\begin{lstlisting}
+y_df=
+         y   y_pred
+0  17.5920  13.2202
+1   9.1302  12.0554
+2  13.6620  18.0372
+3  11.8540  15.0064
+4   6.8233  12.7196
+\end{lstlisting}
+\end{cod}
+\vspace{-10pt}
+\qed
+\end{ans}
+
+
+
+
 
 この結果を用いることで，目的関数を最小二乗誤差関数とした線形回帰問題において，目的関数をより簡潔に表すことができる．
 

@@ -20,3 +20,7 @@ print('array_1d_modc=\n{}\nshape={}\ntype={}\n'.format(array_1d_modc,
 array_1d_modr = np.c_[array_1d].T
 print('array_1d_modr=\n{}\nshape={}\ntype={}\n'.format(array_1d_modr,
                                     array_1d_modr.shape, type(array_1d_modr)))
+
+array_rv_modc = np.c_[array_rv]
+print('array_rv_modc=\n{}\nshape={}\ntype={}\n'.format(array_rv_modc,
+                                    array_rv_modc.shape, type(array_rv_modc)))

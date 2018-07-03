@@ -30,6 +30,29 @@ low_num=5, col_num=2
 \end{cod}
 \vspace{-10pt}
 
+\subsection{\texttt{<2d\_ndarray>}から\texttt{<DataFrame>}の作成}
+
+\texttt{<2d\_ndarray>}から\texttt{<DataFrame>}を作成できる．このときの列名は\texttt{<list>}で指定する．
+
+\begin{gram}　
+\begin{itemize}
+\item \texttt{pd.DataFrame(<2d\_ndarray>, columns=<list>)}: \texttt{<2d\_ndarray>}から\texttt{<DataFrame>}を作成する．\texttt{columns}は，列名をつけるときに指定する．
+\end{itemize}
+\end{gram}
+\begin{cod}[\texttt{pd6.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/pd6.py}
+\vspace{-10pt}
+\begin{lstlisting}
+df=
+   col1  col2  col3
+0     1     2     3
+1     4     5     6
+2     7     8     9
+3    10    11    12
+\end{lstlisting}
+\end{cod}
+\vspace{-10pt}
+
 \subsection{列の追加}
 
 機械学習では，新たに特徴量をデータに追加することが頻繁に行われる．全ての行の数値が同じ列を追加するには，新しい列を指定して数値を代入する文を書く．また，行数と要素数が等しい場合は，新しい列を指定して\texttt{<1d\_ndarray>}や\texttt{<list>}を代入する文を書くことでその配列を追加することができる．
