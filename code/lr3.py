@@ -1,9 +1,11 @@
 import pandas as pd
 import numpy as np
 
-def hypo_function(X, theta):
-    y_pred = X.dot(theta)
-    return y_pred
+
+def cost_function(X, y, theta):
+    m, n = X.shape
+    J = 1 / (2 * m) * (X.dot(theta) - y).T.dot(X.dot(theta) - y)
+    return J[0,0]
 
 df = pd.read_csv('../data/ex1data1.txt', names=['population','profit'])
 
@@ -14,9 +16,5 @@ y = np.c_[y]
 
 THETA = np.array([[1],[-2]])
 
-y_pred = hypo_function(X, THETA)
-
-y_matrix = np.c_[y, y_pred]
-y_df = pd.DataFrame(y_matrix, columns=['y','y_pred'])
-
-print('y_df=\n{}'.format(y_df.head(5)))
+J = cost_function(X, y, THETA)
+print('J={}'.format(J))

@@ -212,9 +212,7 @@ $j=0$のときは$\frac{\partial }{\partial \theta_0}h_{{\bm \theta}}({\bm x}^{(
 
 \subsection{デザイン行列}
 
-最急降下法アルゴリズムは， 式(\ref{simpleJ})を用いて$\nabla_{{\bm \theta}}J$の各要素に対して逐次計算を行っていけば単純に実装できるが，各要素の和の計算を各要素に対して行い，反復してくことは少々ややこしい．行列計算を容易に行えるプログラミング言語で実装する場合には，できるだけ逐次計算をしないように，行列計算やベクトル計算を用いて工夫して実装することが簡潔かつバグも少ない．
-
-デザイン行列を定義し，行列計算により$\nabla_{{\bm \theta}}J$を計算できることを示す．
+最急降下法アルゴリズムは， 式(\ref{simpleJ})を用いて$\nabla_{{\bm \theta}}J$の各要素に対して逐次計算を行っていけば単純に実装できるが，各要素の和の計算を各要素に対して行い，反復していくことは少々ややこしい．行列計算を容易に行えるプログラミング言語で実装する場合には，できるだけ逐次計算をしないように，行列計算やベクトル計算を用いて工夫して実装することが簡潔かつバグも少ない．ここでは，デザイン行列を定義し，行列計算により$\nabla_{{\bm \theta}}J$を計算できることを示す．
 
 \begin{defi}[デザイン行列]
 $x_0^{(i)}=1$も含め特徴量が$n+1$個のトレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$において，式(\ref{designX})で定義する行列$X \in \mathbb{R}^{m\times (n+1)}$を{\bf デザイン行列(design matrix)}という．デザイン行列は，特徴量${\bm x}^{(i)}$を転置してサンプル数の分縦に並べたもので表される．ここで，特徴量として$x_0=1$が加わっていることに注意する．
@@ -261,36 +259,6 @@ X=
 1 & 852  & 2 & 1 & 36 
 \end{bmatrix}
 \end{align*}\qed
-\end{ans}
-
-
-\begin{qu}\label{qu_lr1}
-\texttt{ex1data1\_test.txt}(5行2列，カンマ区切り，列名ヘッダーなし，1列目はpopulation of city in 10,000s，2列目はprofit in \$10,000sであるデータ)から，デザイン行列$X$と目的変数${\bm y}$をそれぞれ\texttt{<2d\_ndarray>}で作成せよ．ここで，目的変数はprofit in \$10,000sとし，デザイン行列には$x_0^{(i)}=1$の項も付け加えよ．
-\end{qu}
-\begin{ans}
-表形式データは，行方向にデータが並び，列方向が特徴量が並ぶものが多いので，デザイン行列は表形式データそのものとして与えてあげればよい．また，目的変数は1列のデータであるが，\texttt{<DataFrame>}から1列だけ読み込む場合は\texttt{<1d\_ndarray>}になってしまうので，列ベクトルとしての\texttt{<2d\_ndarray>}に変換する．
-\begin{cod}[\texttt{lr1.py}]　
-\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/lr1.py}
-\vspace{-10pt}
-\begin{lstlisting}
-X=
-[[1.     6.1101]
- [1.     5.5277]
- [1.     8.5186]
- [1.     7.0032]
- [1.     5.8598]]
-type=<class 'numpy.ndarray'>,shape=(5, 2)
-y=
-[[17.592 ]
- [ 9.1302]
- [13.662 ]
- [11.854 ]
- [ 6.8233]]
-type=<class 'numpy.ndarray'>,shape=(5, 1)
-\end{lstlisting}
-\end{cod}
-\vspace{-10pt}
-\qed
 \end{ans}
 
 デザイン行列を使うと，予測値である線形回帰の仮説関数のベクトルを簡潔に表すことができ，1発の線形代数計算で予測値を計算できる．
@@ -340,32 +308,6 @@ h_{{\bm \theta}}({\bm x}^{(m)})
 \qed
 \end{ans}
 
-\begin{qu}\label{qu_lr2}
-(問題\ref{qu_lr1}の続き) 仮説関数のパラメータを$\bm{\theta}=(1,2)^T$とする．このとき，問題\ref{qu_lr1}で作成したデザイン行列$X$に対して予測値である仮説関数ベクトル$(h_{{\bm \theta}}({\bm x}^{(1)}),h_{{\bm \theta}}({\bm x}^{(2)}),\ldots,h_{{\bm \theta}}({\bm x}^{(m)}))^T$を計算し，問題\ref{qu_lr1}で作成した目的変数${\bm y}$と並べて表示せよ．なお，仮説関数は関数として定義せよ．
-\end{qu}
-\begin{ans}
-式(\ref{lr_hypo})を実装すれば良い．
-\begin{cod}[\texttt{lr2.py}]　
-\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/lr2.py}
-\vspace{-10pt}
-\begin{lstlisting}
-y_df=
-         y   y_pred
-0  17.5920  13.2202
-1   9.1302  12.0554
-2  13.6620  18.0372
-3  11.8540  15.0064
-4   6.8233  12.7196
-\end{lstlisting}
-\end{cod}
-\vspace{-10pt}
-\qed
-\end{ans}
-
-
-
-
-
 この結果を用いることで，目的関数を最小二乗誤差関数とした線形回帰問題において，目的関数をより簡潔に表すことができる．
 
 \begin{qu}
@@ -411,7 +353,7 @@ y^{(m)}
 \end{align}
 より，
 \begin{align}
-J({\bm \theta})&= \frac{1}{2m}(X{\bm \theta}-{\bm y})^T(X{\bm \theta}-{\bm y})
+J({\bm \theta})&= \frac{1}{2m}(X{\bm \theta}-{\bm y})^T(X{\bm \theta}-{\bm y}) \label{lr_cost}
 \end{align}\qed
 \end{ans}
 
@@ -450,6 +392,162 @@ $X^TX$は対称行列であることに注意すると，
 &=\frac{1}{m}\left(X^TX{\bm \theta}-X^T{\bm y}\right) \label{LRglad}
 \end{align}\qed
 \end{ans}
+
+\subsection{Pythonによる実装}
+
+以上で線形回帰で必要なパーツは揃った．これらのパーツを実際にPythonにて実装していきながら，線形回帰とはどういうものかを掴んでいく．
+
+\begin{qu}\label{qu_lr5}
+\texttt{ex1data1.txt}(2列，カンマ区切り，列名ヘッダーなし，1列目はpopulation of city in 10,000s，2列目はprofit in \$10,000sであるデータ)を散布図でプロットせよ．
+\end{qu}
+\begin{ans}
+\begin{cod}[\texttt{lr5.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/lr5.py}
+\vspace{-19pt}
+\begin{figure}[H]
+\begin{center}
+\framed
+\includegraphics[width=8.0cm]{code/lrfig2.eps}
+\vspace{-10pt}
+\caption{\texttt{lrfig2.eps}}
+\endframed
+\end{center}
+\end{figure}
+%\begin{lstlisting}
+%\end{lstlisting}
+\end{cod}
+\vspace{-20pt}
+\end{ans}
+
+
+\begin{qu}\label{qu_lr1}
+(問題\ref{qu_lr5}の続き) \texttt{ex1data1.txt}から，デザイン行列$X$と目的変数${\bm y}$をそれぞれ\texttt{<2d\_ndarray>}で作成せよ．ここで，目的変数はprofit in \$10,000sとし，デザイン行列には$x_0^{(i)}=1$の項も付け加えよ．
+\end{qu}
+\begin{ans}
+表形式データは，行方向にデータが並び，列方向が特徴量が並ぶものが多いので，デザイン行列は表形式データそのものとして与えてあげればよい．また，目的変数は1列のデータであるが，\texttt{<DataFrame>}から1列だけ読み込む場合は\texttt{<1d\_ndarray>}になってしまうので，列ベクトルとしての\texttt{<2d\_ndarray>}に変換する．なお，データ数が多いので，以下のコードにおいてはデザイン行列や目的変数は最初の5行分のみ表示するようにしている．
+\begin{cod}[\texttt{lr1.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/lr1.py}
+\vspace{-10pt}
+\begin{lstlisting}
+X=
+[[1.     6.1101]
+ [1.     5.5277]
+ [1.     8.5186]
+ [1.     7.0032]
+ [1.     5.8598]]
+......
+type=<class 'numpy.ndarray'>,shape=(97, 2)
+y=
+[[17.592 ]
+ [ 9.1302]
+ [13.662 ]
+ [11.854 ]
+ [ 6.8233]]
+......
+type=<class 'numpy.ndarray'>,shape=(97, 1)
+\end{lstlisting}
+\end{cod}
+\vspace{-10pt}
+\qed
+\end{ans}
+
+\begin{qu}\label{qu_lr2}
+(問題\ref{qu_lr1}の続き) 仮説関数のパラメータを$\bm{\theta}=(1,-2)^T$とする．このとき，問題\ref{qu_lr1}で作成したデザイン行列$X$に対して予測値である仮説関数ベクトル$(h_{{\bm \theta}}({\bm x}^{(1)}),h_{{\bm \theta}}({\bm x}^{(2)}),\ldots,h_{{\bm \theta}}({\bm x}^{(m)}))^T$を計算し，問題\ref{qu_lr1}で作成した目的変数${\bm y}$と並べて表示せよ．なお，仮説関数は関数として定義せよ．
+\end{qu}
+\begin{ans}
+式(\ref{lr_hypo})を実装すれば良い．
+\begin{cod}[\texttt{lr2.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/lr2.py}
+\vspace{-10pt}
+\begin{lstlisting}
+y_df=
+         y   y_pred
+0  17.5920 -11.2202
+1   9.1302 -10.0554
+2  13.6620 -16.0372
+3  11.8540 -13.0064
+4   6.8233 -10.7196
+\end{lstlisting}
+\end{cod}
+\vspace{-10pt}
+予測結果より，$\bm{\theta}=(1,-2)^T$では全然予測になっていないことがわかる．
+\qed
+\end{ans}
+
+\begin{qu}\label{qu_lr3}
+(問題\ref{qu_lr2}の続き) 仮説関数のパラメータを$\bm{\theta}=(1,-2)^T$とする．このとき，問題\ref{qu_lr1}で作成したデザイン行列$X$と目的変数${\bm y}$に対して目的関数$J({\bm \theta})$の値を計算せよ．なお，目的関数$J({\bm \theta})$は関数として定義せよ．
+\end{qu}
+\begin{ans}
+式(\ref{lr_cost})を実装すれば良い．numpyでの線形代数計算は，結果がスカラーだとしても\texttt{<2d\_ndarray>}のままなので，要素を指定してあげて数値を取り出すことが必要となる．
+\begin{cod}[\texttt{lr3.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/lr3.py}
+\vspace{-10pt}
+\begin{lstlisting}
+J=303.8795839611464
+\end{lstlisting}
+\end{cod}
+\vspace{-10pt}
+目的関数の数値の大きさからも，${\bm \theta}$は最適化できていないことがわかる．
+\qed
+\end{ans}
+
+\begin{qu}\label{qu_lr6}
+(問題\ref{qu_lr3}の続き) 仮説関数のパラメータを$\bm{\theta}=(1,-2)^T$とする．このとき，問題\ref{qu_lr2}で計算した予測値を線でプロットせよ．
+\end{qu}
+\begin{ans}
+\begin{cod}[\texttt{lr6.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/lr6.py}
+\vspace{-19pt}
+\begin{figure}[H]
+\begin{center}
+\framed
+\includegraphics[width=8.0cm]{code/lrfig3.eps}
+\vspace{-10pt}
+\caption{\texttt{lrfig3.eps}}
+\endframed
+\end{center}
+\end{figure}
+%\begin{lstlisting}
+%\end{lstlisting}
+\end{cod}
+\vspace{-20pt}
+図示すると予測が全然できていないことが一目瞭然．
+\qed	
+\end{ans}
+
+
+
+\begin{qu}\label{qu_lr4}
+(問題\ref{qu_lr6}の続き) \texttt{ex1data1.txt}のデータを全て用いて目的変数${\bm y}$を特徴量から予測するモデルを線形回帰で構築するとしたとき，次の問いに答えよ．
+\begin{enumerate}
+\item 線形回帰の予測値である仮説関数$h_{{\bm \theta}}({\bm x})$のパラメータ${\bm \theta}$を求めよ．ここで，目的関数$J({\bm \theta})$は最小二乗誤差関数とし，${\bm \theta}$を求めるときに使用するアルゴリズムは最急降下法とする．また，最急降下法の学習率$\alpha $は$\alpha = 0.01$，${\bm \theta}$の初期値は${\bm \theta}=(1,-2)^T$とし，収束判定は行わず1500回パラメータの更新を行ったらアルゴリズムは終了するように実装せよ．
+\item 求めた${\bm \theta}$に対する目的関数$J({\bm \theta})$の値を求めよ．
+\item 新しくpopulation of city in 10,000sのデータ$x=7.532$を得たとする．この$x$に対してprofit in \$10,000sがいくらになるか，上で構築した線形回帰モデルを用いて予測せよ．
+\end{enumerate}
+\end{qu}
+\begin{ans}
+最急降下法における$J({\bm \theta})$の勾配ベクトルは式(\ref{LRglad})を実装すればよい．その他，仮説関数や目的関数は問題\ref{qu_lr2}，問題\ref{qu_lr3}で実装したものをベースに組めばよい．
+\begin{cod}[\texttt{lr4.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/lr4.py}
+\vspace{-10pt}
+\begin{lstlisting}
+1: theta=
+[[-3.55089376]
+ [ 1.15838599]]
+2: J=4.4878002526614615
+3: y_pred=5.174069533566031
+\end{lstlisting}
+\end{cod}
+\vspace{-10pt}
+${\bm \theta}=(1,-2)^T$の場合の$J({\bm \theta})$の値からかなり減少していることがわかる．
+\qed
+\end{ans}
+
+
+
+
+
+
 
 \subsection{デバッグ}
 

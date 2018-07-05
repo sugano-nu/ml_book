@@ -2,17 +2,18 @@
 
 \subsection{カンマ区切りテキストを\texttt{DataFrame}オブジェクトに格納(\texttt{read\_csv}関数)}
 
-機械学習の元となるデータは基本的に表形式データであるため，まずそれを読み込むところから始まる．pandasの\texttt{<DataFrame>}は，表形式データを格納できる．カンマ区切りのテキストファイル(\texttt{txt,csv})は，\texttt{pd.read\_csv()}で読み込める．また，読み込んだ表の行数と列数は，\texttt{<DataFrame>.shape}で取り出せる．
+機械学習の元となるデータは基本的に表形式データであるため，まずそれを読み込むところから始まる．pandasの\texttt{<DataFrame>}は，表形式データを格納できる．カンマ区切りのテキストファイル(\texttt{txt,csv})は，\texttt{pd.read\_csv()}で読み込める．また，読み込んだ表の行数と列数は，\texttt{<DataFrame>.shape}で取り出せる．また，読み込む\texttt{<DataFrame>}は巨大であることが多いので，読み込んだあとはその中身の最初の数行を表示して読み込まれているかどうかを確認することが多い．このような処理は\texttt{<DataFrame>.head(<int>)}で行うことができる．
 
 \begin{gram}　
 \begin{itemize}
 \item \texttt{pd.read\_csv(<str>, names=<list>)}: \texttt{<str>}で指定したファイルパスのデータ（カンマ区切り）を読み込み\texttt{<DataFrame>}に格納する．\texttt{names}は，列名をつけるときに指定する．
 \item \texttt{<DataFrame>.shape}: \texttt{<DataFrame>}の行数と列数を\texttt{(行数, 列数)}の形のタプルで出力する．ここで，列数にはindex列はカウントされないことに注意する．
+\item \texttt{<DataFrame>.head(<int>)}: \texttt{<DataFrame>}の最初の\texttt{<int>}行を\texttt{<DataFrame>}で取り出す．
 \end{itemize}
 \end{gram}
 
 \begin{cod}[\texttt{pd1.py}]
-ここで読み込む\texttt{ex1data1\_test.txt}は，以下のようなデータである(5行2列，カンマ区切り，列名ヘッダーなし)．データは，左はpopulation of city in 10,000s，右はprofit in \$10,000sを表している．ヘッダーがないので，読み込む際は列名をつけている．
+ここで読み込む\texttt{ex1data1.txt}は，以下のようなデータである(97行2列，カンマ区切り，列名ヘッダーなし．以下では最初の5行だけ表示している)．データは，左はpopulation of city in 10,000s，右はprofit in \$10,000sを表している．ヘッダーがないので，読み込む際は列名をつけている．
 \lstinputlisting{data/ex1data1_test.txt}
 \lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/pd1.py}
 \vspace{-10pt}
@@ -24,8 +25,13 @@ df=
 2      8.5186  13.6620
 3      7.0032  11.8540
 4      5.8598   6.8233
+5      8.3829  11.8860
+6      7.4764   4.3483
+7      8.5781  12.0000
+8      6.4862   6.5987
+9      5.0546   3.8166
 type=<class 'pandas.core.frame.DataFrame'>
-low_num=5, col_num=2
+low_num=97, col_num=2
 \end{lstlisting}
 \end{cod}
 \vspace{-10pt}

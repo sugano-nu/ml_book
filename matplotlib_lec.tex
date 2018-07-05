@@ -33,16 +33,15 @@
 2次元の散布図は，\texttt{<axes>.scatter()}で描画することができる．散布図の場合は一つ一つの点がどれくらいの数値なのかがわかりにくいので，\texttt{<axes>.grid()}でグリッド補助線を追加する．また，各点についてどっちが$x$でどっちが$y$かわからないので横軸と縦軸に\texttt{<axes>.set\_xlabel(<str>)}，\texttt{<axes>.set\_ylabel(<str>)}でラベルをつける．
 \begin{gram}　
 \begin{itemize}
-\item \texttt{<axes>.scatter(x,y)}: 2次元データ$(\bm{x},\bm{y})$の散布図を描画する．ここで，$\bm{x},\bm{y}$は\texttt{<ndarray>}であり，左のデータが横軸，右のデータが縦軸である．
+\item \texttt{<axes>.scatter(x,y)}: 2次元データ$(\bm{x},\bm{y})$の散布図を描画する．ここで，$\bm{x},\bm{y}$は\texttt{<1d\_ndarray>}であり，左のデータが横軸，右のデータが縦軸である．
 \item \texttt{<axes>.grid()}: \texttt{<axes>}にグリッド補助線を追加する．
 \item \texttt{<axes>.set\_xlabel(<str>)}: \texttt{<axes>}の横軸にラベルをつける．
 \item \texttt{<axes>.set\_ylabel(<str>)}: \texttt{<axes>}の縦軸にラベルをつける．
 \end{itemize}
 \end{gram}
 
-
 \begin{rem}
-基本的にmatplotlibに渡すデータは，\texttt{<ndarray>}であることが必要なので，以降はその前提とする．
+基本的にmatplotlibに渡すデータは，基本的には\texttt{<1d\_ndarray>}であることが必要なので，以降はその前提とする．
 \end{rem}
 
 \begin{cod}[\texttt{fig2.py}]　
@@ -61,3 +60,33 @@
 %\end{lstlisting}
 \end{cod}
 \vspace{-20pt}
+
+\subsection{2次元のグラフ}
+
+いわゆる普通のグラフは、\texttt{<axes>.plot()}で描画することができる．各点を結ぶようにして線が描画される．2つの点を入力して直線を書いたとしても，各点を超えて線を延長してくれるとかはしてくれないので注意．
+\begin{gram}　
+\begin{itemize}
+\item \texttt{<axes>.plot(x,y)}: 2次元データ$(\bm{x},\bm{y})$の各点を結んだ線を描画する．ここで，$\bm{x},\bm{y}$は\texttt{<1d\_ndarray>}であり，左のデータが横軸，右のデータが縦軸である．
+\end{itemize}
+\end{gram}
+
+\begin{cod}[\texttt{fig3.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/fig3.py}
+\vspace{-19pt}
+\begin{figure}[H]
+\begin{center}
+\framed
+\includegraphics[width=8.0cm]{code/fig3.eps}
+\vspace{-10pt}
+\caption{\texttt{fig3.eps}}
+\endframed
+\end{center}
+\end{figure}
+%\begin{lstlisting}
+%\end{lstlisting}
+\end{cod}
+\vspace{-20pt}
+
+
+
+
