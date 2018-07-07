@@ -492,7 +492,7 @@ J=303.8795839611464
 \end{ans}
 
 \begin{qu}\label{qu_lr6}
-(問題\ref{qu_lr3}の続き) 仮説関数のパラメータを$\bm{\theta}=(1,-2)^T$とする．このとき，問題\ref{qu_lr2}で計算した予測値を線でプロットせよ．
+(問題\ref{qu_lr3}の続き) 仮説関数のパラメータを$\bm{\theta}=(1,-2)^T$とする．このとき，\texttt{ex1data1.txt}の散布図と，問題\ref{qu_lr2}で計算した予測値を線でプロットせよ．
 \end{qu}
 \begin{ans}
 \begin{cod}[\texttt{lr6.py}]　
@@ -543,8 +543,29 @@ ${\bm \theta}=(1,-2)^T$の場合の$J({\bm \theta})$の値からかなり減少�
 \qed
 \end{ans}
 
-
-
+\begin{qu}\label{qu_lr7}
+(問題\ref{qu_lr4}の続き) \texttt{ex1data1.txt}の散布図と，問題\ref{qu_lr4}で最適化したパラメータ${\bm \theta}$で\texttt{ex1data1.txt}のデータに対する線形回帰の予測値を線でプロットせよ．
+\end{qu}
+\begin{ans}
+\begin{cod}[\texttt{lr7.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/lr7.py}
+\vspace{-19pt}
+\begin{figure}[H]
+\begin{center}
+\framed
+\includegraphics[width=8.0cm]{code/lrfig4.eps}
+\vspace{-10pt}
+\caption{\texttt{lrfig4.eps}}
+\endframed
+\end{center}
+\end{figure}
+%\begin{lstlisting}
+%\end{lstlisting}
+\end{cod}
+\vspace{-20pt}
+データに対しては良さそうな予測ができていることが確認できる(未知のデータに対しても良い予測かどうかは分からないことに注意)．
+\qed	
+\end{ans}
 
 
 

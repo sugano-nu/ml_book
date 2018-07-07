@@ -174,7 +174,29 @@ array_2d_scl[0,0]=3, type=<class 'numpy.int64'>
 \end{cod}
 \vspace{-10pt}
 
+\subsection{数学の定数，関数など}
 
+ネイピア数$e$は\texttt{np.e}で使用できる．また，$e^x$は\texttt{np.exp(x)}で計算できる．以下に重要なものをまとめる．これらの関数の引数には\texttt{<2d\_ndarray>}などの配列を与えてもよく，この場合は各成分ごとに計算される．
+
+\begin{gram}　
+\begin{itemize}
+\item \texttt{np.e}: ネイピア数$e$を表す．
+\item \texttt{np.exp(x)}: $e^x$を計算する．なお，\texttt{x}に\texttt{<2d\_ndarray>}などの配列を与えた場合は配列の各成分に対して計算する．
+\item \texttt{np.log(x)}: $\log x$を計算する．なお，\texttt{x}に\texttt{<2d\_ndarray>}などの配列を与えた場合は配列の各成分に対して計算する．
+\item \texttt{np.log10(x)}: $\log_{10} x$を計算する．なお，\texttt{x}に\texttt{<2d\_ndarray>}などの配列を与えた場合は配列の各成分に対して計算する．
+\end{itemize}
+\end{gram}
+\begin{cod}[\texttt{num11.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/num11.py}
+\vspace{-10pt}
+\begin{lstlisting}
+e^x=[1.51542622e+01 3.00000000e+00 2.20264658e+04 1.61142883e+00]
+log(x)=[ 1.          0.09404783  2.30258509 -0.73998462]
+10^x=[5.22735300e+02 1.25490916e+01 1.00000000e+10 3.00000000e+00]
+log10(x)=[ 0.43429448  0.04084445  1.         -0.32137124]
+\end{lstlisting}
+\end{cod}
+\vspace{-10pt}
 
 \subsection{規則的な\texttt{<1d\_ndarray>}の作成}
 \texttt{<1d\_ndarray>}をリスト直打ちで作成するのは，大きい配列を作ろうとする場合は不便であるが，規則的な配列であれば，別のプログラムで書くことができる．
@@ -186,6 +208,8 @@ array_2d_scl[0,0]=3, type=<class 'numpy.int64'>
 \item \texttt{np.arange(a)}: $0$から\texttt{a}の手前まで，$1$ずつ増加していく\texttt{<1d\_ndarray>}を作成する．
 \item \texttt{np.arange(a,b)}: \texttt{a}から\texttt{b}の手前まで，$1$ずつ増加していく\texttt{<1d\_ndarray>}を作成する．
 \item \texttt{np.random.randn(a)}: 標準正規分布に従う乱数から発生する\texttt{a}個の要素の\texttt{<1d\_ndarray>}を作成する．
+\item \texttt{np.linspace(a,b,c)}: $a$から始まり、$\frac{b-a}{c-1}$ずつ変化して$b$で終わる長さ$c$の\texttt{<1d\_ndarray>}を作成する．これは，グラフを描画するときに等間隔に各点が欲しくなる場合などによく活用される．
+\item \texttt{np.logspace(a,b,c,base=x)}: $x^a$から始まり，$a$の部分が$\frac{b-a}{c-1}$ずつ変化して$x^b$で終わる長さ$c$の\texttt{<1d\_ndarray>}を作成する．なお，\texttt{base}を省略した場合は，$10$の累乗となる．これは，指数的に増加するようなグラフを対数目盛で描画したい場合などによく活用される．
 \end{itemize}
 \end{gram}
 
@@ -199,6 +223,10 @@ x=[0 1 2 3 4 5 6 7 8 9]
 y=[-10  -9  -8  -7  -6  -5  -4  -3  -2  -1   0]
 z=[-0.38558831  1.20391439  1.18496279  1.50358118  0.93103295 -0.02233168
   0.04894498  0.20757944 -2.67874618 -1.90888007]
+u=[-10.          -7.77777778  -5.55555556  -3.33333333  -1.11111111
+   1.11111111   3.33333333   5.55555556   7.77777778  10.        ]
+t=[1.000e+00 2.000e+00 4.000e+00 8.000e+00 1.600e+01 3.200e+01 6.400e+01
+ 1.280e+02 2.560e+02 5.120e+02 1.024e+03]
 \end{lstlisting}
 \end{cod}
 \vspace{-10pt}
@@ -281,4 +309,42 @@ shape=(4, 2)
 \vspace{-10pt}
 
 
+\subsection{等間隔の2次元の格子点を表現する\texttt{<2d\_ndarray>}の作成}
 
+等間隔の1次元の点は\texttt{np.linspace(a,b,c)}で作成可能であるが，等間隔の2次元の格子点は，2つの\texttt{np.linspace(a,b,c)}の組み合わせとして表現される．例えば，等間隔1次元の点$0,1,2$と$0,1,2$からなる等間隔の2次元の格子点は，9個の点からなり，$(0,0),(0,1),(0,2),(1,0),(1,1),(1,2),(2,0),(2,1),(2,2)$となる．この格子点は，\texttt{np.meshgrid(<1d\_ndarray>,<1d\_ndarray>)}を用いて効率的に作成することができる．が，出力が少々独特なので，よく理解して使用する必要がある．
+
+\begin{gram}　
+\begin{itemize}
+\item \texttt{np.meshgrid(<1d\_ndarray>,<1d\_ndarray>)}: 格子点の第1成分，第2成分のペアを，\texttt{[<2d\_ndarray>,<2d\_ndarray>]}という\texttt{<list>}で出力する．\texttt{[<1d\_ndarray>,<1d\_ndarray>]}のような感じで出るのではと想像しがちだが，そうではないので注意．
+\end{itemize}
+\end{gram}
+
+ここから例えば$\{(0,0),(0,1),(0,2),(1,0),(1,1),(1,2),(2,0),(2,1),(2,2)\}$のような2次元配列を作りたければ，成分ごとに別々の変数で受けた上で，それぞれ\texttt{<2d\_ndarray>.flatten()}で\texttt{<1d\_ndarray>}に変換し，結合することで作成することになる．
+
+\begin{cod}[\texttt{num10.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/num10.py}
+\vspace{-10pt}
+\begin{lstlisting}
+grid=
+[array([[0, 1, 2],
+       [0, 1, 2],
+       [0, 1, 2]]), array([[0, 0, 0],
+       [1, 1, 1],
+       [2, 2, 2]])]
+type=<class 'list'>
+grid=
+[[0 0]
+ [1 0]
+ [2 0]
+ [0 1]
+ [1 1]
+ [2 1]
+ [0 2]
+ [1 2]
+ [2 2]]
+type=<class 'numpy.ndarray'>
+\end{lstlisting}
+\end{cod}
+\vspace{-10pt}
+
+なお，matplotlibの一部の描画では，\texttt{<1d\_ndarray>}ではなく行ベクトルや列ベクトルでもない，行列としての\texttt{<2d\_ndarray>}を与えなければならないものもあり，そういう場合は\texttt{np.meshgrid(<1d\_ndarray>,<1d\_ndarray>)}で生成された\texttt{<2d\_ndarray>}はそのまま使用することになる．

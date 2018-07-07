@@ -74,9 +74,9 @@ p={'x': 3, 'y': 5}, type=<class 'dict'>
 
 
 \subsection{関数の作成}
-Pythonは型の定義や渡し方等を意識して記述することなく，非常にシンプルな書き方で関数を作成できる．また，返り値は複数でもよく，出力先の変数が1つならタプル，複数ならそれぞれの要素をそれぞれの変数に格納する．
+Pythonは型の定義や渡し方等を意識して記述することなく，非常にシンプルな書き方で関数を作成できる．また，返り値は複数でもよく，出力先の変数が1つならタプル，複数ならそれぞれの要素をそれぞれの変数に格納する．通常，関数を作る際は引数の型として何をとるかなどを考えながら組むことが多いが，実際のコードは型を指定しないので，関数を作るときに想定していなかった型の引数を渡した場合にどうなるかということを考えてみると，型を指定しない関数の便利さが分かってくる．
 
-\begin{gram}　
+\begin{gram}[関数の定義]　
 \begin{lstlisting}
 def <func_name>(<object>,<object>,....):
 	<expr>
@@ -86,12 +86,15 @@ def <func_name>(<object>,<object>,....):
 \end{lstlisting}
 \end{gram}
 
+このコード例は，なんとなく数値の引数を思い浮かべながら組んだ関数の例であるが，この関数は数値だけではなく\texttt{<ndarray>}でも動作する(numpyについては後述)．
 \begin{cod}[\texttt{py5.py}]　
 \lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/py5.py}
 \vspace{-7pt}
 \begin{lstlisting}
 add=9,sub=11,mul=-10,div=-10.0
 tpl=(0, 10, -25, -1.0)
+
+add=[0 0 0],sub=[2 4 6],mul=[-1 -4 -9],div=[-1. -1. -1.]
 \end{lstlisting}
 \end{cod}
 \vspace{-10pt}
