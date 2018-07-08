@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.8.1-180226-2.6 (utf8.euc) (TeX Live 2018) (preloaded format=platex 2018.5.28)  7 JUL 2018 18:38
+This is e-pTeX, Version 3.14159265-p3.8.1-180226-2.6 (utf8.euc) (TeX Live 2018) (preloaded format=platex 2018.5.28)  9 JUL 2018 02:47
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -442,7 +442,7 @@ Overfull \hbox (8.40599pt too wide) in paragraph at lines 5--6
 []\OT1/cmtt/m/n/10 <ndarray>\JY1/mc/m/n/10 は\OT1/cmtt/m/n/10 <list>\JY1/mc/m/n/10 から作成できる ． 普通の\OT1/cmtt/m/n/10 <list>\JY1/mc/m/n/10 の場合は \OT1/cmr/m/n/10 1 \JY1/mc/m/n/10 次元の\OT1/cmtt/m/n/10 <ndarray>\OT1/cmr/m/n/10 (\JY1/mc/m/n/10 以下\OT1/cmtt/m/n/10 <1d[]ndarray>\JY1/mc/m/n/10 と
  []
 
-(./code/num1.py [12]) (./code/num5.py) [13]
+[12] (./code/num1.py) (./code/num5.py [13])
 Underfull \hbox (badness 1509) in paragraph at lines 69--70
 \JY1/mc/m/n/10 を使用する ． また ， \OT1/cmtt/m/n/10 <1d[]ndarray>\JY1/mc/m/n/10 を行ベクトルとしての\OT1/cmtt/m/n/10 <2d[]ndarray>\JY1/mc/m/n/10 に変換するには ， 一
  []
@@ -452,7 +452,7 @@ Underfull \hbox (badness 2020) in paragraph at lines 69--70
 \JY1/mc/m/n/10 旦 \OT1/cmtt/m/n/10 np.c[][<1d[]ndarray>] \JY1/mc/m/n/10 で列ベクトルを作 った上で ， \OT1/cmtt/m/n/10 <2d[]ndarray>\JY1/mc/m/n/10 を転置させるメソ ッ
  []
 
-(./code/num3.py [14]) [15] (./code/num8.py) [16] (./code/num4.py) [17] (./code/num11.py) (./code/num2.py [18]) (./code/num7.py) [19] (./code/num6.py) (./code/num9.py) [20] (./code/num10.py) [21]) (./pandas_lec.tex
+(./code/num3.py [14]) [15] (./code/num8.py) [16] (./code/num4.py) [17] (./code/num11.py) (./code/num2.py [18]) (./code/num7.py) [19] (./code/num6.py) (./code/num9.py [20]) (./code/num10.py) [21]) (./pandas_lec.tex
 Underfull \hbox (badness 1226) in paragraph at lines 350--1
 []\JY1/mc/m/n/10 なお ， \OT1/cmr/m/n/10 mat-plotlib \JY1/mc/m/n/10 の一部の描画では ， \OT1/cmtt/m/n/10 <1d[]ndarray>\JY1/mc/m/n/10 ではなく行ベクトルや列ベクトルで
  []
@@ -467,66 +467,99 @@ Underfull \hbox (badness 1895) in paragraph at lines 197--198
 \OT1/cmtt/m/n/10 or Series>.values \JY1/mc/m/n/10 メソ ッドを使う ． \OT1/cmtt/m/n/10 <DataFrame>\JY1/mc/m/n/10 の場合は\OT1/cmtt/m/n/10 <2d[]ndarray>\JY1/mc/m/n/10 ， \OT1/cmtt/m/n/10 <Series>\JY1/mc/m/n/10 の場合
  []
 
-(./code/pd2.py) [27]) (./matplotlib_lec.tex (./code/fig1.py) [28]
+(./code/pd2.py) [27]) (./matplotlib_lec.tex (./code/fig1.py [28])
 File: code/fig1.eps Graphic file (type eps)
 <code/fig1.eps>
-
-Overfull \hbox (4.15877pt too wide) in paragraph at lines 36--37
+ (./code/fig7.py)
+File: code/fig7.eps Graphic file (type eps)
+<code/fig7.eps>
+ [29]
+Overfull \hbox (4.15877pt too wide) in paragraph at lines 60--61
 []\OT1/cmtt/m/n/10 <axes>.scatter(x,y)\OT1/cmr/m/n/10 : 2 \JY1/mc/m/n/10 次元デ ータ $\OT1/cmr/m/n/10 (\OML/cmm/b/it/10 x\OML/cmm/m/it/10 ; \OML/cmm/b/it/10 y\OT1/cmr/m/n/10 )$ \JY1/mc/m/n/10 の散布図を描画する ． ここで ， $\OML/cmm/b/it/10 x\OML/cmm/m/it/10 ; \OML/cmm/b/it/10 y$ \JY1/mc/m/n/10 は\OT1/cmtt/m/n/10 <1d[]ndarray>\JY1/mc/m/n/10 で
  []
 
-(./code/fig2.py [29])
+(./code/fig2.py [30])
 File: code/fig2.eps Graphic file (type eps)
 <code/fig2.eps>
  (./code/fig3.py)
 File: code/fig3.eps Graphic file (type eps)
 <code/fig3.eps>
- [30] (./code/fig4.py [31])
+ [31] (./code/fig6.py)
+File: code/fig6.eps Graphic file (type eps)
+<code/fig6.eps>
+ [32] (./code/fig4.py [33])
 File: code/fig4.eps Graphic file (type eps)
 <code/fig4.eps>
- [32] (./code/fig5.py)
+ [34] (./code/fig5.py)
 File: code/fig5.eps Graphic file (type eps)
 <code/fig5.eps>
 
-Overfull \hbox (10.98834pt too wide) in paragraph at lines 139--141
+Overfull \hbox (10.98834pt too wide) in paragraph at lines 183--185
  [] 
  []
 
-[33]) [34]
+[35] (./code/fig8.py [36])
+File: code/fig8-1.eps Graphic file (type eps)
+<code/fig8-1.eps>
+
+Overfull \hbox (10.98834pt too wide) in paragraph at lines 209--211
+ [] 
+ []
+
+File: code/fig8-2.eps Graphic file (type eps)
+<code/fig8-2.eps>
+
+Overfull \hbox (10.98834pt too wide) in paragraph at lines 212--214
+ [][] 
+ []
+
+) [37]
 第3章
-(./introduction.tex [35
+(./introduction.tex [38
 
-]) (./supervised_learning.tex [36]
+]) (./supervised_learning.tex [39]
 第4章
-[37
+[40
 
-] [38]
+] [41]
 File: code/lrfig1.eps Graphic file (type eps)
 <code/lrfig1.eps>
- [39] (./code/lrfig1.py) [40] [41] [42] [43] [44] (./code/lr5.py)
+ [42] (./code/lrfig1.py) [43] [44] [45] [46] [47] (./code/lr5.py)
 File: code/lrfig2.eps Graphic file (type eps)
 <code/lrfig2.eps>
- [45] (./code/lr1.py) [46] (./code/lr2.py) [47] (./code/lr3.py) (./code/lr6.py [48])
+ [48] (./code/lr1.py) [49] (./code/lr2.py) [50] (./code/lr3.py) (./code/lr6.py [51])
 File: code/lrfig3.eps Graphic file (type eps)
 <code/lrfig3.eps>
- (./code/lr4.py [49]) [50] (./code/lr7.py)
+ (./code/lr4.py [52]) [53] (./code/lr7.py)
 File: code/lrfig4.eps Graphic file (type eps)
 <code/lrfig4.eps>
- [51] [52]
+ [54] (./code/lr8.py [55])
+File: code/lrfig5.eps Graphic file (type eps)
+<code/lrfig5.eps>
+ [56] (./code/lr9.py [57])
+File: code/lrfig6.eps Graphic file (type eps)
+<code/lrfig6.eps>
+ [58]
+Overfull \vbox (35.8958pt too high) has occurred while \output is active []
+
+ [59] (./code/lr10.py [60])
+File: code/lrfig7.eps Graphic file (type eps)
+<code/lrfig7.eps>
+ [61] [62]
 LaTeX Font Info:    Font shape `JT1/mc/m/it' in size <10> not available
-(Font)              Font shape `JT1/mc/m/n' tried instead on input line 636.
+(Font)              Font shape `JT1/mc/m/n' tried instead on input line 700.
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 636.
+(Font)              scaled to size 9.60999pt on input line 700.
 LaTeX Font Info:    Font shape `JY1/mc/m/it' in size <10> not available
-(Font)              Font shape `JY1/mc/m/n' tried instead on input line 636.
+(Font)              Font shape `JY1/mc/m/n' tried instead on input line 700.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 636.
- [53]) (./reference.tex [54]
+(Font)              scaled to size 9.60999pt on input line 700.
+ [63]) (./reference.tex [64]
 Overfull \hbox (4.82687pt too wide) in paragraph at lines 2--3
 []\OT1/cmr/m/n/10 Andrew Ng, ``Ma-chine Learn-ing'', Stan-ford Uni-ver-sity, https://www.coursera.org/learn/machine-
  []
 
-) [55
+) [65
 
 ] (/Users/kotaro/Documents/ML/ml_book/.texpadtmp/ml_main.aux)
 
@@ -534,12 +567,12 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 6289 strings out of 494499
- 82763 string characters out of 6171360
- 214230 words of memory out of 5000000
- 9868 multiletter control sequences out of 15000+600000
+ 6351 strings out of 494499
+ 83562 string characters out of 6171360
+ 210230 words of memory out of 5000000
+ 9907 multiletter control sequences out of 15000+600000
  28303 words of font info for 129 fonts, out of 8000000 for 9000
  112 hyphenation exceptions out of 8191
- 39i,20n,40p,1053b,1958s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 39i,20n,40p,1053b,1956s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on /Users/kotaro/Documents/ML/ml_book/.texpadtmp/ml_main.dvi (55 pages, 431512 bytes).
+Output written on /Users/kotaro/Documents/ML/ml_book/.texpadtmp/ml_main.dvi (65 pages, 537764 bytes).

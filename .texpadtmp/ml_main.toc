@@ -33,21 +33,24 @@
 \contentsline {subsection}{\numberline {2.3.6}\texttt {values}メソッド}{27}
 \contentsline {section}{\numberline {2.4}matplotlib}{28}
 \contentsline {subsection}{\numberline {2.4.1}\texttt {figure}オブジェクトと\texttt {axes}オブジェクトの作成}{28}
-\contentsline {subsection}{\numberline {2.4.2}2次元の散布図}{29}
-\contentsline {subsection}{\numberline {2.4.3}2次元の折れ線図}{30}
-\contentsline {subsection}{\numberline {2.4.4}3次元の曲面図}{31}
-\contentsline {subsection}{\numberline {2.4.5}2次元の等高線図}{32}
-\contentsline {chapter}{\numberline {第3章}機械学習の概念}{35}
-\contentsline {section}{\numberline {3.1}機械学習の定義}{35}
-\contentsline {section}{\numberline {3.2}教師あり学習と教師なし学習}{36}
-\contentsline {chapter}{\numberline {第4章}教師あり学習}{37}
-\contentsline {section}{\numberline {4.1}トレーニングセットと仮説関数}{37}
-\contentsline {section}{\numberline {4.2}線形回帰}{38}
-\contentsline {subsection}{\numberline {4.2.1}目的関数}{38}
-\contentsline {subsection}{\numberline {4.2.2}最急降下法}{40}
-\contentsline {subsection}{\numberline {4.2.3}デザイン行列}{42}
-\contentsline {subsection}{\numberline {4.2.4}Pythonによる実装}{45}
-\contentsline {subsection}{\numberline {4.2.5}デバッグ}{52}
-\contentsline {subsection}{\numberline {4.2.6}正規方程式}{52}
-\contentsline {section}{\numberline {4.3}多項式回帰}{53}
-\contentsline {chapter}{参考文献}{55}
+\contentsline {subsection}{\numberline {2.4.2}\texttt {<axes>}間の余白調整}{29}
+\contentsline {subsection}{\numberline {2.4.3}2次元の散布図}{30}
+\contentsline {subsection}{\numberline {2.4.4}2次元の折れ線図}{31}
+\contentsline {subsection}{\numberline {2.4.5}複数の図の重ね合わせ}{32}
+\contentsline {subsection}{\numberline {2.4.6}3次元の曲面図}{33}
+\contentsline {subsection}{\numberline {2.4.7}2次元の等高線図}{34}
+\contentsline {subsection}{\numberline {2.4.8}\texttt {<axes>}間での$y$軸の共有}{36}
+\contentsline {chapter}{\numberline {第3章}機械学習の概念}{38}
+\contentsline {section}{\numberline {3.1}機械学習の定義}{38}
+\contentsline {section}{\numberline {3.2}教師あり学習と教師なし学習}{39}
+\contentsline {chapter}{\numberline {第4章}教師あり学習}{40}
+\contentsline {section}{\numberline {4.1}トレーニングセットと仮説関数}{40}
+\contentsline {section}{\numberline {4.2}線形回帰}{41}
+\contentsline {subsection}{\numberline {4.2.1}目的関数}{41}
+\contentsline {subsection}{\numberline {4.2.2}最急降下法}{43}
+\contentsline {subsection}{\numberline {4.2.3}デザイン行列}{45}
+\contentsline {subsection}{\numberline {4.2.4}Pythonによる実装}{48}
+\contentsline {subsection}{\numberline {4.2.5}デバッグ}{60}
+\contentsline {subsection}{\numberline {4.2.6}正規方程式}{61}
+\contentsline {section}{\numberline {4.3}多項式回帰}{63}
+\contentsline {chapter}{参考文献}{65}

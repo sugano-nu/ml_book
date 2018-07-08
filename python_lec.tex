@@ -60,6 +60,7 @@ Pythonは多種多様な型を持つため，最初のうちは型をいろい�
 \begin{gram}　
 \begin{itemize}
 \item \texttt{<str>.format(<object>,<object>,\ldots)}: \texttt{<str>}の中に記入した\texttt{\{\}}に，\texttt{<object>}の中身を文字列として代入する．なお，\texttt{\{\}}は何個あってもよく，\texttt{\{\}}には\texttt{<object>,<object>,\ldots}の順にそれぞれ代入されていく．
+\item \texttt{<str>}の中に記入した\texttt{\{\}}を\texttt{\{:f\}}に書き換える: 小数表記(ただし小数点以下第6位まで)で表示する．デフォルトの場合，数値の小ささや大きさ等によって，自動的に指数表記への変換が行われるが，これをやめて欲しい場合，このように指定することで少数で表示できる．
 \end{itemize}
 \end{gram}
 
@@ -68,6 +69,8 @@ Pythonは多種多様な型を持つため，最初のうちは型をいろい�
 \vspace{-7pt}
 \begin{lstlisting}
 p={'x': 3, 'y': 5}, type=<class 'dict'>
+alpha=1e-06
+alpha=0.000001
 \end{lstlisting}
 \end{cod}
 \vspace{-10pt}

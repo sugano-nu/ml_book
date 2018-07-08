@@ -28,6 +28,30 @@
 \end{cod}
 \vspace{-20pt}
 
+\subsection{\texttt{<axes>}間の余白調整}
+
+\texttt{fig1.eps}をみると，\texttt{<axes>}間の余白が詰まっている．デフォルトのまま，これに軸ラベルやグラフのタイトルをつけていくと，大体の場合で重なってしまう．ので，\texttt{<figure>.subplots\_adjust()}で余白を調整する必要がある．
+\begin{gram}　
+\begin{itemize}
+\item \texttt{<figure>.subplots\_adjust(wspace=a, hspace=b)}: \texttt{<figure>.subplot()}での\texttt{<axes>}の余白を調整する．\texttt{wspace=a}は，\texttt{<axes>}の横並び間隔を\texttt{a}インチ広げる．\texttt{hspace=b}は，\texttt{<axes>}の縦並び間隔を\texttt{b}インチ広げる．
+\end{itemize}
+\end{gram}
+\begin{cod}[\texttt{fig7.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/fig7.py}
+\vspace{-19pt}
+\begin{figure}[H]
+\begin{center}
+\framed
+\includegraphics[width=10.0cm]{code/fig7.eps}
+\vspace{-16pt}
+\caption{\texttt{fig7.eps}}
+\endframed
+\end{center}
+\end{figure}
+%\begin{lstlisting}
+%\end{lstlisting}
+\end{cod}
+\vspace{-20pt}
 \subsection{2次元の散布図}
 
 2次元の散布図は，\texttt{<axes>.scatter()}で描画することができる．散布図の場合は一つ一つの点がどれくらいの数値なのかがわかりにくいので，\texttt{<axes>.grid()}でグリッド補助線を追加する．また，各点についてどっちが$x$でどっちが$y$かわからないので横軸と縦軸に\texttt{<axes>.set\_xlabel(<str>)}，\texttt{<axes>.set\_ylabel(<str>)}でラベルをつける．
@@ -79,6 +103,26 @@
 \includegraphics[width=8.0cm]{code/fig3.eps}
 \vspace{-10pt}
 \caption{\texttt{fig3.eps}}
+\endframed
+\end{center}
+\end{figure}
+%\begin{lstlisting}
+%\end{lstlisting}
+\end{cod}
+\vspace{-20pt}
+
+\subsection{複数の図の重ね合わせ}
+
+\texttt{<axes>}にどんどんメソッドを重ねていくイメージで，一つの描画スペースに複数の図を重ねて置くことができる．
+\begin{cod}[\texttt{fig6.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/fig6.py}
+\vspace{-19pt}
+\begin{figure}[H]
+\begin{center}
+\framed
+\includegraphics[width=8.0cm]{code/fig6.eps}
+\vspace{-10pt}
+\caption{\texttt{fig6.eps}}
 \endframed
 \end{center}
 \end{figure}
@@ -139,6 +183,35 @@ $f(x,y)=\frac{e^x+e^{-x}+e^y+e^{-y}}{4}~(-5\leq x\leq 5,-5\leq y\leq 5)$につ�
 \includegraphics[width=15.0cm]{code/fig5.eps}
 \vspace{-10pt}
 \caption{\texttt{fig5.eps}}
+\endframed
+\end{center}
+\end{figure}
+%\begin{lstlisting}
+%\end{lstlisting}
+\end{cod}
+\vspace{-20pt}
+
+\subsection{\texttt{<axes>}間での$y$軸の共有}
+
+matplotlibは，データに応じて軸の目盛りは自動調整されるが，そのせいで，グラフの見た目(傾き等)がどれも同じように調整されてしまい，グラフを比較するときに大きな誤認をしてしまう可能性がある．\texttt{<figure>.subplot()}で\texttt{<axes>}間の$y$軸を同じくする場合，\texttt{<axes>}を生成するときのオプションに\texttt{sharey=<axes>}を指定する．
+
+\begin{gram}　
+\begin{itemize}
+\item \texttt{<figure>.add\_subplot(a,b,c, sharey=<axes2>)}: \texttt{<figure>}を\texttt{a}行\texttt{b}列に分割した上で，\texttt{c}番目の部分に，$y$軸を\texttt{<axes2>}と共有した空の\texttt{<axes>}を作成する．
+\end{itemize}
+\end{gram}
+\begin{cod}[\texttt{fig8.py}]　\\
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/fig8.py}
+\vspace{-19pt}
+\begin{figure}[H]
+\begin{center}
+\framed
+\includegraphics[width=15.0cm]{code/fig8-1.eps}
+\vspace{-10pt}
+\caption{\texttt{fig8-1.eps}}
+\includegraphics[width=15.0cm]{code/fig8-2.eps}
+\vspace{-10pt}
+\caption{\texttt{fig8-2.eps}}
 \endframed
 \end{center}
 \end{figure}

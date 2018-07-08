@@ -515,8 +515,6 @@ J=303.8795839611464
 \qed	
 \end{ans}
 
-
-
 \begin{qu}\label{qu_lr4}
 (問題\ref{qu_lr6}の続き) \texttt{ex1data1.txt}のデータを全て用いて目的変数${\bm y}$を特徴量から予測するモデルを線形回帰で構築するとしたとき，次の問いに答えよ．
 \begin{enumerate}
@@ -567,17 +565,83 @@ ${\bm \theta}=(1,-2)^T$の場合の$J({\bm \theta})$の値からかなり減少�
 \qed	
 \end{ans}
 
+\begin{qu}\label{qu_lr8}
+(問題\ref{qu_lr7}の続き) 目的関数$J({\bm \theta})$について，3次元の曲面図と2次元の等高線図を図示し，等高線図について最適化したパラメータ${\bm \theta}$をプロットして最適化ができていること(最小値付近にいること)を確認せよ．なお，図示の際の定義域は，$-15 \leq \theta_0 \leq 10,~-1 \leq \theta_1 \leq 4$とし，等高線図の図示の際は等高線ができるだけ等間隔に並ぶように\texttt{levels}を適切に設定せよ．
+\end{qu}
+\begin{ans}
+\begin{cod}[\texttt{lr8.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/lr8.py}
+\vspace{-19pt}
+\begin{figure}[H]
+\begin{center}
+\framed
+\includegraphics[width=13.0cm]{code/lrfig5.eps}
+\vspace{-10pt}
+\caption{\texttt{lrfig5.eps}}
+\endframed
+\end{center}
+\end{figure}
+%\begin{lstlisting}
+%\end{lstlisting}
+\end{cod}
+確かに最小値っぽいところに落ち着いているので，最急降下法はうまく動いてくれたようだ．
+\qed	
+\end{ans}
 
-
+\begin{qu}\label{qu_lr9}
+(問題\ref{qu_lr8}の続き) 最急降下法がうまくいっていることを確認するため，繰り返し計算が進むにつれて${\bm \theta}$が最小値付近に移動することや，仮説関数がデータをよく予測できていく様子を描画したい．最急降下法の${\bm \theta}$の更新ごとに${\bm \theta}$をストックするようなプログラムを作り，それを使用して繰り返し回数が0,1,10,1000回それぞれにおける仮説関数と$J({\bm \theta})$の等高線図における${\bm \theta}$のプロットを描画せよ．なお，最急降下法の初期値は${\bm \theta}=(0,0)^T$とすること．
+\end{qu}
+\begin{ans}
+\begin{cod}[\texttt{lr9.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/lr9.py}
+\vspace{-19pt}
+\begin{figure}[H]
+\begin{center}
+\framed
+\includegraphics[width=13.5cm]{code/lrfig6.eps}
+\vspace{-10pt}
+\caption{\texttt{lrfig6.eps}}
+\endframed
+\end{center}
+\end{figure}
+%\begin{lstlisting}
+%\end{lstlisting}
+\end{cod}
+最初の1回の更新でかなり学習が進んでいることがわかる．
+\qed	
+\end{ans}
 
 \subsection{デバッグ}
 
-最急降下法がうまく収束しているかを確認する手段としては，ループ1回ごとに$J({\bm \theta})$の値をプロットしていき，値が順調に減少していっているかどうかをみるという方法がある．これをデバッグという．
+さて，これまで最急降下法の学習率は$\alpha=0.01$固定でずっと行ってきた．この学習率を別の数値にした場合，最急降下法はどういう挙動を示すのか知りたいとする．最急降下法は目的関数$J({\bm \theta})$の数値をどんどん小さくするためのアルゴリズムであるから，最急降下法がうまく収束しているかを確認する手段としては，ループ1回ごとに$J({\bm \theta})$の値をプロットしていき，値が順調に減少していっているかどうかをみるという方法がある．これをデバッグという．
 
 \begin{defi}[デバッグ]
 　\\
 最急降下法において，横軸に繰り返し回数(number of iterations)，縦軸に目的関数値$J({\bm \theta})$をとり図示することを{\bf デバッグ(debugging)}という．
 \end{defi}
+
+\begin{qu}\label{qu_lr10}
+(問題\ref{qu_lr9}の続き) 学習率$\alpha=0.00001,0.0001,0.024324$の3パターンそれぞれで最急降下法のデバッグを行い，目的関数$J({\bm \theta})$の変化具合を図示することで比較し，最も適している学習率は3つのうちどれか答えなさい．なお，最急降下法の初期値は${\bm \theta}=(1,-2)^T$とすること．
+\end{qu}
+\begin{ans}
+\begin{cod}[\texttt{lr10.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/lr10.py}
+\vspace{-19pt}
+\begin{figure}[H]
+\begin{center}
+\framed
+\includegraphics[width=13.5cm]{code/lrfig7.eps}
+\vspace{-10pt}
+\caption{\texttt{lrfig7.eps}}
+\endframed
+\end{center}
+\end{figure}
+%\begin{lstlisting}
+%\end{lstlisting}
+\end{cod}
+最も適している学習率は，図より$\alpha=0.0001$である．学習率とは，パラメータ更新の強さを表すので，弱いとなかなか最小にたどり着かず，かといって強すぎると最小値を超えてパラメータを更新してしまうので，いつまでたっても最小にはたどり着かず，むしろどんどん遠ざかることなる．
+\qed	
+\end{ans}
 
 \subsection{正規方程式}
 
