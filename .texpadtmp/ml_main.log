@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.8.1-180226-2.6 (utf8.euc) (TeX Live 2018) (preloaded format=platex 2018.5.28)  14 JUL 2018 13:12
+This is e-pTeX, Version 3.14159265-p3.8.1-180226-2.6 (utf8.euc) (TeX Live 2018) (preloaded format=platex 2018.5.28)  14 JUL 2018 13:29
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -551,13 +551,13 @@ File: code/lrfig10.eps Graphic file (type eps)
 <code/lrfig10.eps>
  [68]
 LaTeX Font Info:    Font shape `JT1/mc/m/it' in size <10> not available
-(Font)              Font shape `JT1/mc/m/n' tried instead on input line 786.
+(Font)              Font shape `JT1/mc/m/n' tried instead on input line 787.
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 786.
+(Font)              scaled to size 9.60999pt on input line 787.
 LaTeX Font Info:    Font shape `JY1/mc/m/it' in size <10> not available
-(Font)              Font shape `JY1/mc/m/n' tried instead on input line 786.
+(Font)              Font shape `JY1/mc/m/n' tried instead on input line 787.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 786.
+(Font)              scaled to size 9.60999pt on input line 787.
  [69]) (./reference.tex [70]
 Overfull \hbox (4.82687pt too wide) in paragraph at lines 2--3
 []\OT1/cmr/m/n/10 Andrew Ng, ``Ma-chine Learn-ing'', Stan-ford Uni-ver-sity, https://www.coursera.org/learn/machine-
@@ -579,4 +579,4 @@ Here is how much of TeX's memory you used:
  112 hyphenation exceptions out of 8191
  39i,20n,40p,1053b,1956s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on /Users/kotaro/Documents/ML/ml_book/.texpadtmp/ml_main.dvi (71 pages, 621724 bytes).
+Output written on /Users/kotaro/Documents/ML/ml_book/.texpadtmp/ml_main.dvi (71 pages, 621732 bytes).
