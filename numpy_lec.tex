@@ -262,6 +262,7 @@ shape=(4, 3)
 \begin{itemize}
 \item \texttt{<A\_2d\_ndarray>.dot(<B\_2d\_ndarray>)}: 行列積$AB$を計算する．
 \item \texttt{<A\_2d\_ndarray>$*$<B\_2d\_ndarray>}: アダマール積$A*B$を計算する．
+\item \texttt{np.linalg.pinv(<A\_2d\_ndarray>)}: 行列$A$のムーア・ペンローズ一般逆行列$A^+$を計算する．
 \end{itemize}
 \end{gram}
 
@@ -280,6 +281,9 @@ H=
 [[ -6  10]
  [ 12 -12]
  [-10   6]]
+J=
+[[0.16666667 0.16666667 0.16666667]
+ [0.16666667 0.16666667 0.16666667]]
 \end{lstlisting}
 \end{cod}
 \vspace{-10pt}

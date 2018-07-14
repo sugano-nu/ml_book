@@ -113,7 +113,15 @@
 
 \subsection{複数の図の重ね合わせ}
 
-\texttt{<axes>}にどんどんメソッドを重ねていくイメージで，一つの描画スペースに複数の図を重ねて置くことができる．
+\texttt{<axes>}にどんどんメソッドを重ねていくイメージで，一つの描画スペースに複数の図を重ねて置くことができる．また，凡例は，各\texttt{plot}に\texttt{label=<str>}を設定し，\texttt{<axes>.legend()}で表示させることができる(\texttt{plot}以外の描画系関数でも同様のことは可能)．
+
+\begin{gram}　
+\begin{itemize}
+\item \texttt{<axes>.plot(x,y,label=<str>)}: 2次元データ$(\bm{x},\bm{y})$の各点を結んだ線を描画する．また，オプション\texttt{label=<str>}で\texttt{plot}に名前をつける．
+\item \texttt{<axes>.legend()}: \texttt{<axes>}の凡例をつける．ここで，凡例は描く描画系関数で設定した\texttt{label=<str>}となる．
+\end{itemize}
+\end{gram}
+
 \begin{cod}[\texttt{fig6.py}]　
 \lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/fig6.py}
 \vspace{-19pt}
@@ -206,10 +214,10 @@ matplotlibは，データに応じて軸の目盛りは自動調整されるが�
 \begin{figure}[H]
 \begin{center}
 \framed
-\includegraphics[width=15.0cm]{code/fig8-1.eps}
+\includegraphics[width=12.0cm]{code/fig8-1.eps}
 \vspace{-10pt}
 \caption{\texttt{fig8-1.eps}}
-\includegraphics[width=15.0cm]{code/fig8-2.eps}
+\includegraphics[width=12.0cm]{code/fig8-2.eps}
 \vspace{-10pt}
 \caption{\texttt{fig8-2.eps}}
 \endframed

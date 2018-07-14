@@ -27,7 +27,7 @@
 \contentsline {section}{\numberline {2.3}pandas}{22}
 \contentsline {subsection}{\numberline {2.3.1}カンマ区切りテキストを\texttt {DataFrame}オブジェクトに格納(\texttt {read\_csv}関数)}{22}
 \contentsline {subsection}{\numberline {2.3.2}\texttt {<2d\_ndarray>}から\texttt {<DataFrame>}の作成}{23}
-\contentsline {subsection}{\numberline {2.3.3}列の追加}{23}
+\contentsline {subsection}{\numberline {2.3.3}列の追加}{24}
 \contentsline {subsection}{\numberline {2.3.4}\texttt {<DataFrame>}の一部分の取り出し}{24}
 \contentsline {subsection}{\numberline {2.3.5}\texttt {<Series>}と1列しか持たない\texttt {<DataFrame>}の違い}{26}
 \contentsline {subsection}{\numberline {2.3.6}\texttt {values}メソッド}{27}
@@ -52,5 +52,6 @@
 \contentsline {subsection}{\numberline {4.2.4}Pythonによる実装}{48}
 \contentsline {subsection}{\numberline {4.2.5}デバッグ}{60}
 \contentsline {subsection}{\numberline {4.2.6}正規方程式}{61}
-\contentsline {section}{\numberline {4.3}多項式回帰}{63}
-\contentsline {chapter}{参考文献}{65}
+\contentsline {subsection}{\numberline {4.2.7}特徴量スケーリング}{64}
+\contentsline {section}{\numberline {4.3}多項式回帰}{69}
+\contentsline {chapter}{参考文献}{71}
