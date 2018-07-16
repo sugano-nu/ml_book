@@ -398,7 +398,7 @@ $X^TX$は対称行列であることに注意すると，
 以上で線形回帰で必要なパーツは揃った．これらのパーツを実際にPythonにて実装していきながら，線形回帰とはどういうものかを掴んでいく．
 
 \begin{qu}\label{qu_lr5}
-\texttt{ex1data1.txt}(2列，カンマ区切り，列名ヘッダーなし，1列目はpopulation of city in 10,000s，2列目はprofit in \$10,000sであるデータ．取得元は\cite{AndrewML})を散布図でプロットせよ．
+\texttt{ex1data1.txt}(2列，カンマ区切り，列名ヘッダーなし，1列目はpopulation of city in 10,000s，2列目はprofit in \$10,000sであるデータ．取得元は\cite{AndrewML})を散布図でプロットし，すなわち仮説関数を$h_{{\bm \theta}}({\bm x}^{(i)})={\bm \theta}^T{\bm x}^{(i)}$とする線形回帰を行うことが良さそうなことを確認せよ．
 \end{qu}
 \begin{ans}
 \begin{cod}[\texttt{lr5.py}]　
@@ -421,7 +421,7 @@ $X^TX$は対称行列であることに注意すると，
 
 
 \begin{qu}\label{qu_lr1}
-(問題\ref{qu_lr5}の続き) \texttt{ex1data1.txt}から，デザイン行列$X$と目的変数${\bm y}$をそれぞれ\texttt{<2d\_ndarray>}で作成せよ．ここで，目的変数はprofit in \$10,000sとし，デザイン行列には$x_0^{(i)}=1$の項も付け加えよ．
+(問題\ref{qu_lr5}の続き) \texttt{ex1data1.txt}から，線形回帰を行うための準備としてデザイン行列$X$と目的変数${\bm y}$をそれぞれ\texttt{<2d\_ndarray>}で作成せよ．ここで，目的変数はprofit in \$10,000sとし，デザイン行列には$x_0^{(i)}=1$の項も付け加えよ．
 \end{qu}
 \begin{ans}
 表形式データは，行方向にデータが並び，列方向が特徴量が並ぶものが多いので，デザイン行列は表形式データそのものとして与えてあげればよい．また，目的変数は1列のデータであるが，\texttt{<DataFrame>}から1列だけ読み込む場合は\texttt{<1d\_ndarray>}になってしまうので，列ベクトルとしての\texttt{<2d\_ndarray>}に変換する．なお，データ数が多いので，以下のコードにおいてはデザイン行列や目的変数は最初の5行分のみ表示するようにしている．
@@ -452,7 +452,7 @@ type=<class 'numpy.ndarray'>,shape=(97, 1)
 \end{ans}
 
 \begin{qu}\label{qu_lr2}
-(問題\ref{qu_lr1}の続き) 仮説関数のパラメータを$\bm{\theta}=(1,-2)^T$とする．このとき，問題\ref{qu_lr1}で作成したデザイン行列$X$に対して予測値である仮説関数ベクトル$(h_{{\bm \theta}}({\bm x}^{(1)}),h_{{\bm \theta}}({\bm x}^{(2)}),\ldots,h_{{\bm \theta}}({\bm x}^{(m)}))^T$を計算し，問題\ref{qu_lr1}で作成した目的変数${\bm y}$と並べて表示せよ．なお，仮説関数は関数として定義せよ．
+(問題\ref{qu_lr1}の続き) 何らかの学習を行なった結果，仮説関数のパラメータとして$\bm{\theta}=(1,-2)^T$を得られた．このとき，問題\ref{qu_lr1}で作成したデザイン行列$X$に対して予測値である仮説関数ベクトル$(h_{{\bm \theta}}({\bm x}^{(1)}),h_{{\bm \theta}}({\bm x}^{(2)}),\ldots,h_{{\bm \theta}}({\bm x}^{(m)}))^T$を計算し，問題\ref{qu_lr1}で作成した目的変数${\bm y}$と並べて表示することで，予測値の妥当性を確認せよ．なお，仮説関数は関数として定義せよ．
 \end{qu}
 \begin{ans}
 式(\ref{lr_hypo})を実装すれば良い．
@@ -475,7 +475,7 @@ y_df=
 \end{ans}
 
 \begin{qu}\label{qu_lr3}
-(問題\ref{qu_lr2}の続き) 仮説関数のパラメータを$\bm{\theta}=(1,-2)^T$とする．このとき，問題\ref{qu_lr1}で作成したデザイン行列$X$と目的変数${\bm y}$に対して目的関数$J({\bm \theta})$の値を計算せよ．なお，目的関数$J({\bm \theta})$は関数として定義せよ．
+(問題\ref{qu_lr2}の続き) 仮説関数のパラメータを$\bm{\theta}=(1,-2)^T$とする．このとき，問題\ref{qu_lr1}で作成したデザイン行列$X$と目的変数${\bm y}$に対して目的関数$J({\bm \theta})$の値を計算せよ．ここで，目的関数$J({\bm \theta})$は最小二乗誤差関数とする．なお，実装にあたっては，目的関数$J({\bm \theta})$は関数として定義せよ．
 \end{qu}
 \begin{ans}
 式(\ref{lr_cost})を実装すれば良い．numpyでの線形代数計算は，結果がスカラーだとしても\texttt{<2d\_ndarray>}のままなので，要素を指定してあげて数値を取り出すことが必要となる．
@@ -721,7 +721,7 @@ X^TX{\bm \theta}=X^T{\bm y}
 データ\texttt{ex1data2.txt}は，オレゴン州ポートランドの住宅価格のデータ(最初の列は住宅の面積(単位はsquare feet)，2番目の列は寝室の数，3番目の列は住宅価格)である．\texttt{ex1data2.txt}を用いて，オレゴン州ポートランドの住宅価格の予測モデルを線形回帰を用いて構築したい．このとき，次の問いに答えなさい．
 \begin{enumerate}
 \item データ\texttt{ex1data2.txt}をそのまま使用して学習し，最適なパラメータ${\bm \theta}$を求め，新しいデータ${\bm x}^{(m+1)}:住宅面積=2500, 寝室の数=3$に対する住宅価格の予測値を求めよ．ここで，学習率はデバッグをしながら自身で定めよ．また，繰り返し回数は50回で打ち切り，${\bm \theta}={\bm 0}$を初期値とする．
-\item データ\texttt{ex1data2.txt}に特徴量スケーリングを施して学習し，最適なパラメータ${\bm \theta}$を求め，新しいデータ${\bm x}^{(m+1)}:住宅面積=2500, 寝室の数=3$に対する住宅価格の予測値を求めよ．ここで，学習率はデバッグをしながら自身で定めよ．また，繰り返し回数は50回で打ち切り，${\bm \theta}={\bm 0}$を初期値とする．
+\item データ\texttt{ex1data2.txt}に特徴量スケーリングを施して学習し，最適なパラメータ${\bm \theta}$を求め，新しいデータ${\bm x}^{(m+1)}:住宅面積=2500, 寝室の数=3$に対する住宅価格の予測値を求めよ．ここで，学習率はデバッグをしながら自身で定めよ．また，繰り返し回数は50回で打ち切り，${\bm \theta}={\bm 0}$を初期値とする．また，特徴量スケーリングは$x_0=1$の列は施さなくてよい．
 \item 特徴量スケーリングによりどう変わったのか確認せよ．
 \end{enumerate}
 \end{qu}
@@ -771,43 +771,85 @@ y_pred=411368.42281033465
 \qed
 \end{ans}
 
-\section{多項式回帰}
+\subsection{確率論的解釈}
 
-仮説関数として，線形関数を選ぶ必要はない．仮説関数として多項式を設定した場合は多項式回帰と呼ばれる．
-\begin{defi}[多項式回帰]
-　\\
-回帰問題において，仮説関数を多項式とした場合，特に{\bf 多項式回帰(polynomial regression)}という．
+上記の例では，プロットしたデータを観察して，本質的な構造は線形関係であると判断し仮説関数としては線形関数を選択し，仮説関数の未知のパラメータは，当てはめたときの二乗誤差が小さくなるように，最小二乗誤差関数を選択した．しかし，本質的な構造が線形関係でも，実際のデータは直線上に並んでおらず，ばらつきがある．上記の例ではばらつきについては何も考慮してこなかった．すなわち，$y^{(i)}={\bm \theta}^T{\bm x}$であると決め打ちした上で，データに対していい感じに当てはまるようにパラメータ${\bm \theta}$を定めただけだった．そこで，ここでは，このばらつきもある程度考慮したモデルを考える．
+
+$i$番目のデータに対して，本質的な構造は$y^{(i)}={\bm \theta}^T{\bm x}$とするものの，そこからばらつきが発生しているため，このばらつき項$\varepsilon^{(i)}$を付与して$y^{(i)}={\bm \theta}^T{\bm x}^{(i)}+\varepsilon^{(i)}$というモデルとする．ここで，ばらつき項$\varepsilon^{(i)}$は確率変数であり，$\varepsilon^{(i)}〜N(0,\sigma^2)$に従い$i$について互いに独立かつ同分布(i.i.d:independent and identically distributed)であると仮定する．
+
+\begin{defi}[線形回帰(確率論的)]
+トレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m \subset (({\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n) \times {\cal Y})^m$について，${\cal Y}=\mathbb{R}$であり，$y^{(i)}$は式(\ref{LM_p})で生起すると仮定するモデルを{\bf 線形回帰(linear regression)}という．ここで，特徴量${\bm x}^{(i)}$は，常に1の値をとるような特徴量$x_0^{(i)}=1$を付して${\bm x}^{(i)}=(x_0^{(i)},x_1^{(i)},x_2^{(i)},\ldots,x_n^{(i)})^T \in 1 \times {\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n$と置き直すこととする．また，${\bm \theta}=(\theta_0,\theta_1,\ldots,\theta_n)^T \in \mathbb{R}^{n+1}$とする．また，$\varepsilon^{(i)}$は，$\varepsilon^{(i)}〜N(0,\sigma^2)$に従い$i$について互いに独立かつ同分布(i.i.d)とする．また，$y^{(i)}$は確率変数であることを強調するため$Y^{(i)}$と書くこととする．
+\begin{align}
+Y^{(i)} = {\bm \theta}^T {\bm x}^{(i)}+\varepsilon^{(i)} \label{LM_p}
+\end{align}
 \end{defi}
 
-\begin{qu}
-トレーニングセット$\{(x_1^{(i)},y^{(i)})\}_{i=1}^10$をプロットしたところ，下図となった．これについての回帰問題を解きたい．仮説関数としてどのようなものが考えられるか．
+このモデルにより，$Y^{(i)}$は特徴量${\bm x}^{(i)}$とパラメータ${\bm \theta}$が与えられた場合の条件付き確率変数となる．すなわち，$Y^{(i)}|{\bm x}^{(i)},{\bm \theta}$は正規分布に従い生起するというモデルを構築したこととなる．
 
+\begin{rem}
+$\varepsilon^{(i)}〜N(0,\sigma^2)$に従い$i$について互いに独立かつ同分布(i.i.d)と仮定しているということと，$Y^{(i)}$の予測に${\bm x}^{(i)}$しか使わないことから，トレーニングセットの各レコードについても互いに独立かつ同分布(i.i.d)を仮定していることに注意する．すなわち，$i$番目のデータ以外は$Y^{(i)}$の予測に全く影響を及ぼさないと仮定している．
+\end{rem}
+
+\begin{qu}
+式(\ref{LM_p})を仮定した線形回帰において，特徴量${\bm x}^{(i)}$とパラメータ${\bm \theta}$が与えられた場合の条件付き確率変数$y^{(i)}$が従う分布を求めよ．
 \end{qu}
-\begin{proof}
-新しく特徴量として$x_2^{(i)}=(x_1^{(i)})^2$を設定し，仮説関数として$h_{{\bm \theta}}(x^{(i)})=\theta_0+\theta_1 x_1^{(i)}+\theta_2 x_2^{(i)}=\theta_0+\theta_1 x_1^{(i)}+\theta_2 (x_1^{(i)})^2$とする．
-\end{proof}
-
-
-\begin{qu}
-住宅の平米数から住宅価格を予測する回帰問題を解くことを考える．集めたデータの平米数はおおむね1から1000フィートの範囲となっている．平米数と価格をプロットしたところ，以下の仮説関数があてはまりがよさそうと考えた．
+\begin{ans}
 \begin{align*}
-h_{{\bm \theta}}(x^{(i)})=\theta_0+\theta_1 平米数^{(i)}+\theta_2 \sqrt{平米数^{(i)}}
+F_{Y^{(i)}|{\bm x}^{(i)},{\bm \theta}}(y^{(i)}|{\bm x}^{(i)},{\bm \theta})&=\mathrm{Pr}\{Y^{(i)} \leq y^{(i)}|{\bm x}^{(i)},{\bm \theta}\}	\\
+&=\mathrm{Pr}\{{\bm \theta}^T {\bm x}^{(i)}+\varepsilon^{(i)} \leq y^{(i)}|{\bm x}^{(i)},{\bm \theta}\}	\\
+&=\mathrm{Pr}\{\varepsilon^{(i)} \leq y^{(i)}-{\bm \theta}^T {\bm x}^{(i)}|{\bm x}^{(i)},{\bm \theta}\}\\
+&=F_{\varepsilon^{(i)}|{\bm x}^{(i)},{\bm \theta}}(y^{(i)}-{\bm \theta}^T {\bm x}^{(i)})
 \end{align*}
-ここで，特徴量スケーリングをしてより適切に回帰問題を解くために，新しく仮説関数を
+なので，両辺を$y^{(i)}$で微分すると，
 \begin{align*}
-h_{{\bm \theta}}(x^{(i)})=\theta_0+\theta_1 x_1^{(i)}+\theta_2 x_2^{(i)}
+\frac{d}{dy^{(i)}}F_{Y^{(i)}|{\bm x}^{(i)},{\bm \theta}}(y^{(i)}|{\bm x}^{(i)},{\bm \theta})&=\frac{d}{dy^{(i)}}F_{\varepsilon^{(i)}|{\bm x}^{(i)},{\bm \theta}}(y^{(i)}-{\bm \theta}^T {\bm x}^{(i)})\\
+\Longleftrightarrow 　　　f_{Y^{(i)}|{\bm x}^{(i)},{\bm \theta}}(y^{(i)}|{\bm x}^{(i)},{\bm \theta}) &= f_{\varepsilon^{(i)}|{\bm x}^{(i)},{\bm \theta}}(y^{(i)}-{\bm \theta}^T {\bm x}^{(i)})
 \end{align*}
-としたとき，$x_1^{(i)}$と$x_2^{(i)}$はそれぞれどのようにおくのがよいか．ここで，$\sqrt{1000}\fallingdotseq 32$とする．
-\end{qu}
-\begin{proof}
-$x_1^{(i)}=\frac{平米数^{(i)}}{1000}$，$x_2^{(i)}=\frac{\sqrt{平米数^{(i)}}}{32}$．
-\end{proof}
+となる．ここで，
+\begin{align*}
+f_{\varepsilon^{(i)}|{\bm x}^{(i)},{\bm \theta}}(t)=\frac{1}{\sqrt{2\pi }\sigma}e^{-\frac{t^2}{2\sigma^2}}	
+\end{align*}
+であるから，
+\begin{align}
+f_{Y^{(i)}|{\bm x}^{(i)},{\bm \theta}}(y^{(i)}|{\bm x}^{(i)},{\bm \theta})=f_{\varepsilon^{(i)}|{\bm x}^{(i)},{\bm \theta}}(y^{(i)}-{\bm \theta}^T {\bm x}^{(i)})=\frac{1}{\sqrt{2\pi }\sigma}e^{-\frac{(y^{(i)}-{\bm \theta}^T {\bm x}^{(i)})^2}{2\sigma^2}}	\label{LR_f}
+\end{align}
+となる．以上より，$Y^{(i)}|{\bm x}^{(i)},{\bm \theta}$は確率密度関数の形より平均${\bm \theta}^T {\bm x}^{(i)}$，分散$\sigma^2$の正規分布に従う．つまり，$Y^{(i)}|{\bm x}^{(i)},{\bm \theta}〜N({\bm \theta}^T {\bm x}^{(i)},\sigma^2)$．\qed 
+\end{ans}
 
-特徴量は，与えられたものをそのまま使う必要はなく，それらを組み合わせるなどして自分で新しく作っても良い．うまく特徴量を作り出して，より単純な仮説関数にするという選択肢もある．
+やりたいことは，トレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$から未知のパラメータ${\bm \theta}$を推定することである．これはすなわち単純に分布のパラメータ推定問題であるので，最尤推定で良さげな${\bm \theta}$を求めることができる．最尤推定とは，与えられたトレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$での尤度関数が最大となるように分布のパラメータを定める方法である．尤度関数とは，簡単に言うと全ての$Y^{(i)}$から生起したものが手持ちのデータの通りに生起する確率であり，最尤推定とは手持ちのデータの通りに生起する確率が最も高くなるようにパラメータを調整する作業である．
+
+\begin{defi}[尤度関数，対数尤度関数，最尤推定]
+トレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$において，$y^{(i)}$の生起をモデリングしたときの確率変数を$Y^{(i)}|{\bm x}^{(i)},{\bm \theta}$とする(${\bm \theta}$は未知のパラメータ)．このとき，式(\ref{LF1})で表される関数$L({\bm \theta})$を{\bf 尤度関数(likelihood function)}という．特に，$Y^{(i)}$が互いに独立のとき，$L({\bm \theta})$は式(\ref{LF2})となる．
+\begin{align}
+L({\bm \theta})&=f_{(Y^{(1)},Y^{(2)},\ldots,Y^{(m)})}(y^{(1)},y^{(2)},\ldots,y^{(m)}|{\bm x}^{(1)},{\bm x}^{(2)},\ldots,{\bm x}^{(m)},{\bm \theta})\label{LF1}\\
+&=\prod_{i=1}^m f_{Y^{(i)}}(y^{(i)}|{\bm x}^{(i)},{\bm \theta})\label{LF2}
+\end{align}
+また，未知のパラメータ${\bm \theta}$の決定において，尤度関数を最大とする${\bm \theta}$とする手続きを{\bf 最尤推定(maximum likelihood estimation)}という．なお，尤度関数の最大化の代わりに，式(\ref{LF3})で表される{\bf 対数尤度関数(log likelihood function)}を最大化することが多い．
+\begin{align}
+\log L({\bm \theta})=\sum_{i=1}^m \log f_{Y^{(i)}}(y^{(i)}|{\bm x}^{(i)},{\bm \theta})\label{LF3}
+\end{align}
+\end{defi}
+
+さて，これで確率論的な枠組みでの${\bm \theta}$の決定方法の準備が整った．実は，ばらつきのことを考慮しない，天下り的な方法による${\bm \theta}$の決定と最尤推定による${\bm \theta}$の決定は等しい．
+
 
 \begin{qu}
-今，手元に特徴量$x_1^{(i)}$:間口，$x_2^{(i)}$:奥行き，出力変数$y^{(i)}$:土地の価格がある．このとき，土地の価格を予測する問題を線形回帰で解くことを考えると，仮説関数としてまず$h_{{\bm \theta}}({\bm x}^{(i)})=\theta_0+\theta_1 x_1^{(i)}+\theta_2 x_2^{(i)}$が考えつくが，もっと簡単に仮説関数を定めるにはどうすれば良いか．
+トレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$に対して式(\ref{LM_p})の線形回帰モデルを構築する．未知のパラメータ${\bm \theta}$を最尤推定により定めることと，式(\ref{LM})の線形回帰モデルにおける最小二乗誤差関数の最小化により定めることが同値であることを示せ．
 \end{qu}
-\begin{proof}
-新しい特徴量$x_3^{(i)}=x_1^{(i)}x_2^{(i)}$:面積を設定し，仮説関数として$h_{{\bm \theta}}(x^{(i)})=\theta_0+\theta_1 x_3^{(i)}$とする．
-\end{proof}
+\begin{ans}
+式(\ref{LM_p})の線形回帰モデルにおいて$Y^{(i)}|{\bm x}^{(i)},{\bm \theta}〜N({\bm \theta}^T {\bm x}^{(i)},\sigma^2)$であるから，確率密度関数は式(\ref{LR_f})の通りである．よって，
+\begin{align*}
+\log L({\bm \theta})&=\sum_{i=1}^m \log f_{Y^{(i)}}(y^{(i)}|{\bm x}^{(i)},{\bm \theta})\\
+&=\sum_{i=1}^m \log \frac{1}{\sqrt{2\pi }\sigma}e^{-\frac{(y^{(i)}-{\bm \theta}^T {\bm x}^{(i)})^2}{2\sigma^2}}\\
+&= m \log \frac{1}{\sqrt{2\pi }\sigma}-\frac{1}{2\sigma^2}\sum_{i=1}^m(y^{(i)}-{\bm \theta}^T {\bm x}^{(i)})^2\\
+&= m \log \frac{1}{\sqrt{2\pi }\sigma}-\frac{m}{\sigma^2}\frac{1}{2m}\sum_{i=1}^m({\bm \theta}^T {\bm x}^{(i)}-y^{(i)})^2]\\
+&=m \log \frac{1}{\sqrt{2\pi }\sigma}-\frac{m}{\sigma^2}J({\bm \theta})
+\end{align*}
+と式変形できる．ゆえに，$\log L({\bm \theta})$を最大化するためには$J({\bm \theta})$を最小化すると良い．すなわち，未知のパラメータ${\bm \theta}$を最尤推定により定めることと，最小二乗誤差関数の最小化により定めることは同値である．\qed
+\end{ans}
+
+
+
+
+
+

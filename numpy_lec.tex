@@ -254,6 +254,43 @@ shape=(4, 3)
 \end{cod}
 \vspace{-10pt}
 
+\subsection{ブロードキャスト計算}
+
+\texttt{<ndarray>}の四則演算は，\texttt{<ndarray>}の型が同じ場合には要素ごとの演算となる(要素ごとの積はアダマール積と呼ばれる)．また，\texttt{<ndarray>}の形が異なっていても，列または行が等しい\texttt{<1d\_ndarray>}か，ベクトルとしての\texttt{<2d\_ndarray>}の場合は，残りの列または行を拡張して計算してくれる．これをブロードキャスト計算という．なお，スカラーの場合にもブロードキャスト計算は機能するが，その場合は列方向にも行方向にも拡張して計算してくれる．
+
+\begin{rem}
+ブロードキャスト計算において，\texttt{<1d\_ndarray>}は行ベクトルとしての\texttt{<2d\_ndarray>}と同じ挙動を示すので注意．
+\end{rem}
+
+\begin{cod}[\texttt{num12.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/num12.py}
+\vspace{-10pt}
+\begin{lstlisting}
+A + B=
+[[ 0  0  0  0]
+ [ 4  4  4  4]
+ [ 8  8  8  8]
+ [12 12 12 12]]
+A * C=
+[[ -1  -2  -3  -4]
+ [-10 -12 -14 -16]
+ [-27 -30 -33 -36]
+ [-52 -56 -60 -64]]
+A + d=
+[[ -1.          -1.          -1.          -1.        ]
+ [ -5.          -3.          -2.33333333  -2.        ]
+ [ -9.          -5.          -3.66666667  -3.        ]
+ [-13.          -7.          -5.          -4.        ]]
+A + s=
+[[101 102 103 104]
+ [105 106 107 108]
+ [109 110 111 112]
+ [113 114 115 116]]
+\end{lstlisting}
+\end{cod}
+\vspace{-10pt}
+
+
 \subsection{線形代数計算}
 
 基本的には数値と\texttt{<2d\_ndarray>}で計算する．四則演算等について，その計算が定義されるのであれば通常の数値のように式を書けば問題ないが，掛け算記号は，線形代数計算においてはアダマール積であるため，行列積を行うときは\texttt{<2d\_ndarray>.dot(<2d\_ndarray>)}で行う必要がある．なお，線形代数計算の結果スカラーになる場合でも，数値ではなく1要素しかない\texttt{<2d\_ndarray>}で結果が保持されることに注意する．
@@ -352,3 +389,31 @@ type=<class 'numpy.ndarray'>
 \vspace{-10pt}
 
 なお，matplotlibの一部の描画では，\texttt{<1d\_ndarray>}ではなく行ベクトルや列ベクトルでもない，行列としての\texttt{<2d\_ndarray>}を与えなければならないものもあり，そういう場合は\texttt{np.meshgrid(<1d\_ndarray>,<1d\_ndarray>)}で生成された\texttt{<2d\_ndarray>}はそのまま使用することになる．
+
+\subsection{配列の集約}
+
+\texttt{<2d\_ndarray>}の全要素の和をとったり，列ごとに平均値を求めたりなど，配列に対して様々な集約計算を行うことができる．基本的には\texttt{<2d\_ndarray>}に対してメソッドの形で集約でき，引数に何も取らない場合は全要素の集約，引数に\texttt{axis=0}をとると行を潰して列ごとの集約，\texttt{axis=1}をとると列を潰して行ごとの集約となる．以下に主なものを挙げる．
+
+\begin{rem}
+列を潰して行ごとに集約しても，その結果は列ベクトルとしての	\texttt{<2d\_ndarray>}ではなく，\texttt{<1d\_ndarray>}で返って来るので注意．
+\end{rem}
+
+\begin{gram}　
+\begin{itemize}
+\item \texttt{<2d\_ndarray>.sum(axis=a)}: \texttt{<2d\_ndarray>}の各要素の和をとる．引数を何も取らないときは総和をスカラーで返す．\texttt{axis=0}とすると行を潰して各列の和を\texttt{<1d\_ndarray>}で返す．\texttt{axis=1}とすると列を潰して各行の和を\texttt{<1d\_ndarray>}で返す．
+\item \texttt{<2d\_ndarray>.mean(axis=a)}: 上記の平均値バージョン．
+\item \texttt{<2d\_ndarray>.std(axis=a)}: 上記の標準偏差バージョン．不偏分散ではなく普通の分散による標準偏差であることに注意．
+\end{itemize}
+\end{gram}
+
+\begin{cod}[\texttt{num13.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/num13.py}
+\vspace{-10pt}
+\begin{lstlisting}
+A_sum_all=136
+A_mean_bycol=[ 7.  8.  9. 10.]
+A_std_byrow=[1.11803399 1.11803399 1.11803399 1.11803399]
+\end{lstlisting}
+\end{cod}
+\vspace{-10pt}
+

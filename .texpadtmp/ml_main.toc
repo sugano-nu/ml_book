@@ -21,37 +21,39 @@
 \contentsline {subsection}{\numberline {2.2.6}数学の定数，関数など}{17}
 \contentsline {subsection}{\numberline {2.2.7}規則的な\texttt {<1d\_ndarray>}の作成}{18}
 \contentsline {subsection}{\numberline {2.2.8}規則的な\texttt {<2d\_ndarray>}の作成}{19}
-\contentsline {subsection}{\numberline {2.2.9}線形代数計算}{19}
-\contentsline {subsection}{\numberline {2.2.10}複数の\texttt {<1d\_ndarray>}を連結し\texttt {<2d\_ndarray>}を作る}{20}
-\contentsline {subsection}{\numberline {2.2.11}等間隔の2次元の格子点を表現する\texttt {<2d\_ndarray>}の作成}{21}
-\contentsline {section}{\numberline {2.3}pandas}{22}
-\contentsline {subsection}{\numberline {2.3.1}カンマ区切りテキストを\texttt {DataFrame}オブジェクトに格納(\texttt {read\_csv}関数)}{22}
-\contentsline {subsection}{\numberline {2.3.2}\texttt {<2d\_ndarray>}から\texttt {<DataFrame>}の作成}{23}
-\contentsline {subsection}{\numberline {2.3.3}列の追加}{24}
-\contentsline {subsection}{\numberline {2.3.4}\texttt {<DataFrame>}の一部分の取り出し}{24}
-\contentsline {subsection}{\numberline {2.3.5}\texttt {<Series>}と1列しか持たない\texttt {<DataFrame>}の違い}{26}
-\contentsline {subsection}{\numberline {2.3.6}\texttt {values}メソッド}{27}
-\contentsline {section}{\numberline {2.4}matplotlib}{28}
-\contentsline {subsection}{\numberline {2.4.1}\texttt {figure}オブジェクトと\texttt {axes}オブジェクトの作成}{28}
-\contentsline {subsection}{\numberline {2.4.2}\texttt {<axes>}間の余白調整}{29}
-\contentsline {subsection}{\numberline {2.4.3}2次元の散布図}{30}
-\contentsline {subsection}{\numberline {2.4.4}2次元の折れ線図}{31}
-\contentsline {subsection}{\numberline {2.4.5}複数の図の重ね合わせ}{32}
-\contentsline {subsection}{\numberline {2.4.6}3次元の曲面図}{33}
-\contentsline {subsection}{\numberline {2.4.7}2次元の等高線図}{34}
-\contentsline {subsection}{\numberline {2.4.8}\texttt {<axes>}間での$y$軸の共有}{36}
-\contentsline {chapter}{\numberline {第3章}機械学習の概念}{38}
-\contentsline {section}{\numberline {3.1}機械学習の定義}{38}
-\contentsline {section}{\numberline {3.2}教師あり学習と教師なし学習}{39}
-\contentsline {chapter}{\numberline {第4章}教師あり学習}{40}
-\contentsline {section}{\numberline {4.1}トレーニングセットと仮説関数}{40}
-\contentsline {section}{\numberline {4.2}線形回帰}{41}
-\contentsline {subsection}{\numberline {4.2.1}目的関数}{41}
-\contentsline {subsection}{\numberline {4.2.2}最急降下法}{43}
-\contentsline {subsection}{\numberline {4.2.3}デザイン行列}{45}
-\contentsline {subsection}{\numberline {4.2.4}Pythonによる実装}{48}
-\contentsline {subsection}{\numberline {4.2.5}デバッグ}{60}
-\contentsline {subsection}{\numberline {4.2.6}正規方程式}{61}
-\contentsline {subsection}{\numberline {4.2.7}特徴量スケーリング}{64}
-\contentsline {section}{\numberline {4.3}多項式回帰}{69}
-\contentsline {chapter}{参考文献}{71}
+\contentsline {subsection}{\numberline {2.2.9}ブロードキャスト計算}{19}
+\contentsline {subsection}{\numberline {2.2.10}線形代数計算}{20}
+\contentsline {subsection}{\numberline {2.2.11}複数の\texttt {<1d\_ndarray>}を連結し\texttt {<2d\_ndarray>}を作る}{21}
+\contentsline {subsection}{\numberline {2.2.12}等間隔の2次元の格子点を表現する\texttt {<2d\_ndarray>}の作成}{22}
+\contentsline {subsection}{\numberline {2.2.13}配列の集約}{23}
+\contentsline {section}{\numberline {2.3}pandas}{24}
+\contentsline {subsection}{\numberline {2.3.1}カンマ区切りテキストを\texttt {DataFrame}オブジェクトに格納(\texttt {read\_csv}関数)}{24}
+\contentsline {subsection}{\numberline {2.3.2}\texttt {<2d\_ndarray>}から\texttt {<DataFrame>}の作成}{25}
+\contentsline {subsection}{\numberline {2.3.3}列の追加}{25}
+\contentsline {subsection}{\numberline {2.3.4}\texttt {<DataFrame>}の一部分の取り出し}{26}
+\contentsline {subsection}{\numberline {2.3.5}\texttt {<Series>}と1列しか持たない\texttt {<DataFrame>}の違い}{28}
+\contentsline {subsection}{\numberline {2.3.6}\texttt {values}メソッド}{29}
+\contentsline {section}{\numberline {2.4}matplotlib}{30}
+\contentsline {subsection}{\numberline {2.4.1}\texttt {figure}オブジェクトと\texttt {axes}オブジェクトの作成}{30}
+\contentsline {subsection}{\numberline {2.4.2}\texttt {<axes>}間の余白調整}{31}
+\contentsline {subsection}{\numberline {2.4.3}2次元の散布図}{32}
+\contentsline {subsection}{\numberline {2.4.4}2次元の折れ線図}{33}
+\contentsline {subsection}{\numberline {2.4.5}複数の図の重ね合わせ}{34}
+\contentsline {subsection}{\numberline {2.4.6}3次元の曲面図}{35}
+\contentsline {subsection}{\numberline {2.4.7}2次元の等高線図}{36}
+\contentsline {subsection}{\numberline {2.4.8}\texttt {<axes>}間での$y$軸の共有}{38}
+\contentsline {chapter}{\numberline {第3章}機械学習の概念}{40}
+\contentsline {section}{\numberline {3.1}機械学習の定義}{40}
+\contentsline {section}{\numberline {3.2}教師あり学習と教師なし学習}{41}
+\contentsline {chapter}{\numberline {第4章}教師あり学習}{42}
+\contentsline {section}{\numberline {4.1}トレーニングセットと仮説関数}{42}
+\contentsline {section}{\numberline {4.2}線形回帰}{43}
+\contentsline {subsection}{\numberline {4.2.1}目的関数}{43}
+\contentsline {subsection}{\numberline {4.2.2}最急降下法}{45}
+\contentsline {subsection}{\numberline {4.2.3}デザイン行列}{47}
+\contentsline {subsection}{\numberline {4.2.4}Pythonによる実装}{50}
+\contentsline {subsection}{\numberline {4.2.5}デバッグ}{62}
+\contentsline {subsection}{\numberline {4.2.6}正規方程式}{63}
+\contentsline {subsection}{\numberline {4.2.7}特徴量スケーリング}{66}
+\contentsline {subsection}{\numberline {4.2.8}確率論的解釈}{71}
+\contentsline {chapter}{参考文献}{74}
