@@ -42,18 +42,22 @@
 \contentsline {subsection}{\numberline {2.4.6}3次元の曲面図}{35}
 \contentsline {subsection}{\numberline {2.4.7}2次元の等高線図}{36}
 \contentsline {subsection}{\numberline {2.4.8}\texttt {<axes>}間での$y$軸の共有}{38}
-\contentsline {chapter}{\numberline {第3章}機械学習の概念}{40}
-\contentsline {section}{\numberline {3.1}機械学習の定義}{40}
-\contentsline {section}{\numberline {3.2}教師あり学習と教師なし学習}{41}
-\contentsline {chapter}{\numberline {第4章}教師あり学習}{42}
-\contentsline {section}{\numberline {4.1}トレーニングセットと仮説関数}{42}
-\contentsline {section}{\numberline {4.2}線形回帰}{43}
-\contentsline {subsection}{\numberline {4.2.1}目的関数}{43}
-\contentsline {subsection}{\numberline {4.2.2}最急降下法}{45}
-\contentsline {subsection}{\numberline {4.2.3}デザイン行列}{47}
-\contentsline {subsection}{\numberline {4.2.4}Pythonによる実装}{50}
-\contentsline {subsection}{\numberline {4.2.5}デバッグ}{62}
-\contentsline {subsection}{\numberline {4.2.6}正規方程式}{63}
-\contentsline {subsection}{\numberline {4.2.7}特徴量スケーリング}{66}
-\contentsline {subsection}{\numberline {4.2.8}確率論的解釈}{71}
-\contentsline {chapter}{参考文献}{74}
+\contentsline {section}{\numberline {2.5}クラス}{39}
+\contentsline {subsection}{\numberline {2.5.1}クラス・インスタンスの作成}{40}
+\contentsline {chapter}{\numberline {第3章}機械学習の概念}{43}
+\contentsline {section}{\numberline {3.1}機械学習の定義}{43}
+\contentsline {section}{\numberline {3.2}教師あり学習と教師なし学習}{44}
+\contentsline {chapter}{\numberline {第4章}教師あり学習}{45}
+\contentsline {section}{\numberline {4.1}トレーニングセットと仮説関数}{45}
+\contentsline {section}{\numberline {4.2}線形回帰}{46}
+\contentsline {subsection}{\numberline {4.2.1}目的関数}{46}
+\contentsline {subsection}{\numberline {4.2.2}最急降下法}{48}
+\contentsline {subsection}{\numberline {4.2.3}デザイン行列}{50}
+\contentsline {subsection}{\numberline {4.2.4}Pythonによる実装}{53}
+\contentsline {subsection}{\numberline {4.2.5}デバッグ}{65}
+\contentsline {subsection}{\numberline {4.2.6}正規方程式}{66}
+\contentsline {subsection}{\numberline {4.2.7}特徴量スケーリング}{69}
+\contentsline {subsection}{\numberline {4.2.8}確率論的解釈}{74}
+\contentsline {subsection}{\numberline {4.2.9}クラスを用いた実装}{76}
+\contentsline {subsection}{\numberline {4.2.10}scikit-learnによる実装}{79}
+\contentsline {chapter}{参考文献}{81}
