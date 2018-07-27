@@ -17,3 +17,5 @@ Keishi Okudera
 - [Applied Social Network Analysis in Python](https://www.coursera.org/account/accomplishments/certificate/VK4DS6TAGN3E)
 - [Machine Learning](https://www.coursera.org/account/accomplishments/certificate/M6YNZNKVYP7X)
 - [How to Win a Data Science Competition: Learn from Top Kagglers](https://www.coursera.org/account/accomplishments/certificate/NT776SR4WH7A)
+- [Neural Networks and Deep Learning](https://www.coursera.org/account/accomplishments/certificate/9JJPEU7J96NL)
+- [Improving Deep Neural Networks: Hyperparameter tuning, Regularization and Optimization](https://www.coursera.org/account/accomplishments/certificate/QS4EXYRE285H)
