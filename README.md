@@ -19,3 +19,4 @@ Keishi Okudera
 - [How to Win a Data Science Competition: Learn from Top Kagglers](https://www.coursera.org/account/accomplishments/certificate/NT776SR4WH7A)
 - [Neural Networks and Deep Learning](https://www.coursera.org/account/accomplishments/certificate/9JJPEU7J96NL)
 - [Improving Deep Neural Networks: Hyperparameter tuning, Regularization and Optimization](https://www.coursera.org/account/accomplishments/certificate/QS4EXYRE285H)
+- [Structuring Machine Learning Projects](https://www.coursera.org/account/accomplishments/certificate/AJEAPVYFDTH2)
