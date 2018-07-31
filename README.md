@@ -20,3 +20,4 @@ Keishi Okudera
 - [Neural Networks and Deep Learning](https://www.coursera.org/account/accomplishments/certificate/9JJPEU7J96NL)
 - [Improving Deep Neural Networks: Hyperparameter tuning, Regularization and Optimization](https://www.coursera.org/account/accomplishments/certificate/QS4EXYRE285H)
 - [Structuring Machine Learning Projects](https://www.coursera.org/account/accomplishments/certificate/AJEAPVYFDTH2)
+- [Convolutional Neural Networks](https://www.coursera.org/account/accomplishments/verify/3KTADAJL8MP4)
