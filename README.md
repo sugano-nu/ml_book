@@ -22,3 +22,6 @@ Keishi Okudera
 - [Structuring Machine Learning Projects](https://www.coursera.org/account/accomplishments/certificate/AJEAPVYFDTH2)
 - [Convolutional Neural Networks](https://www.coursera.org/account/accomplishments/verify/3KTADAJL8MP4)
 - [Sequence Models](https://www.coursera.org/account/accomplishments/verify/H6L7QC82NZV6)
+
+# Certificate(Udemy)
+- [Feature Engineering for Machine Learning](https://www.udemy.com/certificate/UC-AEQOGYHL/)
