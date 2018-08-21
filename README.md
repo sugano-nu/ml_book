@@ -25,3 +25,4 @@ Keishi Okudera
 
 # Certificate(Udemy)
 - [Feature Engineering for Machine Learning](https://www.udemy.com/certificate/UC-AEQOGYHL/)
+- [Feature Selection for Machine Learning](https://www.udemy.com/certificate/UC-RZE1RM0Z/)
