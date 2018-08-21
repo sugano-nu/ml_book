@@ -8,22 +8,26 @@
 $\{(\bm{x}^{(i)},y^{(i)})\}_{i=1}^m \subset (({\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n) \times {\cal Y})^m$を{\bf トレーニングセット(training set)}という．ここで，$m$は{\bf トレーニングサンプル数(number of training examples)}，${\bm x}^{(i)} \in {\cal X}_1 \times {\cal X}_2\times \cdots \times {\cal X}_n$は$i$番目の$n$個の{\bf 入力変数(input variables)}または{\bf 特徴量(features)}で，${\bm x}^{(i)}=(x_1^{(i)},x_2^{(i)},\ldots,x_n^{(i)})^T$と表す．また，$y^{(i)} \in {\cal Y}$は$i$番目の{\bf 出力変数(output variable)}または{\bf 目的変数(target variable)}である．また，トレーニングセットの$i$番目の要素$({\bm x}^{(i)},y^{(i)})\in ({\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n) \times {\cal Y}$を{\bf トレーニングサンプル(training example)}という．また，入力変数のとる空間${\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n$を{\bf 入力変数空間(space of input values)}，出力変数のとる空間${\cal Y}$を{\bf 出力変数空間(space of output values)}という．
 \end{defi}
 
+\begin{rem}
+一般的に(特段の加工をしていない)トレーニングセットには文字列なども含まれるため，特徴量のとりうる集合として数の集合を仮定していないことを明確にするために，単なる集合${\cal X}_i$と表記している．
+\end{rem}
+
 \begin{qu}
-次のトレーニングセットにおいて，$x_3^{(4)},y^{(2)}$を答えよ．
+次のトレーニングセットにおいて，$x_3^{(4)},x_4^{(3)},y^{(2)}$を答えよ．
 \begin{table}[H]
 \centering
 \begin{tabular}{rrrrrr}
 \hline
 $i$ &$x_1^{(i)}$ &$x_2^{(i)}$ &$x_3^{(i)}$ &$x_4^{(i)}$ & $y^{(i)}$ \\ \hline
-1 & 2104 & 5 & 1 & 45 & 460 \\
-2 & 1416 & 3 & 2 & 40 & 232 \\
-3 & 1534 & 3 & 2 & 30 & 315 \\
-4 & 852  & 2 & 1 & 36 & 178 \\ \hline
+1 & 2104 & 5 & 1 & apple & 460 \\
+2 & 1416 & 3 & 2 & melon & 232 \\
+3 & 1534 & 3 & 2 & lemon & 315 \\
+4 & 852  & 2 & 1 & tomato & 178 \\ \hline
 \end{tabular}
 \end{table}
 \end{qu}
 \begin{ans}
-$x_3^{(4)}=1,~y^{(2)}=232$．\qed
+$x_3^{(4)}=1,~x_4^{(3)}={\rm lemon},~y^{(2)}=232$．\qed
 \end{ans}
 
 教師あり学習を使って解きたいタスク$T$は，入力変数から出力変数を予測することであるが，それは言い換えると入力変数を引数として出力変数を出力する写像を設定することである．この写像を仮説関数という．仮説関数を以下で定義する．
@@ -39,13 +43,18 @@ $x_3^{(4)}=1,~y^{(2)}=232$．\qed
 仮説関数は自らで与える必要があるが，仮説関数の形によって，教師あり学習に特別な名前がつくものがある．例えば，仮説関数を線形関数とし，出力変数空間を${\cal Y}=\mathbb{R}$としたときは線形回帰という．
 
 \begin{defi}[線形回帰]
-トレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m \subset (({\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n) \times {\cal Y})^m$について，${\cal Y}=\mathbb{R}$であり，かつ仮説関数が式(\ref{LM})である教師あり学習を，特に{\bf 線形回帰(linear regression)}という．ここで，特徴量${\bm x}^{(i)}$は，常に1の値をとるような特徴量$x_0^{(i)}=1$を付して${\bm x}^{(i)}=(x_0^{(i)},x_1^{(i)},x_2^{(i)},\ldots,x_n^{(i)})^T \in 1 \times {\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n$と置き直すこととする．また，${\bm \theta}=(\theta_0,\theta_1,\ldots,\theta_n)^T \in \mathbb{R}^{n+1}$とする．
+トレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m \subset (\mathbb{R}^n \times {\cal Y})^m$について，${\cal Y}=\mathbb{R}$であり，かつ仮説関数が式(\ref{LM})である教師あり学習を，特に{\bf 線形回帰(linear regression)}という．ここで，特徴量${\bm x}^{(i)}$は，常に1の値をとるような特徴量$x_0^{(i)}=1$を付して${\bm x}^{(i)}=(x_0^{(i)},x_1^{(i)},x_2^{(i)},\ldots,x_n^{(i)})^T \in 1 \times \mathbb{R}^n \subset \mathbb{R}^{n+1}$と置き直すこととする．また，${\bm \theta}=(\theta_0,\theta_1,\ldots,\theta_n)^T \in \mathbb{R}^{n+1}$とする．
 \begin{align}
 h_{{\bm \theta}}({\bm x}^{(i)}) &= \theta_0 x_0^{(i)}+\theta_1 x_1^{(i)} +\theta_2 x_2^{(i)}+\cdots + \theta_n x_n^{(i)} \nonumber \\
 &= \sum_{j=0}^n \theta_j x_j^{(i)}\nonumber \\
 &= {\bm \theta}^T {\bm x}^{(i)} \label{LM}
 \end{align}
 \end{defi}
+
+\begin{rem}
+仮説関数の形より，線形回帰を用いるためには特徴量を引数にして数値計算を行う必要があるので，トレーニングセット$\{(\bm{x}^{(i)},y^{(i)})\}_{i=1}^m \subset (({\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n) \times {\cal Y})^m$に文字列が含まれる場合はそのまま適用できず，何らかの規則で数値に変換して$\{(\bm{x}^{(i)},y^{(i)})\}_{i=1}^m \subset (\mathbb{R}^n \times \mathbb{R})^m$の形にしなければならない．このような変換を行う作業を{\bf 特徴量エンジニアリング(feature engineerring)}という．特徴量エンジニアリングの話は後で述べる．
+\end{rem}
+
 
 \begin{qu}
 ある大学生について，1年次の成績で優をとった個数から2年次にいくつ優をとるのか予測したい．そこで，何人かの大学生の1年次の成績の優の個数$x$と2年次の成績の優の個数$y$を集めた．その結果が次表である．このとき，次の問いに答えよ．
@@ -84,7 +93,7 @@ $x$    & $y$   \\ \hline
 回帰問題における性能指標としては，各トレーニングサンプル$({\bm x}^{(i)},y^{(i)})$での仮説関数$h_{{\bm \theta}}({\bm x}^{(i)})$と$y^{(i)}$の二乗誤差平均が考えられる．この二乗誤差平均を計算する目的関数を最小二乗誤差関数という．
 
 \begin{defi}[最小二乗誤差関数]
-トレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m \subset ((1 \times {\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n) \times {\cal Y})^m$について，式(\ref{SEF})で表される目的関数$J({\bm \theta})$を{\bf 最小二乗誤差関数(squared error function)}という．
+トレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m \subset ((1 \times \mathbb{R}^n) \times \mathbb{R})^m$について，式(\ref{SEF})で表される目的関数$J({\bm \theta})$を{\bf 最小二乗誤差関数(squared error function)}という．
 \begin{align}
 J({\bm \theta}) = \frac{1}{2m}\sum_{i=1}^m (h_{{\bm \theta}}({\bm x}^{(i)})-y^{(i)})^2 \label{SEF}
 \end{align}
@@ -215,7 +224,7 @@ $j=0$のときは$\frac{\partial }{\partial \theta_0}h_{{\bm \theta}}({\bm x}^{(
 最急降下法アルゴリズムは， 式(\ref{simpleJ})を用いて$\nabla_{{\bm \theta}}J$の各要素に対して逐次計算を行っていけば単純に実装できるが，各要素の和の計算を各要素に対して行い，反復していくことは少々ややこしい．行列計算を容易に行えるプログラミング言語で実装する場合には，できるだけ逐次計算をしないように，行列計算やベクトル計算を用いて工夫して実装することが簡潔かつバグも少ない．ここでは，デザイン行列を定義し，行列計算により$\nabla_{{\bm \theta}}J$を計算できることを示す．
 
 \begin{defi}[デザイン行列]
-$x_0^{(i)}=1$も含め特徴量が$n+1$個のトレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$において，式(\ref{designX})で定義する行列$X \in \mathbb{R}^{m\times (n+1)}$を{\bf デザイン行列(design matrix)}という．デザイン行列は，特徴量${\bm x}^{(i)}$を転置してサンプル数の分縦に並べたもので表される．ここで，特徴量として$x_0=1$が加わっていることに注意する．
+$x_0^{(i)}=1$も含め特徴量が$n+1$個のトレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m\subset ((1 \times \mathbb{R}^n) \times \mathbb{R})^m$において，式(\ref{designX})で定義する行列$X \in \mathbb{R}^{m\times (n+1)}$を{\bf デザイン行列(design matrix)}という．デザイン行列は，特徴量${\bm x}^{(i)}$を転置してサンプル数の分縦に並べたもので表される．ここで，特徴量として$x_0=1$が加わっていることに注意する．
 \begin{align}
 X = 
 \begin{bmatrix}
@@ -710,7 +719,7 @@ X^TX{\bm \theta}=X^T{\bm y}
 これまでの実例では，特徴量は1つの場合しか取り扱ってこなかった．しかし，特徴量は複数あることの方が普通である．複数であっても，上記の実例と同様に線形代数計算と最急降下法で同じように実装できる．ここで，最急降下法を適用するにあたり，複数の特徴量がある場合，各特徴量のとりうる範囲がだいたい同じような範囲にあると，収束速度は速くなる．特徴量を変換してとりうる範囲の調整を行うことを，特徴量スケーリングという．
 
 \begin{defi}[特徴量スケーリング]
-トレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$について，${\bm x}^{(i)}$の各特徴量のとりうる範囲を同じような範囲に変換することを{\bf 特徴量スケーリング(feature scalling)}という．特に，特徴量$x_j$の平均$\mu_j$と標準偏差$s_j$を用いて$\frac{x_j-\mu_j}{s_j}$のようにスケーリングすることを，{\bf 平均標準化(mean normalization)}という．
+トレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m\subset (\mathbb{R}^n \times \mathbb{R})^m$について，${\bm x}^{(i)}$の各特徴量のとりうる範囲を同じような範囲に変換することを{\bf 特徴量スケーリング(feature scalling)}という．特に，特徴量$x_j$の平均$\mu_j$と標準偏差$s_j$を用いて$\frac{x_j-\mu_j}{s_j}$のようにスケーリングすることを，{\bf 平均標準化(mean normalization)}という．
 \end{defi}
 
 \begin{rem}
@@ -721,8 +730,8 @@ X^TX{\bm \theta}=X^T{\bm y}
 データ\texttt{ex1data2.txt}は，オレゴン州ポートランドの住宅価格のデータ(最初の列は住宅の面積(単位はsquare feet)，2番目の列は寝室の数，3番目の列は住宅価格)である．\texttt{ex1data2.txt}を用いて，オレゴン州ポートランドの住宅価格の予測モデルを線形回帰を用いて構築したい．このとき，次の問いに答えなさい．
 \begin{enumerate}
 \item データ\texttt{ex1data2.txt}をそのまま使用して学習し，最適なパラメータ${\bm \theta}$を求め，新しいデータ${\bm x}^{(m+1)}:住宅面積=2500, 寝室の数=3$に対する住宅価格の予測値を求めよ．ここで，学習率はデバッグをしながら自身で定めよ．また，繰り返し回数は50回で打ち切り，${\bm \theta}={\bm 0}$を初期値とする．
-\item データ\texttt{ex1data2.txt}に特徴量スケーリングを施して学習し，最適なパラメータ${\bm \theta}$を求め，新しいデータ${\bm x}^{(m+1)}:住宅面積=2500, 寝室の数=3$に対する住宅価格の予測値を求めよ．ここで，学習率はデバッグをしながら自身で定めよ．また，繰り返し回数は50回で打ち切り，${\bm \theta}={\bm 0}$を初期値とする．また，特徴量スケーリングは$x_0=1$の列は施さなくてよい．
-\item 特徴量スケーリングによりどう変わったのか確認せよ．
+\item データ\texttt{ex1data2.txt}に平均標準化を施して学習し，最適なパラメータ${\bm \theta}$を求め，新しいデータ${\bm x}^{(m+1)}:住宅面積=2500, 寝室の数=3$に対する住宅価格の予測値を求めよ．ここで，学習率はデバッグをしながら自身で定めよ．また，繰り返し回数は50回で打ち切り，${\bm \theta}={\bm 0}$を初期値とする．また，平均標準化は$x_0=1$の列には施さなくてよい．
+\item 平均標準化によりどう変わったのか確認せよ．
 \end{enumerate}
 \end{qu}
 \begin{ans}　
@@ -747,7 +756,7 @@ y_pred=413220.18984796316
 \end{cod}
 \vspace{-25pt}
 \begin{enumerate}
-\item[2.] 特徴量スケーリングを行う関数は，スケーリングに使用する平均値や標準偏差も併せて返すようにし，新しいデータに対する特徴量スケーリングを行う関数の引数として使えるようにする．あとは，$\alpha $を変えながらひらすらデバッグをしていい感じに収束していくようなパターンを見つけていく．その結果，$\alpha = 0.3$の場合がいい感じであった．
+\item[2.] 平均標準化を行う関数は，スケーリングに使用する平均値や標準偏差も併せて返すようにし，新しいデータに対する平均標準化を行う関数の引数として使えるようにする．あとは，$\alpha $を変えながらひらすらデバッグをしていい感じに収束していくようなパターンを見つけていく．その結果，$\alpha = 0.3$の場合がいい感じであった．
 \end{enumerate}
 \begin{cod}[\texttt{lr13.py}]　
 \lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/lr13.py}
@@ -766,7 +775,7 @@ y_pred=411368.42281033465
 \end{figure}
 \end{cod}
 \begin{enumerate}
-\item[3.] 特徴量スケーリングをすると学習率はありうる自然な値とすることができる程度で，学習率として適切なものを設定できれば特徴量スケーリングをしてもしなくても少ない繰り返し回数で収束させることができるのではと考えられる．とはいえ，探索する学習率の範囲が広大だとデバッグに苦労するため，範囲を狭くするという意味で特徴量スケーリングを施す意義はあると思われる．なお，特徴量スケーリングはあくまでも学習効率を上げるための手法であり，予測精度を高める手法ではないことに注意する．実際，上記の例でも予測値はどちらも同じような値を示している．
+\item[3.] 平均標準化をすると学習率はありうる自然な値とすることができる程度で，学習率として適切なものを設定できれば平均標準化をしてもしなくても少ない繰り返し回数で収束させることができるのではと考えられる．とはいえ，探索する学習率の範囲が広大だとデバッグに苦労するため，範囲を狭くするという意味で平均標準化を施す意義はあると思われる．なお，平均標準化はあくまでも学習効率を上げるための手法であり，予測精度を高める手法ではないことに注意する．実際，上記の例でも予測値はどちらも同じような値を示している．
 \end{enumerate}
 \qed
 \end{ans}
@@ -778,7 +787,7 @@ y_pred=411368.42281033465
 $i$番目のデータに対して，本質的な構造は$y^{(i)}={\bm \theta}^T{\bm x}$とするものの，そこからばらつきが発生しているため，このばらつき項$\varepsilon^{(i)}$を付与して$y^{(i)}={\bm \theta}^T{\bm x}^{(i)}+\varepsilon^{(i)}$というモデルとする．ここで，ばらつき項$\varepsilon^{(i)}$は確率変数であり，$\varepsilon^{(i)}〜N(0,\sigma^2)$に従い$i$について互いに独立かつ同分布(i.i.d:independent and identically distributed)であると仮定する．
 
 \begin{defi}[線形回帰(確率論的)]
-トレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m \subset (({\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n) \times {\cal Y})^m$について，${\cal Y}=\mathbb{R}$であり，$y^{(i)}$は式(\ref{LM_p})で生起すると仮定するモデルを{\bf 線形回帰(linear regression)}という．ここで，特徴量${\bm x}^{(i)}$は，常に1の値をとるような特徴量$x_0^{(i)}=1$を付して${\bm x}^{(i)}=(x_0^{(i)},x_1^{(i)},x_2^{(i)},\ldots,x_n^{(i)})^T \in 1 \times {\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n$と置き直すこととする．また，${\bm \theta}=(\theta_0,\theta_1,\ldots,\theta_n)^T \in \mathbb{R}^{n+1}$とする．また，$\varepsilon^{(i)}$は，$\varepsilon^{(i)}〜N(0,\sigma^2)$に従い$i$について互いに独立かつ同分布(i.i.d)とする．また，$y^{(i)}$は確率変数であることを強調するため$Y^{(i)}$と書くこととする．
+トレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m \subset (\mathbb{R}^n \times {\cal Y})^m$について，${\cal Y}=\mathbb{R}$であり，$y^{(i)}$は式(\ref{LM_p})で生起すると仮定するモデルを{\bf 線形回帰(linear regression)}という．ここで，特徴量${\bm x}^{(i)}$は，常に1の値をとるような特徴量$x_0^{(i)}=1$を付して${\bm x}^{(i)}=(x_0^{(i)},x_1^{(i)},x_2^{(i)},\ldots,x_n^{(i)})^T \in 1 \times \mathbb{R}^n$と置き直すこととする．また，${\bm \theta}=(\theta_0,\theta_1,\ldots,\theta_n)^T \in \mathbb{R}^{n+1}$とする．また，$\varepsilon^{(i)}$は，$\varepsilon^{(i)}〜N(0,\sigma^2)$に従い$i$について互いに独立かつ同分布(i.i.d)とする．また，$y^{(i)}$は確率変数であることを強調するため$Y^{(i)}$と書くこととする．
 \begin{align}
 Y^{(i)} = {\bm \theta}^T {\bm x}^{(i)}+\varepsilon^{(i)} \label{LM_p}
 \end{align}
@@ -819,7 +828,7 @@ f_{Y^{(i)}|{\bm x}^{(i)},{\bm \theta}}(y^{(i)}|{\bm x}^{(i)},{\bm \theta})=f_{\v
 やりたいことは，トレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$から未知のパラメータ${\bm \theta}$を推定することである．これはすなわち単純に分布のパラメータ推定問題であるので，最尤推定で良さげな${\bm \theta}$を求めることができる．最尤推定とは，与えられたトレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$での尤度関数が最大となるように分布のパラメータを定める方法である．尤度関数とは，簡単に言うと全ての$Y^{(i)}$から生起したものが手持ちのデータの通りに生起する確率であり，最尤推定とは手持ちのデータの通りに生起する確率が最も高くなるようにパラメータを調整する作業である．
 
 \begin{defi}[尤度関数，対数尤度関数，最尤推定]
-トレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m$において，$y^{(i)}$の生起をモデリングしたときの確率変数を$Y^{(i)}|{\bm x}^{(i)},{\bm \theta}$とする(${\bm \theta}$は未知のパラメータ)．このとき，式(\ref{LF1})で表される関数$L({\bm \theta})$を{\bf 尤度関数(likelihood function)}という．特に，$Y^{(i)}$が互いに独立のとき，$L({\bm \theta})$は式(\ref{LF2})となる．
+トレーニングセット$\{({\bm x}^{(i)},y^{(i)})\}_{i=1}^m\subset (\mathbb{R}^n \times \mathbb{R})^m$において，$y^{(i)}$の生起をモデリングしたときの確率変数を$Y^{(i)}|{\bm x}^{(i)},{\bm \theta}$とする(${\bm \theta}$は未知のパラメータ)．このとき，式(\ref{LF1})で表される関数$L({\bm \theta})$を{\bf 尤度関数(likelihood function)}という．特に，$Y^{(i)}$が互いに独立のとき，$L({\bm \theta})$は式(\ref{LF2})となる．
 \begin{align}
 L({\bm \theta})&=f_{(Y^{(1)},Y^{(2)},\ldots,Y^{(m)})}(y^{(1)},y^{(2)},\ldots,y^{(m)}|{\bm x}^{(1)},{\bm x}^{(2)},\ldots,{\bm x}^{(m)},{\bm \theta})\label{LF1}\\
 &=\prod_{i=1}^m f_{Y^{(i)}}(y^{(i)}|{\bm x}^{(i)},{\bm \theta})\label{LF2}
@@ -842,7 +851,7 @@ L({\bm \theta})&=f_{(Y^{(1)},Y^{(2)},\ldots,Y^{(m)})}(y^{(1)},y^{(2)},\ldots,y^{
 \log L({\bm \theta})&=\sum_{i=1}^m \log f_{Y^{(i)}}(y^{(i)}|{\bm x}^{(i)},{\bm \theta})\\
 &=\sum_{i=1}^m \log \frac{1}{\sqrt{2\pi }\sigma}e^{-\frac{(y^{(i)}-{\bm \theta}^T {\bm x}^{(i)})^2}{2\sigma^2}}\\
 &= m \log \frac{1}{\sqrt{2\pi }\sigma}-\frac{1}{2\sigma^2}\sum_{i=1}^m(y^{(i)}-{\bm \theta}^T {\bm x}^{(i)})^2\\
-&= m \log \frac{1}{\sqrt{2\pi }\sigma}-\frac{m}{\sigma^2}\frac{1}{2m}\sum_{i=1}^m({\bm \theta}^T {\bm x}^{(i)}-y^{(i)})^2]\\
+&= m \log \frac{1}{\sqrt{2\pi }\sigma}-\frac{m}{\sigma^2}\frac{1}{2m}\sum_{i=1}^m({\bm \theta}^T {\bm x}^{(i)}-y^{(i)})^2\\
 &=m \log \frac{1}{\sqrt{2\pi }\sigma}-\frac{m}{\sigma^2}J({\bm \theta})
 \end{align*}
 と式変形できる．ゆえに，$\log L({\bm \theta})$を最大化するためには$J({\bm \theta})$を最小化すると良い．すなわち，未知のパラメータ${\bm \theta}$を最尤推定により定めることと，最小二乗誤差関数の最小化により定めることは同値である．\qed
@@ -877,6 +886,31 @@ y_pred=413220.18984796316
 \qed	
 \end{ans}
 
+\begin{qu}
+問題\ref{qu_lr2_1}の問2について，クラス\texttt{MyLinearRegression}(\texttt{fit}メソッドでパラメータの推定，\texttt{predict}メソッドで予測)，クラス\texttt{MyMeanNormalization}(\texttt{fit}メソッドで平均，標準偏差を算出しクラス内変数に保持，\texttt{transform}メソッドで特徴量を平均標準化したものを出力)を作成して線形回帰を実装し，結果が一致することを確認せよ．
+\end{qu}
+\begin{ans}
+プログラム例は以下の通り．$x_0=1$を付加する部分は\texttt{MyLinearRegression}の内部で行なっているため，\ref{qu_lr2_1}の問2でやっているような，平均標準化をする上で1列目を避けて平均値などを計算するようなプログラムは書く必要がない．
+\begin{cod}[\texttt{lr16.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/lr16.py}
+\vspace{-10pt}
+\begin{lstlisting}
+y_pred=411368.42281033465
+\end{lstlisting}
+\begin{figure}[H]
+\begin{center}
+\framed
+\includegraphics[width=8cm]{code/lrfig12.eps}
+\vspace{-10pt}
+\caption{\texttt{lrfig12.eps}}
+\endframed
+\end{center}
+\end{figure}
+\end{cod}
+\vspace{-25pt}
+\qed	
+\end{ans}
+
 \subsection{scikit-learnによる実装}
 
 前節でクラスによる実装を取り上げたのは，scikit-learnによる機械学習モデルのイメージをつけてもらうためである．scikit-learnは，まさに各モデルがクラスとして定義され，だいたい全てのクラスに\texttt{fit}メソッドによる学習，\texttt{predict}メソッドによる予測が備わっている．よって，scikit-learnもクラスを取り替えるだけで様々なモデルを簡単に試すことができる．
@@ -887,27 +921,13 @@ scikit-learnでの線形回帰モデルのクラスは\texttt{sklearn.linear\_mo
 \item \texttt{<instance>=LinearRegression()}: パラメータがデフォルトの線形回帰モデルのインスタンスを作成する．
 \item \texttt{<instance>.fit(X, y)}: \texttt{<instance>}に特徴量\texttt{X}と目的変数\texttt{y}を与えてパラメータを推定する．なお，特徴量\texttt{X}には$x_0=1$である列を追加する必要はない．
 \item \texttt{<nd\_array>=<instance>.predict(X)}: \texttt{<instance>}に特徴量\texttt{X}を与えて，学習済みのパラメータを用いて予測しその結果を\texttt{<nd\_array>}に格納する．
-\item \texttt{<instace>.intercept\_} : $x_0$のパラメータ$\theta_0$が格納されているインスタンス変数．
-\item \texttt{<instace>.coef\_} : $x_1,x_2,\ldots$のパラメータ$\theta_1,\theta_2,\ldots$が格納されているインスタンス変数．
+\item \texttt{<instace>.intercept\_} : $x_0$のパラメータ$\theta_0$が格納されているインスタンス変数．\texttt{<1d\_ndarray>}で格納されている．
+\item \texttt{<instace>.coef\_} : $x_1,x_2,\ldots$のパラメータ$\theta_1,\theta_2,\ldots$が格納されているインスタンス変数．行ベクトルとしての\texttt{<2d\_ndarray>}で格納されている．
 \end{itemize}
 \end{gram}
-\begin{cod}[\texttt{pd3.py}]　
-\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/pd3.py}
-\vspace{-10pt}
-\begin{lstlisting}
-df=
-   population   profit  all_1  ndarray  list
-0      6.1101  17.5920      1        0     0
-1      5.5277   9.1302      1        1     1
-2      8.5186  13.6620      1        2     2
-3      7.0032  11.8540      1        3     3
-4      5.8598   6.8233      1        4     4
-\end{lstlisting}
-\end{cod}
-\vspace{-10pt}
 
 \begin{qu}
-問題\ref{qu_lr2_1}の問1について，scikit-learnの\texttt{LinearRegression}クラスを用いて予測せよ．なお，\texttt{LinearRegression}クラスを使う上での各種パラメータは全てデフォルトとする(特別に何かパラメータを与えるなどはしない)．
+問題\ref{qu_lr2_1}の問1について，scikit-learnの\texttt{LinearRegression}クラスを用いて予測せよ．なお，\texttt{LinearRegression}クラスを使う上での各種パラメータは全てデフォルトとする(特別に何かパラメータを与えるなどはしない)．また，推定したパラメータも表示せよ．
 \end{qu}
 \begin{ans}
 これまでの実装プログラムに比べて圧倒的に短く実装できる．これがscikit-learnが広く使われる理由となっている(それを実感する上でも，上記クラスの実装までスクラッチで書くことの意義は大きい)．
@@ -916,11 +936,39 @@ df=
 \vspace{-10pt}
 \begin{lstlisting}
 y_pred=411410.5372498779
+theta_0=[89597.9095428]
+theta_1,2=[[  139.21067402 -8738.01911233]]
 \end{lstlisting}
 \end{cod}
 \vspace{-10pt}
 \qed	
 \end{ans}
+
+scikit-learnは，機械学習のモデルのクラスだけではなく，特徴量スケーリングなどデータ前処理に関するクラスも多数備わっている．上で平均標準化のクラスをスクラッチ実装したが，scikit-learnにおいては\texttt{sklearn.preprocessing}の中にある\texttt{StandardScaler}クラスがそれに該当する．
+\begin{gram}　
+\begin{itemize}
+\item \texttt{<instance>=StandardScaler()}: 平均標準化クラスのインスタンスを作成する．
+\item \texttt{<instance>.fit(X)}: \texttt{<instance>}に特徴量\texttt{X}を与えて平均と標準偏差を計算し\texttt{<instance>}内のクラス変数に保持する．
+\item \texttt{<nd\_array>=<instance>.transform(X)}: \texttt{<instance>}に特徴量\texttt{X}を与えて，\texttt{<instance>}のクラス変数にある平均と標準偏差を使って平均標準化を行い，その結果を\texttt{<nd\_array>}に格納する．
+\item \texttt{<nd\_array>=<instance>.fit\_transform(X)}: \texttt{<instance>}に特徴量\texttt{X}を与えて，平均と標準偏差を求め，それを使って平均標準化を行い，その結果を\texttt{<nd\_array>}に格納する．
+\end{itemize}
+\end{gram}
+
+\begin{qu}
+問題\ref{qu_lr2_1}の問2について，scikit-learnの\texttt{LinearRegression}クラス，\texttt{StandardScaler}クラスを用いて予測せよ．なお，\texttt{LinearRegression}クラスを使う上での各種パラメータは全てデフォルトとする(特別に何かパラメータを与えるなどはしない)．
+\end{qu}
+\begin{ans}
+\begin{cod}[\texttt{lr17.py}]　
+\lstinputlisting[backgroundcolor={\color[gray]{.95}}]{code/lr17.py}
+\vspace{-10pt}
+\begin{lstlisting}
+y_pred=411410.5372498779
+\end{lstlisting}
+\end{cod}
+\vspace{-10pt}
+\qed	
+\end{ans}
+
 
 
 

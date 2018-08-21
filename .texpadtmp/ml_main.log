@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.8.1-180226-2.6 (utf8.euc) (TeX Live 2018) (preloaded format=platex 2018.5.28)  20 JUL 2018 01:42
+This is e-pTeX, Version 3.14159265-p3.8.1-180226-2.6 (utf8.euc) (TeX Live 2018) (preloaded format=platex 2018.5.28)  22 AUG 2018 02:03
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -555,7 +555,7 @@ Overfull \vbox (35.8958pt too high) has occurred while \output is active []
 File: code/lrfig7.eps Graphic file (type eps)
 <code/lrfig7.eps>
 
-Overfull \hbox (10.98834pt too wide) in paragraph at lines 632--634
+Overfull \hbox (10.98834pt too wide) in paragraph at lines 641--643
  [] 
  []
 
@@ -571,12 +571,15 @@ File: code/lrfig10.eps Graphic file (type eps)
  [73] [74] [75] [76] (./code/lr14.py [77])
 File: code/lrfig10.eps Graphic file (type eps)
 <code/lrfig10.eps>
- [78] (./code/pd3.py [79]) (./code/lr15.py)) (./reference.tex [80]
+ [78] (./code/lr16.py [79] [80])
+File: code/lrfig12.eps Graphic file (type eps)
+<code/lrfig12.eps>
+ [81] (./code/lr15.py) [82] (./code/lr17.py)) (./reference.tex [83]
 Overfull \hbox (4.82687pt too wide) in paragraph at lines 2--3
 []\OT1/cmr/m/n/10 Andrew Ng, ``Ma-chine Learn-ing'', Stan-ford Uni-ver-sity, https://www.coursera.org/learn/machine-
  []
 
-) [81
+) [84
 
 ] (/Users/kotaro/Documents/ML/ml_book/.texpadtmp/ml_main.aux)
 
@@ -584,12 +587,12 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 6455 strings out of 494499
- 84794 string characters out of 6171360
+ 6470 strings out of 494499
+ 85015 string characters out of 6171360
  213230 words of memory out of 5000000
- 9979 multiletter control sequences out of 15000+600000
+ 9989 multiletter control sequences out of 15000+600000
  28125 words of font info for 129 fonts, out of 8000000 for 9000
  112 hyphenation exceptions out of 8191
  39i,20n,40p,1053b,1958s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on /Users/kotaro/Documents/ML/ml_book/.texpadtmp/ml_main.dvi (81 pages, 727372 bytes).
+Output written on /Users/kotaro/Documents/ML/ml_book/.texpadtmp/ml_main.dvi (84 pages, 775040 bytes).

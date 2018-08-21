@@ -57,14 +57,30 @@ class MyLinearRegression:
         self.y_pred = hypo_function(X, self.theta)
         return self.y_pred
 
+class MyMeanNormalization:
+
+    def fit(self, X):
+        self.mean = X.mean(axis=0)
+        self.std = X.std(axis=0)
+
+    def transform(self, X):
+        new_X = (X - self.mean) / self.std
+        return new_X
+
 df = pd.read_csv('../data/ex1data2.txt', names=['area','bedroom','price'])
 X = df[['area','bedroom']].values
 y = df['price'].values
 y = np.c_[y]
 
-lr = MyLinearRegression(alpha=0.00000003,itera=50)
+mn = MyMeanNormalization()
+mn.fit(X)
+X = mn.transform(X)
+
+lr = MyLinearRegression(alpha=0.3,itera=50)
 lr.fit(X, y)
+
 X_pred = np.array([[2500,3]])
+X_pred = mn.transform(X_pred)
 y_pred = lr.predict(X_pred)
 
 print('y_pred={}'.format(y_pred[0,0]))
@@ -76,4 +92,4 @@ ax.plot(np.arange(m), lr.J_hist)
 ax.set_xlabel('iter')
 ax.set_ylabel(r'$J(\theta)$')
 
-fig.savefig('lrfig11.eps')
+fig.savefig('lrfig12.eps')
