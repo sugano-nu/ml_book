@@ -1,5 +1,5 @@
 # ml_book
-Machine Learning: Theory and Implementation using Python --- see [ml_main.pdf](https://github.com/kotaro0220/ml_book/blob/master/ml_main.pdf)
+Machine Learning: Theory and Implementation using Python -- see old/ml_main.pdf
 
 # Author
 Keishi Okudera
