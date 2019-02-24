@@ -1,8 +1,10 @@
 # ml_book
-Machine Learning: Theory and Implementation using Python -- see old/ml_main.pdf
+- Machine Learning: Theory and Implementation URL: https://kotaro0220.github.io/ml_book/
+- PDFベースからhtmlベースに変更しました。
+- 以前のもの（PDF）は https://github.com/kotaro0220/ml_book/blob/master/old/ml_main.pdf です。
 
 # Author
-Keishi Okudera
+- Keishi Okudera
 
 # Certificate(Coursera)
 - [Programming for Everybody (Getting Started with Python)](https://www.coursera.org/account/accomplishments/certificate/SLW9N79ATL5Q)

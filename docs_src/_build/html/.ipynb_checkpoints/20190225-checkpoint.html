@@ -1,0 +1,583 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>線形代数 &mdash; Machine Learning: Theory and Implementation 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Machine Learning: Theory and Implementation
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../20190225.html">線形代数</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Machine Learning: Theory and Implementation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>線形代数</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/.ipynb_checkpoints/20190225-checkpoint.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="線形代数">
+<h1>線形代数<a class="headerlink" href="#線形代数" title="Permalink to this headline">¶</a></h1>
+<p>まずは行列を定義する．</p>
+<div class="section" id="[定義]-行列">
+<h2>[定義] 行列<a class="headerlink" href="#[定義]-行列" title="Permalink to this headline">¶</a></h2>
+<p>実数の長方形配列を<strong>行列(matrix)</strong>と呼ぶ．すなわち，行列は一般的な形として以下のように配列された実数<span class="math notranslate nohighlight">\(a_{11},a_{12},\ldots,a_{1n},\ldots,a_{m1},a_{m2},\ldots,a_{mn} \in \mathbb{R}\)</span>の集まりである．</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+\begin{bmatrix}
+a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} \\
+a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} \\
+\vdots &amp; \vdots &amp; \vdots &amp; \vdots \\
+a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn}
+\end{bmatrix}
+\end{align*}\end{split}\]</div>
+<p>なお，上記のように<span class="math notranslate nohighlight">\(m\)</span>個の行と<span class="math notranslate nohighlight">\(n\)</span>個の列からなる行列を<span class="math notranslate nohighlight">\(m\times n\)</span>行列と呼び，<span class="math notranslate nohighlight">\(m\)</span>と<span class="math notranslate nohighlight">\(n\)</span>をこの行列の<strong>次元(dimension)</strong>と呼ぶ．行列の第<span class="math notranslate nohighlight">\(i\)</span>行と第<span class="math notranslate nohighlight">\(j\)</span>列にある<span class="math notranslate nohighlight">\(a_{ij}\)</span>をその行列の第<span class="math notranslate nohighlight">\(ij\)</span><strong>要素(element)</strong>または<strong>成分(entry)</strong>と呼ぶ．たびたび，行列はその成分<span class="math notranslate nohighlight">\(a_{ij}\)</span>として<span class="math notranslate nohighlight">\(A=\{a_{ij}\}\)</span>と表記する．なお，行列に対して，単なる数のことを，<strong>スカラー(scalar)</strong>と呼ぶ．</p>
+</div>
+<div class="section" id="[注意]">
+<h2>[注意]<a class="headerlink" href="#[注意]" title="Permalink to this headline">¶</a></h2>
+<p>断りのない限り，行列の成分は実数に限定する．</p>
+<p>上記で定義した行列に対して，相等，和・差，積(スカラー積と行列の積)，そして転置という行列特有の操作を導入する．</p>
+</div>
+<div class="section" id="[定義]-行列の相等">
+<h2>[定義] 行列の相等<a class="headerlink" href="#[定義]-行列の相等" title="Permalink to this headline">¶</a></h2>
+<p>同じ次元を持つ2つの行列<span class="math notranslate nohighlight">\(A\)</span>,<span class="math notranslate nohighlight">\(B\)</span>について，もし<span class="math notranslate nohighlight">\(A\)</span>の全ての要素が<span class="math notranslate nohighlight">\(B\)</span>のその対応する各要素に等しいならば，行列は<strong>等しい(equal)</strong>といい，<span class="math notranslate nohighlight">\(A=B\)</span>と書く．</p>
+</div>
+<div class="section" id="[定義]-スカラー乗法">
+<h2>[定義] スカラー乗法<a class="headerlink" href="#[定義]-スカラー乗法" title="Permalink to this headline">¶</a></h2>
+<p>任意のスカラー<span class="math notranslate nohighlight">\(k\)</span>と任意の<span class="math notranslate nohighlight">\(m\times n\)</span>行列<span class="math notranslate nohighlight">\(A=\{a_{ij}\}\)</span>に対して，<span class="math notranslate nohighlight">\(k\)</span>と<span class="math notranslate nohighlight">\(A\)</span>の<strong>スカラー積(scalar product)</strong>を，その第<span class="math notranslate nohighlight">\(ij\)</span>要素が<span class="math notranslate nohighlight">\(ka_{ij}\)</span>である<span class="math notranslate nohighlight">\(m\times n\)</span>行列と定義し，<span class="math notranslate nohighlight">\(kA\)</span>と書く．特に，<span class="math notranslate nohighlight">\(-1\)</span>と<span class="math notranslate nohighlight">\(A\)</span>のスカラー積<span class="math notranslate nohighlight">\((-1)A\)</span>を，<span class="math notranslate nohighlight">\(A\)</span>の<strong>負(negative)</strong>と呼び，<span class="math notranslate nohighlight">\(-A\)</span>と略記する．</p>
+</div>
+<div class="section" id="[定義]-行列の加法と減法">
+<h2>[定義] 行列の加法と減法<a class="headerlink" href="#[定義]-行列の加法と減法" title="Permalink to this headline">¶</a></h2>
+<p>同じ行の数<span class="math notranslate nohighlight">\(m\)</span>と同じ列の数<span class="math notranslate nohighlight">\(n\)</span>をもつ任意の行列<span class="math notranslate nohighlight">\(A=\{a_{ij}\},B=\{b_{ij}\}\)</span>に対して，<span class="math notranslate nohighlight">\(A\)</span>と<span class="math notranslate nohighlight">\(B\)</span>の<strong>和(sum)</strong>を，その第<span class="math notranslate nohighlight">\(ij\)</span>要素が<span class="math notranslate nohighlight">\(a_{ij}+b_{ij}\)</span>である<span class="math notranslate nohighlight">\(m\times n\)</span>行列と定義し，<span class="math notranslate nohighlight">\(A+B\)</span>と書く．また，和<span class="math notranslate nohighlight">\(A+(-B)\)</span>，すなわちその第<span class="math notranslate nohighlight">\(ij\)</span>要素が<span class="math notranslate nohighlight">\(a_{ij}-b_{ij}\)</span>である<span class="math notranslate nohighlight">\(m\times n\)</span>行列を<span class="math notranslate nohighlight">\(A-B\)</span>と書くこととし，この行列を<span class="math notranslate nohighlight">\(A\)</span>と<span class="math notranslate nohighlight">\(B\)</span>の<strong>差(difference)</strong>と呼ぶ．同じ数の行と列をもつ行列は加法あるいは減法に対して<strong>共形的(conformal)</strong>であるという．</p>
+</div>
+<div class="section" id="[定義]-行列の積">
+<h2>[定義] 行列の積<a class="headerlink" href="#[定義]-行列の積" title="Permalink to this headline">¶</a></h2>
+<p><span class="math notranslate nohighlight">\(m\times n\)</span>行列<span class="math notranslate nohighlight">\(A\)</span>と<span class="math notranslate nohighlight">\(p\times q\)</span>行列<span class="math notranslate nohighlight">\(B\)</span>について，<span class="math notranslate nohighlight">\(n=p\)</span>，すなわち<span class="math notranslate nohighlight">\(A\)</span>の列と<span class="math notranslate nohighlight">\(B\)</span>の行の数が等しいとする．このとき，行列の<strong>積(matrix product)</strong><span class="math notranslate nohighlight">\(AB\)</span>は，<span class="math notranslate nohighlight">\(AB=\{c_{ij}\}\)</span>としたとき，その第<span class="math notranslate nohighlight">\(ij\)</span>要素<span class="math notranslate nohighlight">\(c_{ij}\)</span>が次式で表される<span class="math notranslate nohighlight">\(m\times q\)</span>行列と定義する．</p>
+<div class="math notranslate nohighlight">
+\[\begin{align}
+c_{ij}=\sum_{k=1}^n a_{ik}b_{kj}     \tag{4}
+\end{align}\]</div>
+<p>なお，<span class="math notranslate nohighlight">\(AB\)</span>は，<span class="math notranslate nohighlight">\(A\)</span>による<span class="math notranslate nohighlight">\(B\)</span>への<strong>前からの乗法(premultiplication)</strong>または<span class="math notranslate nohighlight">\(B\)</span>の<span class="math notranslate nohighlight">\(A\)</span>による<strong>後ろからの乗法(postmultiplication)</strong>と呼ぶ．</p>
+</div>
+<div class="section" id="[定義]-転置">
+<h2>[定義] 転置<a class="headerlink" href="#[定義]-転置" title="Permalink to this headline">¶</a></h2>
+<p><span class="math notranslate nohighlight">\(m\times n\)</span>行列<span class="math notranslate nohighlight">\(A\)</span>の<strong>転置(transposition)</strong>は記号<span class="math notranslate nohighlight">\(A^T\)</span>で表し，各<span class="math notranslate nohighlight">\(ij\)</span>要素が<span class="math notranslate nohighlight">\(A\)</span>の第<span class="math notranslate nohighlight">\(ji\)</span>要素である<span class="math notranslate nohighlight">\(n\times m\)</span>行列を意味する．すなわち，行列の転置は行を列として，列を行として書き直すことで作られる．</p>
+</div>
+<div class="section" id="[定理]">
+<h2>[定理]<a class="headerlink" href="#[定理]" title="Permalink to this headline">¶</a></h2>
+<p>任意のスカラー<span class="math notranslate nohighlight">\(c,k\)</span>，任意の行列<span class="math notranslate nohighlight">\(A\)</span>に対して次式が成り立つ．</p>
+<div class="math notranslate nohighlight">
+\[\begin{align}
+c(kA)=(ck)A=(kc)A=k(cA)
+\end{align}\]</div>
+<p><strong>証明）</strong></p>
+<p>省略(任意の<span class="math notranslate nohighlight">\(ij\)</span>成分に対して成り立つことを示せばよい)．</p>
+</div>
+<div class="section" id="[定理]">
+<h2>[定理]<a class="headerlink" href="#[定理]" title="Permalink to this headline">¶</a></h2>
+<p>任意のスカラー<span class="math notranslate nohighlight">\(c,k\)</span>，任意の共形的である行列<span class="math notranslate nohighlight">\(A,B,C\)</span>に対して次式が成り立つ．</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+&amp;A+B=B+A \tag{3}\\
+&amp; A+(B+C)=(A+B)+C \\
+&amp; c(A+B)=cA+cB \\
+&amp; (c+k)A=cA+kA
+\end{align}\end{split}\]</div>
+<p><strong>証明）</strong></p>
+<p>省略(任意の<span class="math notranslate nohighlight">\(ij\)</span>成分に対して成り立つことを示せばよい)．</p>
+</div>
+<div class="section" id="[定理]">
+<h2>[定理]<a class="headerlink" href="#[定理]" title="Permalink to this headline">¶</a></h2>
+<p>任意のスカラー<span class="math notranslate nohighlight">\(c\)</span>，任意の<span class="math notranslate nohighlight">\(m\times n\)</span>行列<span class="math notranslate nohighlight">\(A\)</span>，<span class="math notranslate nohighlight">\(n\times q\)</span>行列<span class="math notranslate nohighlight">\(B\)</span>，<span class="math notranslate nohighlight">\(q\times t\)</span>行列<span class="math notranslate nohighlight">\(C\)</span>に対して次式が成り立つ．</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+&amp;A(BC)=(AB)C \\
+&amp;A(B+C)=AB+AC \tag{1}\\
+&amp;(A+B)C=AC+BC \tag{2}\\
+&amp;cAB=(cA)B=A(cB)
+\end{align}\end{split}\]</div>
+<p><strong>証明）</strong></p>
+<p>省略(任意の<span class="math notranslate nohighlight">\(ij\)</span>成分に対して成り立つことを示せばよい)．</p>
+</div>
+<div class="section" id="[定理]">
+<h2>[定理]<a class="headerlink" href="#[定理]" title="Permalink to this headline">¶</a></h2>
+<p>任意の行列<span class="math notranslate nohighlight">\(A\)</span>に対して，次式が成り立つ．</p>
+<div class="math notranslate nohighlight">
+\[\begin{align}
+(A^T)^T=A \tag{5}
+\end{align}\]</div>
+<p>また，加法に関して共形的である任意の行列<span class="math notranslate nohighlight">\(A,B\)</span>に対して，次式が成り立つ．</p>
+<div class="math notranslate nohighlight">
+\[\begin{align}
+(A+B)^T=A^T+B^T
+\end{align}\]</div>
+<p>また，積が定義される任意の行列<span class="math notranslate nohighlight">\(A,B\)</span>に対して，次式が成り立つ．</p>
+<div class="math notranslate nohighlight">
+\[\begin{align}
+(AB)^T=B^TA^T \tag{6}
+\end{align}\]</div>
+<p><strong>証明）</strong></p>
+<p>任意の<span class="math notranslate nohighlight">\(ij\)</span>成分に対して成り立つことを示せばよいので省略するが，最後の式のみ示す．<span class="math notranslate nohighlight">\(m\times n\)</span>行列<span class="math notranslate nohighlight">\(A=\{a_{ij}\}\)</span>，<span class="math notranslate nohighlight">\(n\times q\)</span>行列<span class="math notranslate nohighlight">\(B=\{b_{ij}\}\)</span>とする．<span class="math notranslate nohighlight">\(q\times m\)</span>行列<span class="math notranslate nohighlight">\((AB)^T=\{d_{ij}\}\)</span>の第<span class="math notranslate nohighlight">\(ij\)</span>成分は，<span class="math notranslate nohighlight">\(m\times q\)</span>行列<span class="math notranslate nohighlight">\(AB=\{c_{ij}\}\)</span>の第<span class="math notranslate nohighlight">\(ji\)</span>成分であるため，行列の積の定義より</p>
+<div class="math notranslate nohighlight">
+\[\begin{align*}
+d_{ij}=c_{ji}=\sum_{k=1}^n a_{jk}b_{ki}
+\end{align*}\]</div>
+<p>となる．一方，<span class="math notranslate nohighlight">\(q\times n\)</span>行列<span class="math notranslate nohighlight">\(B^T=\{b'_{ij}\}\)</span>，<span class="math notranslate nohighlight">\(n\times m\)</span>行列<span class="math notranslate nohighlight">\(A^T=\{a'_{ij}\}\)</span>としたとき，<span class="math notranslate nohighlight">\(q\times m\)</span>行列<span class="math notranslate nohighlight">\(B^TA^T=\{d'_{ij}\}\)</span>の第<span class="math notranslate nohighlight">\(ij\)</span>成分は，式(4)より</p>
+<div class="math notranslate nohighlight">
+\[\begin{align*}
+d'_{ij}=\sum_{k=1}^n b'_{ik}a'_{kj}
+\end{align*}\]</div>
+<p>となるが，<span class="math notranslate nohighlight">\(b'_{ik}=b_{ki},a'_{kj}=a_{jk}\)</span>であるため，結局，</p>
+<div class="math notranslate nohighlight">
+\[\begin{align*}
+d'_{ij}=\sum_{k=1}^n b'_{ik}a'_{kj}=\sum_{k=1}^n b_{ki}a_{jk}=\sum_{k=1}^n a_{jk}b_{ki}=d_{ij}
+\end{align*}\]</div>
+<p>となるため，<span class="math notranslate nohighlight">\((AB)^T=B^TA^T\)</span>となる．</p>
+</div>
+<div class="section" id="[問題]">
+<h2>[問題]<a class="headerlink" href="#[問題]" title="Permalink to this headline">¶</a></h2>
+<p>任意の<span class="math notranslate nohighlight">\(m\times n\)</span>行列<span class="math notranslate nohighlight">\(A,B\)</span>，<span class="math notranslate nohighlight">\(n\times q\)</span>行列<span class="math notranslate nohighlight">\(C,D\)</span>に対して次式が成り立つことを示せ．</p>
+<div class="math notranslate nohighlight">
+\[\begin{align}
+(A+B)(C+D)=AC+AD+BC+BD
+\end{align}\]</div>
+<p><strong>解答）</strong></p>
+<p>式(1)において<span class="math notranslate nohighlight">\((A+B)\)</span>を<span class="math notranslate nohighlight">\(A\)</span>だとして適用し，その後に式(2)を順に適用して展開したあと，式(3)で交換操作をすることで示せる．</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+(A+B)(C+D)&amp;= (A+B)C+(A+B)D\\
+&amp;= AC+BC+AD+BD \\
+&amp;= AC+AD+BC+BD
+\end{align*}\end{split}\]</div>
+<p>行列の中でも，特別な名前がつけられているものがある．ここでは正方行列と対称行列，ベクトルを定義する．</p>
+</div>
+<div class="section" id="[定義]-正方行列">
+<h2>[定義] 正方行列<a class="headerlink" href="#[定義]-正方行列" title="Permalink to this headline">¶</a></h2>
+<p>行の数と列の数が同じ行列を<strong>正方行列(square matrix)</strong>と呼び，<span class="math notranslate nohighlight">\(n\times n\)</span>正方行列における<span class="math notranslate nohighlight">\(n\)</span>を<strong>次数(order)</strong>という．また，<span class="math notranslate nohighlight">\(n\times n\)</span>正方行列において<span class="math notranslate nohighlight">\(a_{11},a_{22},\ldots,a_{nn}\)</span>を（第1，第2，等の）<strong>対角要素(diagonal element)</strong>と呼び，対角要素以外の要素を<strong>非対角要素(off-diagonal element)</strong>と呼ぶ．</p>
+</div>
+<div class="section" id="[定義]-対称行列">
+<h2>[定義] 対称行列<a class="headerlink" href="#[定義]-対称行列" title="Permalink to this headline">¶</a></h2>
+<p><span class="math notranslate nohighlight">\(A^T=A\)</span>である行列<span class="math notranslate nohighlight">\(A\)</span>，すなわち第<span class="math notranslate nohighlight">\(ij\)</span>要素が第<span class="math notranslate nohighlight">\(ji\)</span>要素と等しい行列を<strong>対称行列(symmetric matrix)</strong>という．</p>
+</div>
+<div class="section" id="[定理]">
+<h2>[定理]<a class="headerlink" href="#[定理]" title="Permalink to this headline">¶</a></h2>
+<p>任意の行列<span class="math notranslate nohighlight">\(X\)</span>に対して，<span class="math notranslate nohighlight">\(X^TX\)</span>は対称行列である．</p>
+<p><strong>証明）</strong></p>
+<p>式(6)，式(5)より，<span class="math notranslate nohighlight">\((X^TX)^T=X^T(X^T)^T=X^TX\)</span>．</p>
+</div>
+<div class="section" id="[定義]-ベクトル">
+<h2>[定義] ベクトル<a class="headerlink" href="#[定義]-ベクトル" title="Permalink to this headline">¶</a></h2>
+<p>ただ1個の列をもつ行列，すなわち以下の行列を<strong>列ベクトル(column vector)</strong>と呼ぶ．</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+\begin{bmatrix}
+a_{1} \\
+a_{2} \\
+\vdots \\
+a_{m}
+\end{bmatrix}
+\end{align*}\end{split}\]</div>
+<p>同様に，ただ1個の行をもつ行列を<strong>行ベクトル(row vector)</strong>と呼ぶ．なお，上記のように<span class="math notranslate nohighlight">\(m\)</span>個の要素からなるベクトルを<span class="math notranslate nohighlight">\(m\)</span>次元ベクトルと呼ぶ．たびたび，ベクトルはその第<span class="math notranslate nohighlight">\(i\)</span>成分<span class="math notranslate nohighlight">\(a_{i}\)</span>として<span class="math notranslate nohighlight">\(\mathbf{a}=\{a_{i}\}\)</span>と表記する．また，上記の列ベクトルを文章中で書く場合，行ベクトルと転置を用いて<span class="math notranslate nohighlight">\(\mathbf{a}=(a_1,a_2,\ldots,a_m)^T\)</span>とすることが多い．</p>
+<p>内積，(通常の)ノルム，角度を定義する．</p>
+</div>
+<div class="section" id="[定義]-内積">
+<h2>[定義] 内積<a class="headerlink" href="#[定義]-内積" title="Permalink to this headline">¶</a></h2>
+<p>2個の<span class="math notranslate nohighlight">\(n\)</span>次元列ベクトル<span class="math notranslate nohighlight">\(\mathbf{a}=(a_1,a_2,\ldots,a_n)^T\)</span>，<span class="math notranslate nohighlight">\(\mathbf{b}=(b_1,b_2,\ldots,b_n)^T\)</span>に対して，<strong>内積(inner product)</strong> <span class="math notranslate nohighlight">\(\mathbf{a}\cdot \mathbf{b}\)</span>は次式で定義される．</p>
+<div class="math notranslate nohighlight">
+\[\begin{align}
+\mathbf{a}\cdot \mathbf{b} = \mathbf{a}^T \mathbf{b} = a_1b_1+a_2b_2+\cdots+a_nb_n \label{IP}
+\end{align}\]</div>
+</div>
+<div class="section" id="[定理]">
+<h2>[定理]<a class="headerlink" href="#[定理]" title="Permalink to this headline">¶</a></h2>
+<p>2個の<span class="math notranslate nohighlight">\(n\)</span>次元列ベクトル<span class="math notranslate nohighlight">\(\mathbf{a}=(a_1,a_2,\ldots,a_n)^T\)</span>，<span class="math notranslate nohighlight">\(\mathbf{b}=(b_1,b_2,\ldots,b_n)^T\)</span>の内積について次式が成り立つ．</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+&amp;\mathbf{a}^T\mathbf{b}= \mathbf{b}^T\mathbf{a} \\
+&amp;\mathbf{a}^T\mathbf{a} \geq 0\\
+&amp;(k\mathbf{a})^T\mathbf{b}= k\mathbf{a}^T\mathbf{b} \\
+&amp;(\mathbf{a}+\mathbf{b})^T(\mathbf{c}+\mathbf{d})= \mathbf{a}^T\mathbf{c}+\mathbf{b}^T\mathbf{c}+\mathbf{a}^T\mathbf{d}+\mathbf{b}^T\mathbf{d}
+\end{align}\end{split}\]</div>
+<p><strong>証明）</strong></p>
+<p>略．</p>
+</div>
+<div class="section" id="[定義]-(通常の)ノルム">
+<h2>[定義] (通常の)ノルム<a class="headerlink" href="#[定義]-(通常の)ノルム" title="Permalink to this headline">¶</a></h2>
+<p><span class="math notranslate nohighlight">\(n\)</span>次元列ベクトル<span class="math notranslate nohighlight">\(\mathbf{a}=(a_1,a_2,\ldots,a_n)^T\)</span>に対して，<strong>(通常の)ノルム((usual) norm)</strong> <span class="math notranslate nohighlight">\(||\mathbf{a}||\)</span>は次式で定義される．</p>
+<div class="math notranslate nohighlight">
+\[\begin{align}
+    ||\mathbf{a}||=\sqrt{\mathbf{a}^T\mathbf{a}}=\sqrt{a_1^2+a_2^2+\cdots +a_n^2}
+\end{align}\]</div>
+</div>
+<div class="section" id="[定理]">
+<h2>[定理]<a class="headerlink" href="#[定理]" title="Permalink to this headline">¶</a></h2>
+<p><span class="math notranslate nohighlight">\(n\)</span>次元列ベクトル<span class="math notranslate nohighlight">\(\mathbf{a}=(a_1,a_2,\ldots,a_n)^T\)</span>の通常のノルムについて次式が成り立つ．</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+&amp;||\mathbf{a}|| \geq 0\\
+&amp;||k\mathbf{a}|| = |k|||\mathbf{a}||
+\end{align}\end{split}\]</div>
+<p><strong>証明）</strong></p>
+<p>略．</p>
+</div>
+<div class="section" id="[定義]-角度">
+<h2>[定義] 角度<a class="headerlink" href="#[定義]-角度" title="Permalink to this headline">¶</a></h2>
+<p>2つの<span class="math notranslate nohighlight">\(\mathbf{0}\)</span>でない<span class="math notranslate nohighlight">\(n\)</span>次元列ベクトル<span class="math notranslate nohighlight">\(\mathbf{x},\mathbf{y}\)</span>に対して，そのなす<strong>角度</strong>$ <span class="math">\theta`~(0:nbsphinx-math:</span>leq <cite>:nbsphinx-math:</cite>theta <cite>:nbsphinx-math:</cite>leq <cite>:nbsphinx-math:</cite>pi`)$を，その余弦を用いて次式で定義する．</p>
+<div class="math notranslate nohighlight">
+\[\begin{align}
+\cos \theta = \frac{\mathbf{x}^T\mathbf{y}}{||\mathbf{x}||||\mathbf{y}||}
+\end{align}\]</div>
+<p>行列はベクトルを横だったり縦だったりにくっつけたものともいえる．行列においてその要素をベクトルに分割したものを分割ベクトルという．</p>
+</div>
+<div class="section" id="[定義]-分割ベクトル">
+<h2>[定義] 分割ベクトル<a class="headerlink" href="#[定義]-分割ベクトル" title="Permalink to this headline">¶</a></h2>
+<p>任意の<span class="math notranslate nohighlight">\(m\times n\)</span>行列<span class="math notranslate nohighlight">\(A=\{a_{ij}\}\)</span>を行方向に分割した場合，すなわち<span class="math notranslate nohighlight">\(m\)</span>個の列ベクトル<span class="math notranslate nohighlight">\(\mathbf{a}_i=(a_{i1},a_{i2},\ldots,a_{in})^T~(i=1,2,\ldots,m)\)</span>で分割したとき，その列ベクトル<span class="math notranslate nohighlight">\(\mathbf{a}_1,\mathbf{a}_2,\ldots,\mathbf{a}_m\)</span>を<strong>分割行ベクトル(partitioned row
+vector)</strong>という．また，列方向に分割した場合，すなわち<span class="math notranslate nohighlight">\(n\)</span>個の列ベクトル<span class="math notranslate nohighlight">\(\mathbf{a}'_j=(a_{1j},a_{2j},\ldots,a_{mj})^T~(j=1,2,\ldots,n)\)</span>で分割した時，その列ベクトル<span class="math notranslate nohighlight">\(\mathbf{a}'_1,\mathbf{a}'_2,\ldots,\mathbf{a}'_n\)</span>を<strong>分割列ベクトル(partitioned column vector)</strong>という．これらを用いて，<span class="math notranslate nohighlight">\(A\)</span>は次式で表記される．</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+A=
+\begin{bmatrix}
+\mbox{------} &amp; \mathbf{a}_1^T &amp; \mbox{------} \\
+\mbox{------} &amp; \mathbf{a}_2^T &amp; \mbox{------} \\
+  &amp; \vdots &amp;  \\
+\mbox{------} &amp; \mathbf{a}_m^T &amp; \mbox{------}
+\end{bmatrix}
+=
+\begin{bmatrix}
+| &amp; | &amp;  &amp; | \\[-12pt]
+| &amp; | &amp;  &amp; | \\
+\mathbf{a}'_1 &amp; \mathbf{a}'_2 &amp; \cdots &amp; \mathbf{a}'_n \\
+| &amp; | &amp;  &amp; |    \\[-12pt]
+| &amp; | &amp;  &amp; |
+\end{bmatrix}
+\end{align}\end{split}\]</div>
+</div>
+<div class="section" id="[定理]">
+<h2>[定理]<a class="headerlink" href="#[定理]" title="Permalink to this headline">¶</a></h2>
+<p><span class="math notranslate nohighlight">\(m\times n\)</span>行列<span class="math notranslate nohighlight">\(A=\{a_{ij}\}\)</span>と<span class="math notranslate nohighlight">\(n\)</span>次元ベクトル<span class="math notranslate nohighlight">\(\mathbf{x}=(x_1,x_2,\ldots,x_n)\)</span>との積<span class="math notranslate nohighlight">\(A\mathbf{x}\)</span>は，分割行ベクトル<span class="math notranslate nohighlight">\(\mathbf{a}=(a_{i1},a_{i2},\ldots,a_{in})^T~(i=1,2,\ldots,m)\)</span>または分割列ベクトル<span class="math notranslate nohighlight">\(\mathbf{a}'_j=(a_{1j},a_{2j},\ldots,a_{mj})^T~(j=1,2,\ldots,n)\)</span>を用いてそれぞれ以下で表すことができる．</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+A\mathbf{x}&amp;=
+\begin{bmatrix}
+\mbox{------} &amp; \mathbf{a}_1^T &amp; \mbox{------} \\
+\mbox{------} &amp; \mathbf{a}_2^T &amp; \mbox{------} \\
+ &amp; \vdots &amp; \\
+\mbox{------} &amp; \mathbf{a}_m^T &amp; \mbox{------}
+\end{bmatrix}
+\begin{bmatrix}
+| \\[-2pt]
+| \\
+\mathbf{x} \\
+| \\[-2pt]
+|
+\end{bmatrix}
+=
+\begin{bmatrix}
+\mathbf{a}_1^T \mathbf{x} \\
+\mathbf{a}_2^T \mathbf{x} \\
+\vdots \\
+\mathbf{a}_m^T \mathbf{x}
+\end{bmatrix}
+=
+\begin{bmatrix}
+\mathbf{x}^T \mathbf{a}_1 \\
+\mathbf{x}^T \mathbf{a}_2 \\
+\vdots \\
+\mathbf{x}^T \mathbf{a}_m
+\end{bmatrix}\tag{7}\\
+&amp;=
+\begin{bmatrix}
+| &amp; | &amp;  &amp; | \\[-2pt]
+| &amp; | &amp;  &amp; | \\
+\mathbf{a}'_1 &amp; \mathbf{a}'_2 &amp; \cdots &amp; \mathbf{a}'_n \\
+| &amp; | &amp;  &amp; |    \\[-2pt]
+| &amp; | &amp;  &amp; |
+\end{bmatrix}
+\begin{bmatrix}
+| \\[-2pt]
+| \\
+\mathbf{x} \\
+| \\[-2pt]
+|
+\end{bmatrix}
+=\mathbf{a}'_1x_1+\mathbf{a}'_2x_2+\cdots +\mathbf{a}'_nx_n \tag{8}
+\end{align}\end{split}\]</div>
+<p><strong>証明）</strong></p>
+<p><span class="math notranslate nohighlight">\(A\mathbf{x}\)</span>を書き下すことで容易に示すことができる．式(7)は内積の定義，性質よりすぐ分かる．式(8)は和を分解していく操作をすると示される．</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+A\mathbf{x}&amp;=
+\begin{bmatrix}
+a_{11}x_1+a_{12}x_2+\cdots +a_{1n}x_n \\
+a_{21}x_1+a_{22}x_2+\cdots +a_{2n}x_n \\
+\vdots \\
+a_{m1}x_1+a_{m2}x_2+\cdots +a_{mn}x_n
+\end{bmatrix}
+=
+\begin{bmatrix}
+\mathbf{a}_1^T \mathbf{x} \\
+\mathbf{a}_2^T \mathbf{x} \\
+\vdots \\
+\mathbf{a}_m^T \mathbf{x}
+\end{bmatrix}
+=
+\begin{bmatrix}
+\mathbf{x}^T \mathbf{a}_1 \\
+\mathbf{x}^T \mathbf{a}_2 \\
+\vdots \\
+\mathbf{x}^T \mathbf{a}_m
+\end{bmatrix}\nonumber\\
+&amp;=
+\begin{bmatrix}
+a_{11} \\
+a_{21} \\
+\vdots \\
+a_{m1}
+\end{bmatrix}
+x_1+
+\begin{bmatrix}
+a_{12} \\
+a_{22} \\
+\vdots \\
+a_{m2}
+\end{bmatrix}
+x_2+\cdots+
+\begin{bmatrix}
+a_{1n} \\
+a_{2n} \\
+\vdots \\
+a_{mn}
+\end{bmatrix}
+x_n=\mathbf{a}'_1x_1+\mathbf{a}'_2x_2+\cdots +\mathbf{a}'_nx_n
+\end{align*}\end{split}\]</div>
+<p>行列やベクトルを演算した結果としてスカラー値を返す関数はいくらでもあるが，その中に重要な関数がいくつかある．代表的なものとして線形形式，二次形式がある．(線形形式は内積を再定義したものである．)</p>
+</div>
+<div class="section" id="[定義]-線形形式">
+<h2>[定義] 線形形式<a class="headerlink" href="#[定義]-線形形式" title="Permalink to this headline">¶</a></h2>
+<p><span class="math notranslate nohighlight">\(\mathbf{a}=(a_1,a_2,\ldots,a_n)^T\)</span>を任意の<span class="math notranslate nohighlight">\(n\)</span>次元列ベクトルとする．このとき，任意の<span class="math notranslate nohighlight">\(n\)</span>次元列ベクトル<span class="math notranslate nohighlight">\(\mathbf{x}=(x_1,x_2,\ldots,x_n)^T\)</span>に対してスカラー値<span class="math notranslate nohighlight">\(\mathbf{a}^T\mathbf{x}\)</span>を返す関数を，<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>に関する<strong>線形形式(linear form)</strong>と呼ぶ．ここで，習慣的に<span class="math notranslate nohighlight">\(\mathbf{a}\)</span>を<strong>係数ベクトル(coefficient vector)</strong>と呼ぶ．</p>
+</div>
+<div class="section" id="[定義]-二次形式">
+<h2>[定義] 二次形式<a class="headerlink" href="#[定義]-二次形式" title="Permalink to this headline">¶</a></h2>
+<p><span class="math notranslate nohighlight">\(A=\{a_{ij}\}\)</span>を任意の<span class="math notranslate nohighlight">\(n\times n\)</span>行列とする．このとき，任意の<span class="math notranslate nohighlight">\(n\)</span>次元列ベクトル<span class="math notranslate nohighlight">\(\mathbf{x}=(x_1,x_2,\ldots,x_n)^T\)</span>に対してスカラー値<span class="math notranslate nohighlight">\(\mathbf{x}^TA\mathbf{x}\)</span>を返す関数を，<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>に関する<strong>二次形式(quadratic form)</strong>と呼ぶ．ここで，習慣的に<span class="math notranslate nohighlight">\(A\)</span>を<strong>二次形式の行列(matrix of quadratic
+form)</strong>と呼ぶ．<span class="math notranslate nohighlight">\(\mathbf{x}^TA\mathbf{x}\)</span>は次式で展開される．2つ目の式は，<span class="math notranslate nohighlight">\(a_{ii}\)</span>を起点にそれ自身の項，行方向に見た項，列方向に見た項，それ以外の項に分けた形で，<span class="math notranslate nohighlight">\(x_i\)</span>での微分をする場合等に役立つ．</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+\mathbf{x}^TA\mathbf{x}&amp;= \sum_{i=1}^n\sum_{j=1}^n a_{ij}x_ix_j\\
+&amp;=a_{ii}x_i^2+\sum_{\substack{j=1\\j\neq i}}^n a_{ij}x_ix_j+\sum_{\substack{k=1\\k\neq i}}^n a_{ki}x_kx_i+\sum_{\substack{j,k\\j\neq i\\k\neq i}}a_{kj}x_kx_j \label{quadform}
+\end{align}\end{split}\]</div>
+<p>スカラー積，行列の積とは別に，要素同士の積をとった演算も存在する．それをアダマール積という．</p>
+</div>
+<div class="section" id="[定義]-アダマール積">
+<h2>[定義] アダマール積<a class="headerlink" href="#[定義]-アダマール積" title="Permalink to this headline">¶</a></h2>
+<p>2つの<span class="math notranslate nohighlight">\(m\times n\)</span>行列<span class="math notranslate nohighlight">\(A=\{a_{ij}\}, B=\{b_{ij}\}\)</span>について，<strong>アダマール積(hadamard product)</strong><span class="math notranslate nohighlight">\(A\odot B\)</span>は，<span class="math notranslate nohighlight">\(A\odot B=\{c_{ij}\}\)</span>としたとき，その第<span class="math notranslate nohighlight">\(ij\)</span>要素<span class="math notranslate nohighlight">\(c_{ij}\)</span>が次式で表される<span class="math notranslate nohighlight">\(m\times n\)</span>行列と定義する．</p>
+<div class="math notranslate nohighlight">
+\[\begin{align}
+c_{ij}=a_{ij}b_{ij}
+\end{align}\]</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Keishi Okudera
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

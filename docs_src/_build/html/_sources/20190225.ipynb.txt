@@ -1,0 +1,652 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# 線形代数"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "まずは行列を定義する．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] 行列\n",
+    "実数の長方形配列を**行列(matrix)**と呼ぶ．すなわち，行列は一般的な形として以下のように配列された実数$a_{11},a_{12},\\ldots,a_{1n},\\ldots,a_{m1},a_{m2},\\ldots,a_{mn} \\in \\mathbb{R}$の集まりである．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align*}\n",
+    "\\begin{bmatrix}\n",
+    "a_{11} & a_{12} & \\cdots & a_{1n} \\\\\n",
+    "a_{21} & a_{22} & \\cdots & a_{2n} \\\\\n",
+    "\\vdots & \\vdots & \\vdots & \\vdots \\\\\n",
+    "a_{m1} & a_{m2} & \\cdots & a_{mn} \n",
+    "\\end{bmatrix}\t\n",
+    "\\end{align*}\n",
+    "$$\n",
+    "\n",
+    "なお，上記のように$m$個の行と$n$個の列からなる行列を$m\\times n$行列と呼び，$m$と$n$をこの行列の**次元(dimension)**と呼ぶ．行列の第$i$行と第$j$列にある$a_{ij}$をその行列の第$ij$**要素(element)**または**成分(entry)**と呼ぶ．たびたび，行列はその成分$a_{ij}$として$A=\\{a_{ij}\\}$と表記する．なお，行列に対して，単なる数のことを，**スカラー(scalar)**と呼ぶ．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [注意]\n",
+    "\n",
+    "断りのない限り，行列の成分は実数に限定する．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "上記で定義した行列に対して，相等，和・差，積(スカラー積と行列の積)，そして転置という行列特有の操作を導入する．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] 行列の相等\n",
+    "同じ次元を持つ2つの行列$A$,$B$について，もし$A$の全ての要素が$B$のその対応する各要素に等しいならば，行列は**等しい(equal)**といい，$A=B$と書く．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] スカラー乗法\n",
+    "任意のスカラー$k$と任意の$m\\times n$行列$A=\\{a_{ij}\\}$に対して，$k$と$A$の**スカラー積(scalar product)**を，その第$ij$要素が$ka_{ij}$である$m\\times n$行列と定義し，$kA$と書く．特に，$-1$と$A$のスカラー積$(-1)A$を，$A$の**負(negative)**と呼び，$-A$と略記する．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] 行列の加法と減法\n",
+    "同じ行の数$m$と同じ列の数$n$をもつ任意の行列$A=\\{a_{ij}\\},B=\\{b_{ij}\\}$に対して，$A$と$B$の**和(sum)**を，その第$ij$要素が$a_{ij}+b_{ij}$である$m\\times n$行列と定義し，$A+B$と書く．また，和$A+(-B)$，すなわちその第$ij$要素が$a_{ij}-b_{ij}$である$m\\times n$行列を$A-B$と書くこととし，この行列を$A$と$B$の**差(difference)**と呼ぶ．同じ数の行と列をもつ行列は加法あるいは減法に対して**共形的(conformal)**であるという．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] 行列の積\n",
+    "$m\\times n$行列$A$と$p\\times q$行列$B$について，$n=p$，すなわち$A$の列と$B$の行の数が等しいとする．このとき，行列の**積(matrix product)**$AB$は，$AB=\\{c_{ij}\\}$としたとき，その第$ij$要素$c_{ij}$が次式で表される$m\\times q$行列と定義する．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "c_{ij}=\\sum_{k=1}^n a_{ik}b_{kj}\t \\tag{4}\n",
+    "\\end{align}\n",
+    "$$\n",
+    "\n",
+    "なお，$AB$は，$A$による$B$への**前からの乗法(premultiplication)**または$B$の$A$による**後ろからの乗法(postmultiplication)**と呼ぶ．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] 転置\n",
+    "$m\\times n$行列$A$の**転置(transposition)**は記号$A^T$で表し，各$ij$要素が$A$の第$ji$要素である$n\\times m$行列を意味する．すなわち，行列の転置は行を列として，列を行として書き直すことで作られる．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定理]\n",
+    "任意のスカラー$c,k$，任意の行列$A$に対して次式が成り立つ．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "c(kA)=(ck)A=(kc)A=k(cA)\t\n",
+    "\\end{align}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**証明）**\n",
+    "\n",
+    "省略(任意の$ij$成分に対して成り立つことを示せばよい)．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定理]\n",
+    "任意のスカラー$c,k$，任意の共形的である行列$A,B,C$に対して次式が成り立つ．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "&A+B=B+A \\tag{3}\\\\\n",
+    "& A+(B+C)=(A+B)+C \\\\\n",
+    "& c(A+B)=cA+cB \\\\\n",
+    "& (c+k)A=cA+kA\n",
+    "\\end{align}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**証明）**\n",
+    "\n",
+    "省略(任意の$ij$成分に対して成り立つことを示せばよい)．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定理]\n",
+    "任意のスカラー$c$，任意の$m\\times n$行列$A$，$n\\times q$行列$B$，$q\\times t$行列$C$に対して次式が成り立つ．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "&A(BC)=(AB)C \\\\\n",
+    "&A(B+C)=AB+AC \\tag{1}\\\\\n",
+    "&(A+B)C=AC+BC \\tag{2}\\\\\n",
+    "&cAB=(cA)B=A(cB)\n",
+    "\\end{align}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**証明）**\n",
+    "\n",
+    "省略(任意の$ij$成分に対して成り立つことを示せばよい)．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定理]\n",
+    "任意の行列$A$に対して，次式が成り立つ．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "(A^T)^T=A \\tag{5}\n",
+    "\\end{align}\n",
+    "$$\n",
+    "\n",
+    "また，加法に関して共形的である任意の行列$A,B$に対して，次式が成り立つ．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "(A+B)^T=A^T+B^T\t\n",
+    "\\end{align}\n",
+    "$$\n",
+    "\n",
+    "また，積が定義される任意の行列$A,B$に対して，次式が成り立つ．\n",
+    "\n",
+    "$$\\begin{align}\n",
+    "(AB)^T=B^TA^T \\tag{6}\n",
+    "\\end{align}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**証明）**\n",
+    "\n",
+    "任意の$ij$成分に対して成り立つことを示せばよいので省略するが，最後の式のみ示す．$m\\times n$行列$A=\\{a_{ij}\\}$，$n\\times q$行列$B=\\{b_{ij}\\}$とする．$q\\times m$行列$(AB)^T=\\{d_{ij}\\}$の第$ij$成分は，$m\\times q$行列$AB=\\{c_{ij}\\}$の第$ji$成分であるため，行列の積の定義より\n",
+    "\n",
+    "$$\n",
+    "\\begin{align*}\n",
+    "d_{ij}=c_{ji}=\\sum_{k=1}^n a_{jk}b_{ki}\n",
+    "\\end{align*}\n",
+    "$$\n",
+    "\n",
+    "となる．一方，$q\\times n$行列$B^T=\\{b'_{ij}\\}$，$n\\times m$行列$A^T=\\{a'_{ij}\\}$としたとき，$q\\times m$行列$B^TA^T=\\{d'_{ij}\\}$の第$ij$成分は，式(4)より\n",
+    "\n",
+    "$$\n",
+    "\\begin{align*}\n",
+    "d'_{ij}=\\sum_{k=1}^n b'_{ik}a'_{kj}\n",
+    "\\end{align*}\n",
+    "$$\n",
+    "\n",
+    "となるが，$b'_{ik}=b_{ki},a'_{kj}=a_{jk}$であるため，結局，\n",
+    "\n",
+    "$$\n",
+    "\\begin{align*}\n",
+    "d'_{ij}=\\sum_{k=1}^n b'_{ik}a'_{kj}=\\sum_{k=1}^n b_{ki}a_{jk}=\\sum_{k=1}^n a_{jk}b_{ki}=d_{ij}\n",
+    "\\end{align*}\n",
+    "$$\n",
+    "\n",
+    "となるため，$(AB)^T=B^TA^T$となる．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [問題]\n",
+    "任意の$m\\times n$行列$A,B$，$n\\times q$行列$C,D$に対して次式が成り立つことを示せ．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "(A+B)(C+D)=AC+AD+BC+BD\n",
+    "\\end{align}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**解答）**\n",
+    "\n",
+    "式(1)において$(A+B)$を$A$だとして適用し，その後に式(2)を順に適用して展開したあと，式(3)で交換操作をすることで示せる．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align*}\n",
+    "(A+B)(C+D)&= (A+B)C+(A+B)D\\\\\n",
+    "&= AC+BC+AD+BD \\\\\n",
+    "&= AC+AD+BC+BD\n",
+    "\\end{align*}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "行列の中でも，特別な名前がつけられているものがある．ここでは正方行列と対称行列，ベクトルを定義する．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] 正方行列\n",
+    "行の数と列の数が同じ行列を**正方行列(square matrix)**と呼び，$n\\times n$正方行列における$n$を**次数(order)**という．また，$n\\times n$正方行列において$a_{11},a_{22},\\ldots,a_{nn}$を（第1，第2，等の）**対角要素(diagonal element)**と呼び，対角要素以外の要素を**非対角要素(off-diagonal element)**と呼ぶ．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] 対称行列\n",
+    "$A^T=A$である行列$A$，すなわち第$ij$要素が第$ji$要素と等しい行列を**対称行列(symmetric matrix)**という．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定理]\n",
+    "任意の行列$X$に対して，$X^TX$は対称行列である．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**証明）**\n",
+    "\n",
+    "式(6)，式(5)より，$(X^TX)^T=X^T(X^T)^T=X^TX$．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] ベクトル\n",
+    "ただ1個の列をもつ行列，すなわち以下の行列を**列ベクトル(column vector)**と呼ぶ．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align*}\n",
+    "\\begin{bmatrix}\n",
+    "a_{1} \\\\\n",
+    "a_{2} \\\\\n",
+    "\\vdots \\\\\n",
+    "a_{m} \n",
+    "\\end{bmatrix}\t\n",
+    "\\end{align*}\n",
+    "$$\n",
+    "\n",
+    "同様に，ただ1個の行をもつ行列を**行ベクトル(row vector)**と呼ぶ．なお，上記のように$m$個の要素からなるベクトルを$m$次元ベクトルと呼ぶ．たびたび，ベクトルはその第$i$成分$a_{i}$として$\\mathbf{a}=\\{a_{i}\\}$と表記する．また，上記の列ベクトルを文章中で書く場合，行ベクトルと転置を用いて$\\mathbf{a}=(a_1,a_2,\\ldots,a_m)^T$とすることが多い．\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "内積，(通常の)ノルム，角度を定義する．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] 内積\n",
+    "2個の$n$次元列ベクトル$\\mathbf{a}=(a_1,a_2,\\ldots,a_n)^T$，$\\mathbf{b}=(b_1,b_2,\\ldots,b_n)^T$に対して，**内積(inner product)** $\\mathbf{a}\\cdot \\mathbf{b}$は次式で定義される．\t\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "\\mathbf{a}\\cdot \\mathbf{b} = \\mathbf{a}^T \\mathbf{b} = a_1b_1+a_2b_2+\\cdots+a_nb_n \\label{IP}\n",
+    "\\end{align}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定理]\n",
+    "2個の$n$次元列ベクトル$\\mathbf{a}=(a_1,a_2,\\ldots,a_n)^T$，$\\mathbf{b}=(b_1,b_2,\\ldots,b_n)^T$の内積について次式が成り立つ．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "&\\mathbf{a}^T\\mathbf{b}= \\mathbf{b}^T\\mathbf{a}\t\\\\\n",
+    "&\\mathbf{a}^T\\mathbf{a} \\geq 0\\\\\n",
+    "&(k\\mathbf{a})^T\\mathbf{b}= k\\mathbf{a}^T\\mathbf{b} \\\\\n",
+    "&(\\mathbf{a}+\\mathbf{b})^T(\\mathbf{c}+\\mathbf{d})= \\mathbf{a}^T\\mathbf{c}+\\mathbf{b}^T\\mathbf{c}+\\mathbf{a}^T\\mathbf{d}+\\mathbf{b}^T\\mathbf{d}\n",
+    "\\end{align}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**証明）**\n",
+    "\n",
+    "略．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] (通常の)ノルム\n",
+    "$n$次元列ベクトル$\\mathbf{a}=(a_1,a_2,\\ldots,a_n)^T$に対して，**(通常の)ノルム((usual) norm)** $||\\mathbf{a}||$は次式で定義される．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "\t||\\mathbf{a}||=\\sqrt{\\mathbf{a}^T\\mathbf{a}}=\\sqrt{a_1^2+a_2^2+\\cdots +a_n^2}\n",
+    "\\end{align}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定理]\n",
+    "$n$次元列ベクトル$\\mathbf{a}=(a_1,a_2,\\ldots,a_n)^T$の通常のノルムについて次式が成り立つ．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "&||\\mathbf{a}|| \\geq 0\\\\\n",
+    "&||k\\mathbf{a}|| = |k|||\\mathbf{a}||\t\n",
+    "\\end{align}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**証明）**\n",
+    "\n",
+    "略．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] 角度\n",
+    "2つの$\\mathbf{0}$でない$n$次元列ベクトル$\\mathbf{x},\\mathbf{y}$に対して，そのなす**角度**$ \\theta~(0\\leq \\theta \\leq \\pi)$を，その余弦を用いて次式で定義する．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "\\cos \\theta = \\frac{\\mathbf{x}^T\\mathbf{y}}{||\\mathbf{x}||||\\mathbf{y}||}\t\n",
+    "\\end{align}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "行列はベクトルを横だったり縦だったりにくっつけたものともいえる．行列においてその要素をベクトルに分割したものを分割ベクトルという．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] 分割ベクトル\n",
+    "任意の$m\\times n$行列$A=\\{a_{ij}\\}$を行方向に分割した場合，すなわち$m$個の列ベクトル$\\mathbf{a}_i=(a_{i1},a_{i2},\\ldots,a_{in})^T~(i=1,2,\\ldots,m)$で分割したとき，その列ベクトル$\\mathbf{a}_1,\\mathbf{a}_2,\\ldots,\\mathbf{a}_m$を**分割行ベクトル(partitioned row vector)**という．また，列方向に分割した場合，すなわち$n$個の列ベクトル$\\mathbf{a}'_j=(a_{1j},a_{2j},\\ldots,a_{mj})^T~(j=1,2,\\ldots,n)$で分割した時，その列ベクトル$\\mathbf{a}'_1,\\mathbf{a}'_2,\\ldots,\\mathbf{a}'_n$を**分割列ベクトル(partitioned column vector)**という．これらを用いて，$A$は次式で表記される．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "A=\n",
+    "\\begin{bmatrix}\n",
+    "\\mbox{------} & \\mathbf{a}_1^T & \\mbox{------} \\\\\n",
+    "\\mbox{------} & \\mathbf{a}_2^T & \\mbox{------} \\\\\n",
+    "  & \\vdots &  \\\\\n",
+    "\\mbox{------} & \\mathbf{a}_m^T & \\mbox{------}\n",
+    "\\end{bmatrix}\t\n",
+    "=\n",
+    "\\begin{bmatrix}\n",
+    "| & | &  & | \\\\[-12pt]\n",
+    "| & | &  & | \\\\\n",
+    "\\mathbf{a}'_1 & \\mathbf{a}'_2 & \\cdots & \\mathbf{a}'_n \\\\\n",
+    "| & | &  & |\t\\\\[-12pt]\n",
+    "| & | &  & |\n",
+    "\\end{bmatrix}\n",
+    "\\end{align}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定理]\n",
+    "$m\\times n$行列$A=\\{a_{ij}\\}$と$n$次元ベクトル$\\mathbf{x}=(x_1,x_2,\\ldots,x_n)$との積$A\\mathbf{x}$は，分割行ベクトル$\\mathbf{a}=(a_{i1},a_{i2},\\ldots,a_{in})^T~(i=1,2,\\ldots,m)$または分割列ベクトル$\\mathbf{a}'_j=(a_{1j},a_{2j},\\ldots,a_{mj})^T~(j=1,2,\\ldots,n)$を用いてそれぞれ以下で表すことができる．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "A\\mathbf{x}&=\n",
+    "\\begin{bmatrix}\n",
+    "\\mbox{------} & \\mathbf{a}_1^T & \\mbox{------} \\\\\n",
+    "\\mbox{------} & \\mathbf{a}_2^T & \\mbox{------} \\\\\n",
+    " & \\vdots & \\\\\n",
+    "\\mbox{------} & \\mathbf{a}_m^T & \\mbox{------}\n",
+    "\\end{bmatrix}\n",
+    "\\begin{bmatrix}\n",
+    "| \\\\[-2pt]\n",
+    "| \\\\\n",
+    "\\mathbf{x} \\\\\n",
+    "| \\\\[-2pt]\n",
+    "|\n",
+    "\\end{bmatrix}\n",
+    "=\n",
+    "\\begin{bmatrix}\n",
+    "\\mathbf{a}_1^T \\mathbf{x} \\\\\n",
+    "\\mathbf{a}_2^T \\mathbf{x} \\\\\n",
+    "\\vdots \\\\\n",
+    "\\mathbf{a}_m^T \\mathbf{x}  \n",
+    "\\end{bmatrix}\n",
+    "=\n",
+    "\\begin{bmatrix}\n",
+    "\\mathbf{x}^T \\mathbf{a}_1 \\\\\n",
+    "\\mathbf{x}^T \\mathbf{a}_2 \\\\\n",
+    "\\vdots \\\\\n",
+    "\\mathbf{x}^T \\mathbf{a}_m  \n",
+    "\\end{bmatrix}\\tag{7}\\\\\n",
+    "&=\n",
+    "\\begin{bmatrix}\n",
+    "| & | &  & | \\\\[-2pt]\n",
+    "| & | &  & | \\\\\n",
+    "\\mathbf{a}'_1 & \\mathbf{a}'_2 & \\cdots & \\mathbf{a}'_n \\\\\n",
+    "| & | &  & |\t\\\\[-2pt]\n",
+    "| & | &  & |\n",
+    "\\end{bmatrix}\n",
+    "\\begin{bmatrix}\n",
+    "| \\\\[-2pt]\n",
+    "| \\\\\n",
+    "\\mathbf{x} \\\\\n",
+    "| \\\\[-2pt]\n",
+    "|\n",
+    "\\end{bmatrix}\n",
+    "=\\mathbf{a}'_1x_1+\\mathbf{a}'_2x_2+\\cdots +\\mathbf{a}'_nx_n \\tag{8}\n",
+    "\\end{align}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**証明）**\n",
+    "\n",
+    "$A\\mathbf{x}$を書き下すことで容易に示すことができる．式(7)は内積の定義，性質よりすぐ分かる．式(8)は和を分解していく操作をすると示される．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align*}\n",
+    "A\\mathbf{x}&=\n",
+    "\\begin{bmatrix}\n",
+    "a_{11}x_1+a_{12}x_2+\\cdots +a_{1n}x_n \\\\\n",
+    "a_{21}x_1+a_{22}x_2+\\cdots +a_{2n}x_n \\\\\n",
+    "\\vdots \\\\\n",
+    "a_{m1}x_1+a_{m2}x_2+\\cdots +a_{mn}x_n\n",
+    "\\end{bmatrix}\n",
+    "=\n",
+    "\\begin{bmatrix}\n",
+    "\\mathbf{a}_1^T \\mathbf{x} \\\\\n",
+    "\\mathbf{a}_2^T \\mathbf{x} \\\\\n",
+    "\\vdots \\\\\n",
+    "\\mathbf{a}_m^T \\mathbf{x}  \n",
+    "\\end{bmatrix}\n",
+    "=\n",
+    "\\begin{bmatrix}\n",
+    "\\mathbf{x}^T \\mathbf{a}_1 \\\\\n",
+    "\\mathbf{x}^T \\mathbf{a}_2 \\\\\n",
+    "\\vdots \\\\\n",
+    "\\mathbf{x}^T \\mathbf{a}_m  \n",
+    "\\end{bmatrix}\\nonumber\\\\\n",
+    "&=\n",
+    "\\begin{bmatrix}\n",
+    "a_{11} \\\\\n",
+    "a_{21} \\\\\n",
+    "\\vdots \\\\\n",
+    "a_{m1}  \n",
+    "\\end{bmatrix}\n",
+    "x_1+\n",
+    "\\begin{bmatrix}\n",
+    "a_{12} \\\\\n",
+    "a_{22} \\\\\n",
+    "\\vdots \\\\\n",
+    "a_{m2}  \n",
+    "\\end{bmatrix}\n",
+    "x_2+\\cdots+\n",
+    "\\begin{bmatrix}\n",
+    "a_{1n} \\\\\n",
+    "a_{2n} \\\\\n",
+    "\\vdots \\\\\n",
+    "a_{mn}  \n",
+    "\\end{bmatrix}\n",
+    "x_n=\\mathbf{a}'_1x_1+\\mathbf{a}'_2x_2+\\cdots +\\mathbf{a}'_nx_n\n",
+    "\\end{align*}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "行列やベクトルを演算した結果としてスカラー値を返す関数はいくらでもあるが，その中に重要な関数がいくつかある．代表的なものとして線形形式，二次形式がある．(線形形式は内積を再定義したものである．)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] 線形形式\n",
+    "$\\mathbf{a}=(a_1,a_2,\\ldots,a_n)^T$を任意の$n$次元列ベクトルとする．このとき，任意の$n$次元列ベクトル$\\mathbf{x}=(x_1,x_2,\\ldots,x_n)^T$に対してスカラー値$\\mathbf{a}^T\\mathbf{x}$を返す関数を，$\\mathbf{x}$に関する**線形形式(linear form)**と呼ぶ．ここで，習慣的に$\\mathbf{a}$を**係数ベクトル(coefficient vector)**と呼ぶ．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] 二次形式\n",
+    "$A=\\{a_{ij}\\}$を任意の$n\\times n$行列とする．このとき，任意の$n$次元列ベクトル$\\mathbf{x}=(x_1,x_2,\\ldots,x_n)^T$に対してスカラー値$\\mathbf{x}^TA\\mathbf{x}$を返す関数を，$\\mathbf{x}$に関する**二次形式(quadratic form)**と呼ぶ．ここで，習慣的に$A$を**二次形式の行列(matrix of quadratic form)**と呼ぶ．$\\mathbf{x}^TA\\mathbf{x}$は次式で展開される．2つ目の式は，$a_{ii}$を起点にそれ自身の項，行方向に見た項，列方向に見た項，それ以外の項に分けた形で，$x_i$での微分をする場合等に役立つ．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "\\mathbf{x}^TA\\mathbf{x}&= \\sum_{i=1}^n\\sum_{j=1}^n a_{ij}x_ix_j\\\\\n",
+    "&=a_{ii}x_i^2+\\sum_{\\substack{j=1\\\\j\\neq i}}^n a_{ij}x_ix_j+\\sum_{\\substack{k=1\\\\k\\neq i}}^n a_{ki}x_kx_i+\\sum_{\\substack{j,k\\\\j\\neq i\\\\k\\neq i}}a_{kj}x_kx_j \\label{quadform}\n",
+    "\\end{align}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "スカラー積，行列の積とは別に，要素同士の積をとった演算も存在する．それをアダマール積という．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] アダマール積\n",
+    "2つの$m\\times n$行列$A=\\{a_{ij}\\}, B=\\{b_{ij}\\}$について，**アダマール積(hadamard product)**$A\\odot B$は，$A\\odot B=\\{c_{ij}\\}$としたとき，その第$ij$要素$c_{ij}$が次式で表される$m\\times n$行列と定義する．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "c_{ij}=a_{ij}b_{ij}\n",
+    "\\end{align}\n",
+    "$$"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

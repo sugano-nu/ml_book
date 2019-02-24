@@ -7,7 +7,7 @@ Machine Learning: Theory and Implementation
 =======================================================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Contents:
 
-
+   20190225
