@@ -48,6 +48,116 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
+    "#### [NumPy] 行列の作成\n",
+    "\n",
+    "行列は，NumPyにおいてはndarrayとして取り扱う．ndarrayは以下の関数により作成できる．\n",
+    "- `np.array(object)`：ndarrayを作成する．行列を作成したい場合，`object`には，入れ子のリストを与える．[Official](https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html?highlight=array#numpy-array)\n",
+    "\n",
+    "ndarrayが持つ属性で基本的なものとして，`shape`がある．これは，ndarrayの次元をタプルで返す．\n",
+    "- `ndarray.shape`：ndarrayの次元をタプルで返す．[Official](https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.shape.html?highlight=shape#numpy-ndarray-shape)\n",
+    "\n",
+    "行列であるndarrayの各要素$a_{ij}$へのアクセスは，`ndarray[i,j]`のようにして行う．ここで，$i,j$は**0始まり**であることに注意する．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [問題]\n",
+    "次の行列$A=\\{a_{ij}\\}$の次元，$a_{32}$を答えよ．また，この行列$A$をNumPyでndarrayとして作成し，次元，$a_{32}$の確認により，結果が正しいことを確認せよ．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align*}\n",
+    "A=\n",
+    "\\begin{bmatrix}\n",
+    "5 & 9 & 4 \\\\\n",
+    "4 & -11 & -4 \\\\\n",
+    "-3 & 0 & 0 \\\\\n",
+    "10 & 1 & 1 \n",
+    "\\end{bmatrix}\t\n",
+    "\\end{align*}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**解答)**\n",
+    "\n",
+    "$A$の次元は$(4,3)$，$a_{32}=0$である．また，$A$をndarrayとして作成し，次元と$a_{32}$を確認すると以下となる．ndarrayでは，添字が0始まりであるため，$a_{32}$を確認するときに`A[3,2]`としてはいけないことに注意する必要がある．"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([[  5,   9,   4],\n",
+       "       [  4, -11,  -4],\n",
+       "       [ -3,   0,   0],\n",
+       "       [ 10,   1,   1]])"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import numpy as np\n",
+    "\n",
+    "A = np.array([[5,9,4],[4,-11,-4],[-3,0,0],[10,1,1]])\n",
+    "A"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "(4, 3)"
+      ]
+     },
+     "execution_count": 2,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "A.shape"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0"
+      ]
+     },
+     "execution_count": 3,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "A[2,1]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
     "上記で定義した行列に対して，相等，和・差，積(スカラー積と行列の積)，そして転置という行列特有の操作を導入する．"
    ]
   },
