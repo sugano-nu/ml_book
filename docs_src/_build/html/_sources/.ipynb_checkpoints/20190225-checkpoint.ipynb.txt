@@ -418,7 +418,7 @@
    "metadata": {},
    "source": [
     "#### [定義] 角度\n",
-    "2つの$\\mathbf{0}$でない$n$次元列ベクトル$\\mathbf{x},\\mathbf{y}$に対して，そのなす**角度**$ \\theta~(0\\leq \\theta \\leq \\pi)$を，その余弦を用いて次式で定義する．\n",
+    "2つの$\\mathbf{0}$でない$n$次元列ベクトル$\\mathbf{x},\\mathbf{y}$に対して，そのなす**角度**$\\theta$ ($0\\leq \\theta \\leq \\pi$)を，その余弦を用いて次式で定義する．\n",
     "\n",
     "$$\n",
     "\\begin{align}\n",
