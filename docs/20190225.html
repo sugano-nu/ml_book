@@ -419,8 +419,14 @@ a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn}
 </div>
 <div class="section" id="[NumPy]-行列の作成">
 <h2>[NumPy] 行列の作成<a class="headerlink" href="#[NumPy]-行列の作成" title="Permalink to this headline">¶</a></h2>
-<p>行列は，NumPyにおいてはndarrayとして取り扱う．ndarrayは以下の関数により作成できる． - <code class="docutils literal notranslate"><span class="pre">np.array(object)</span></code>：ndarrayを作成する．行列を作成したい場合，<code class="docutils literal notranslate"><span class="pre">object</span></code>には，入れ子のリストを与える．<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html?highlight=array#numpy-array">Official</a></p>
-<p>ndarrayが持つ属性で基本的なものとして，<code class="docutils literal notranslate"><span class="pre">shape</span></code>がある．これは，ndarrayの次元をタプルで返す． - <code class="docutils literal notranslate"><span class="pre">ndarray.shape</span></code>：ndarrayの次元をタプルで返す．<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.shape.html?highlight=shape#numpy-ndarray-shape">Official</a></p>
+<p>行列は，NumPyにおいてはndarrayとして取り扱う．ndarrayは以下の関数により作成できる．</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">np.array(object)</span></code>：ndarrayを作成する．行列を作成したい場合，<code class="docutils literal notranslate"><span class="pre">object</span></code>には，入れ子のリストを与える．<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html?highlight=array#numpy-array">Official</a></li>
+</ul>
+<p>ndarrayが持つ属性で基本的なものとして，<code class="docutils literal notranslate"><span class="pre">shape</span></code>がある．これは，ndarrayの次元をタプルで返す．</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">ndarray.shape</span></code>：ndarrayの次元をタプルで返す．<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.shape.html?highlight=shape#numpy-ndarray-shape">Official</a></li>
+</ul>
 <p>行列であるndarrayの各要素<span class="math notranslate nohighlight">\(a_{ij}\)</span>へのアクセスは，<code class="docutils literal notranslate"><span class="pre">ndarray[i,j]</span></code>のようにして行う．ここで，<span class="math notranslate nohighlight">\(i,j\)</span>は<strong>0始まり</strong>であることに注意する．</p>
 </div>
 <div class="section" id="[問題]">

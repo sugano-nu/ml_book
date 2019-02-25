@@ -51,9 +51,11 @@
     "#### [NumPy] 行列の作成\n",
     "\n",
     "行列は，NumPyにおいてはndarrayとして取り扱う．ndarrayは以下の関数により作成できる．\n",
+    "\n",
     "- `np.array(object)`：ndarrayを作成する．行列を作成したい場合，`object`には，入れ子のリストを与える．[Official](https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html?highlight=array#numpy-array)\n",
     "\n",
     "ndarrayが持つ属性で基本的なものとして，`shape`がある．これは，ndarrayの次元をタプルで返す．\n",
+    "\n",
     "- `ndarray.shape`：ndarrayの次元をタプルで返す．[Official](https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.shape.html?highlight=shape#numpy-ndarray-shape)\n",
     "\n",
     "行列であるndarrayの各要素$a_{ij}$へのアクセスは，`ndarray[i,j]`のようにして行う．ここで，$i,j$は**0始まり**であることに注意する．"
