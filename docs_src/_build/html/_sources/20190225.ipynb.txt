@@ -50,9 +50,11 @@
    "source": [
     "#### [NumPy] 行列の作成\n",
     "\n",
-    "行列は，NumPyにおいてはndarrayとして取り扱う．ndarrayは以下の関数により作成できる．\n",
+    "行列は，NumPyにおいては次元数が2のndarrayとして取り扱う．ndarrayは以下の関数により作成できる．(次元数とは，次元をいくつ持っているかという数を表す)\n",
     "\n",
-    "- `np.array(object)`：ndarrayを作成する．行列を作成したい場合，`object`には，入れ子のリストを与える．[Official](https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html)\n",
+    "なお，次元数が2のndarrayを，単に2次元配列と呼ぶことにする．\n",
+    "\n",
+    "- `np.array(object)`：ndarrayを作成する．行列(2次元配列)を作成したい場合，`object`には，入れ子のリストを与える．[Official](https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html)\n",
     "\n",
     "ndarrayが持つ属性で基本的なものとして，`shape`がある．これは，ndarrayの次元をタプルで返す．\n",
     "\n",
@@ -732,6 +734,71 @@
     "&= \\mathbf{a}^T\\mathbf{c}+\\mathbf{b}^T\\mathbf{c}+\\mathbf{a}^T\\mathbf{d}+\\mathbf{b}^T\\mathbf{d}\n",
     "\\end{align}\n",
     "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [NumPy] 列ベクトル・行ベクトルの作成\n",
+    "NumPyでは，列ベクトル・行ベクトルは2次元配列として定義する必要がある．すなわち，入れ子のリストで作成する必要がある．何故ならば，列や行という概念は，2次元を考えて初めて区別できるものになるからである．1次元の場合は，それが列なのか行なのかという情報を持たない．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [NumPy] 内積\n",
+    "内積は，列ベクトルや行ベクトルも行列の一種だと考えれば，行列の積を計算することと同じなので，`ndarray.dot()`メソッドで計算できる．ただし，計算結果はスカラーではなく，$1\\times 1$行列としての2次元配列で返ってくるので注意する．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [問題]\n",
+    "2個の$3$次元列ベクトル$\\mathbf{a}=(-1,2,-3)^T$，$\\mathbf{b}=(4,-5,-6)^T$の内積$\\mathbf{a}^T\\mathbf{b}$を求めよ．また，NumPyでも同様の計算を行い，結果が一致することを確認せよ．ただし，結果はスカラーで得るようにせよ．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**解答)**\n",
+    "\n",
+    "手計算は省略．NumPyで計算した結果は以下の通り．内積計算後，スカラーとして取り出すために要素指定している．"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "\n",
+    "a = np.array([[-1],[2],[-3]])\n",
+    "b = np.array([[4],[-5],[-6]])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "4"
+      ]
+     },
+     "execution_count": 7,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "a.T.dot(b)[0,0]"
    ]
   },
   {

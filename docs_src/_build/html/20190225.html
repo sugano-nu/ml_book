@@ -106,6 +106,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#[定義]-ベクトル">[定義] ベクトル</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#[定義]-内積">[定義] 内積</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#[定理]">[定理]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#[NumPy]-列ベクトル・行ベクトルの作成">[NumPy] 列ベクトル・行ベクトルの作成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#[NumPy]-内積">[NumPy] 内積</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#[問題]">[問題]</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#[定義]-(通常の)ノルム">[定義] (通常の)ノルム</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#[定理]">[定理]</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#[定義]-角度">[定義] 角度</a></li>
@@ -427,9 +430,10 @@ a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn}
 </div>
 <div class="section" id="[NumPy]-行列の作成">
 <h2>[NumPy] 行列の作成<a class="headerlink" href="#[NumPy]-行列の作成" title="Permalink to this headline">¶</a></h2>
-<p>行列は，NumPyにおいてはndarrayとして取り扱う．ndarrayは以下の関数により作成できる．</p>
+<p>行列は，NumPyにおいては次元数が2のndarrayとして取り扱う．ndarrayは以下の関数により作成できる．(次元数とは，次元をいくつ持っているかという数を表す)</p>
+<p>なお，次元数が2のndarrayを，単に2次元配列と呼ぶことにする．</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">np.array(object)</span></code>：ndarrayを作成する．行列を作成したい場合，<code class="docutils literal notranslate"><span class="pre">object</span></code>には，入れ子のリストを与える．<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html">Official</a></li>
+<li><code class="docutils literal notranslate"><span class="pre">np.array(object)</span></code>：ndarrayを作成する．行列(2次元配列)を作成したい場合，<code class="docutils literal notranslate"><span class="pre">object</span></code>には，入れ子のリストを与える．<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html">Official</a></li>
 </ul>
 <p>ndarrayが持つ属性で基本的なものとして，<code class="docutils literal notranslate"><span class="pre">shape</span></code>がある．これは，ndarrayの次元をタプルで返す．</p>
 <ul class="simple">
@@ -865,6 +869,50 @@ a_{m}
 (\mathbf{a}+\mathbf{b})^T(\mathbf{c}+\mathbf{d})&amp;=(\mathbf{a}^T+\mathbf{b}^T)(\mathbf{c}+\mathbf{d}) \\
 &amp;= \mathbf{a}^T\mathbf{c}+\mathbf{b}^T\mathbf{c}+\mathbf{a}^T\mathbf{d}+\mathbf{b}^T\mathbf{d}
 \end{align}\end{split}\]</div>
+</div>
+<div class="section" id="[NumPy]-列ベクトル・行ベクトルの作成">
+<h2>[NumPy] 列ベクトル・行ベクトルの作成<a class="headerlink" href="#[NumPy]-列ベクトル・行ベクトルの作成" title="Permalink to this headline">¶</a></h2>
+<p>NumPyでは，列ベクトル・行ベクトルは2次元配列として定義する必要がある．すなわち，入れ子のリストで作成する必要がある．何故ならば，列や行という概念は，2次元を考えて初めて区別できるものになるからである．1次元の場合は，それが列なのか行なのかという情報を持たない．</p>
+</div>
+<div class="section" id="[NumPy]-内積">
+<h2>[NumPy] 内積<a class="headerlink" href="#[NumPy]-内積" title="Permalink to this headline">¶</a></h2>
+<p>内積は，列ベクトルや行ベクトルも行列の一種だと考えれば，行列の積を計算することと同じなので，<code class="docutils literal notranslate"><span class="pre">ndarray.dot()</span></code>メソッドで計算できる．ただし，計算結果はスカラーではなく，<span class="math notranslate nohighlight">\(1\times 1\)</span>行列としての2次元配列で返ってくるので注意する．</p>
+</div>
+<div class="section" id="[問題]">
+<h2>[問題]<a class="headerlink" href="#[問題]" title="Permalink to this headline">¶</a></h2>
+<p>2個の<span class="math notranslate nohighlight">\(3\)</span>次元列ベクトル<span class="math notranslate nohighlight">\(\mathbf{a}=(-1,2,-3)^T\)</span>，<span class="math notranslate nohighlight">\(\mathbf{b}=(4,-5,-6)^T\)</span>の内積<span class="math notranslate nohighlight">\(\mathbf{a}^T\mathbf{b}\)</span>を求めよ．また，NumPyでも同様の計算を行い，結果が一致することを確認せよ．ただし，結果はスカラーで得るようにせよ．</p>
+<p><strong>解答)</strong></p>
+<p>手計算は省略．NumPyで計算した結果は以下の通り．内積計算後，スカラーとして取り出すために要素指定している．</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">1</span><span class="p">],[</span><span class="mi">2</span><span class="p">],[</span><span class="o">-</span><span class="mi">3</span><span class="p">]])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">4</span><span class="p">],[</span><span class="o">-</span><span class="mi">5</span><span class="p">],[</span><span class="o">-</span><span class="mi">6</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">a</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>4
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="[定義]-(通常の)ノルム">
 <h2>[定義] (通常の)ノルム<a class="headerlink" href="#[定義]-(通常の)ノルム" title="Permalink to this headline">¶</a></h2>
