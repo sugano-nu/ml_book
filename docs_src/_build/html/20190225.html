@@ -114,6 +114,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#[定義]-角度">[定義] 角度</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#[定義]-分割ベクトル">[定義] 分割ベクトル</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#[定理]">[定理]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#[NumPy]-分割ベクトルの抜き出し（スライス）とreshapeメソッド">[NumPy] 分割ベクトルの抜き出し（スライス）とreshapeメソッド</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#[問題]">[問題]</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#[定義]-線形形式">[定義] 線形形式</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#[定義]-二次形式">[定義] 二次形式</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#[定義]-アダマール積">[定義] アダマール積</a></li>
@@ -884,7 +886,7 @@ a_{m}
 <p><strong>解答)</strong></p>
 <p>手計算は省略．NumPyで計算した結果は以下の通り．内積計算後，スカラーとして取り出すために要素指定している．</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -896,7 +898,7 @@ a_{m}
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -905,7 +907,7 @@ a_{m}
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -1063,6 +1065,93 @@ a_{mn}
 \end{bmatrix}
 x_n=\mathbf{a}'_1x_1+\mathbf{a}'_2x_2+\cdots +\mathbf{a}'_nx_n
 \end{align*}\end{split}\]</div>
+</div>
+<div class="section" id="[NumPy]-分割ベクトルの抜き出し（スライス）とreshapeメソッド">
+<h2>[NumPy] 分割ベクトルの抜き出し（スライス）とreshapeメソッド<a class="headerlink" href="#[NumPy]-分割ベクトルの抜き出し（スライス）とreshapeメソッド" title="Permalink to this headline">¶</a></h2>
+<p>NumPyにおいて2次元配列から分割ベクトルを抜き出すには，スライスを使って抜き出す．例えば，2次元の<code class="docutils literal notranslate"><span class="pre">ndarray</span></code>について<code class="docutils literal notranslate"><span class="pre">ndarray[a:b,c:d]</span></code>：2次元の<code class="docutils literal notranslate"><span class="pre">ndarray</span></code>について<code class="docutils literal notranslate"><span class="pre">a</span></code>行目から<code class="docutils literal notranslate"><span class="pre">b</span></code>行目<strong>の手前</strong>，<code class="docutils literal notranslate"><span class="pre">c</span></code>列目から<code class="docutils literal notranslate"><span class="pre">d</span></code>列目<strong>の手前</strong>という条件で2次元配列を抜き出す．よって，例えば3列目の分割列ベクトルを抜き出したい場合，<code class="docutils literal notranslate"><span class="pre">ndarray[:,2]</span></code>と指定することで抜き出すことができる．ここで，スライスで抜き出した後の配列の次元数は，最小のものに置き換えられる点に注意する必要がある．例えば<code class="docutils literal notranslate"><span class="pre">ndarray[:,2]</span></code>で分割列ベクトルを抜き出した結果は1次元配列となってしまい，列や行という概念がなくなってしまう．列や行という概念がなくなってしまうと，その先の線形代数演算がうまくいかずエラーになる要因となる．</p>
+<p>抜き出した1次元配列を2次元配列に変換するには，<code class="docutils literal notranslate"><span class="pre">ndarray.reshape()</span></code>メソッドで使用する( <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.reshape.html">Official</a> )．以下に，1次元配列を行ベクトルまたは列ベクトルとしての2次元配列に変換する例を紹介する．</p>
+<ul class="simple">
+<li>1次元配列の<code class="docutils literal notranslate"><span class="pre">ndarray</span></code>に対して，<code class="docutils literal notranslate"><span class="pre">ndarray.reshape(-1,1)</span></code>：1次元配列を列ベクトルとしての2次元配列に変換する．</li>
+<li>1次元配列の<code class="docutils literal notranslate"><span class="pre">ndarray</span></code>に対して，<code class="docutils literal notranslate"><span class="pre">ndarray.reshape(1,-1)</span></code>：1次元配列を行ベクトルとしての2次元配列に変換する．</li>
+</ul>
+<p>2次元配列に変換する場合，<code class="docutils literal notranslate"><span class="pre">reshape()</span></code>でとる引数は、(行，列)となり，何行何列の2次元配列にしたいかという情報を入力する．ここで，行または列を一つ定めると，残りの一つは一意に定まるため，わざわざ自分で計算して埋めたくない場合，<code class="docutils literal notranslate"><span class="pre">-1</span></code>を入力することで自動的に補完してくれる．例えば，要素が12個ある1次元配列を，<span class="math notranslate nohighlight">\(3\times 4\)</span>行列に変換したい場合，素直に<code class="docutils literal notranslate"><span class="pre">reshape(3,4)</span></code>としてもよいが，行を3に指定すれば，列数がいくつになるかは自動的に4と定まるので，<code class="docutils literal notranslate"><span class="pre">reshape(3,-1)</span></code>として良い．(<code class="docutils literal notranslate"><span class="pre">reshape(-1,4)</span></code>も同様．)</p>
+</div>
+<div class="section" id="[問題]">
+<h2>[問題]<a class="headerlink" href="#[問題]" title="Permalink to this headline">¶</a></h2>
+<p>以下の行列<span class="math notranslate nohighlight">\(A\)</span>と列ベクトル<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>に対して，<span class="math notranslate nohighlight">\(A\mathbf{x}\)</span>を行列の積で素直に計算した結果と，式(8)のように分割列ベクトルを使用して計算した結果が一致することを確認せよ．また，NumPyでも同様のことを行い，結果が一致することを確認せよ．</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+A=
+\begin{bmatrix}
+1 &amp; -2 &amp; 3 \\
+-4 &amp; 5 &amp; -6 \\
+5 &amp; -4 &amp; 3 \\
+-2 &amp; 1 &amp; 0
+\end{bmatrix}
+,~
+\mathbf{x}=
+\begin{bmatrix}
+-4 \\
+6 \\
+2
+\end{bmatrix}
+\end{align*}\end{split}\]</div>
+<p><strong>解答)</strong></p>
+<p>手計算は省略．NumPyで計算した結果は以下の通り．分割列ベクトルを取り出した時，1次元配列として抜き出されてしまうので，<code class="docutils literal notranslate"><span class="pre">reshape()</span></code>メソッドで列ベクトルに直していることに注意．また，<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>は列ベクトルなので2次元配列であることから，要素を抜き出す時には行と列両方を指定しないと抜き出せないということにも併せて注意．</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="o">-</span><span class="mi">6</span><span class="p">],[</span><span class="mi">5</span><span class="p">,</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">4</span><span class="p">],[</span><span class="mi">6</span><span class="p">],[</span><span class="mi">2</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">A</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>array([[-10],
+       [ 34],
+       [-38],
+       [ 14]])
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">A</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">A</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">A</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>array([[-10],
+       [ 34],
+       [-38],
+       [ 14]])
+</pre></div>
+</div>
+</div>
 <p>行列やベクトルを演算した結果としてスカラー値を返す関数はいくらでもあるが，その中に重要な関数がいくつかある．代表的なものとして線形形式，二次形式がある．(線形形式は内積を再定義したものである．)</p>
 </div>
 <div class="section" id="[定義]-線形形式">
@@ -1112,7 +1201,7 @@ B=
 <p><strong>解答)</strong></p>
 <p>手計算部分は省略．NumPyで計算すると以下の通り．</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1126,7 +1215,7 @@ B=
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>

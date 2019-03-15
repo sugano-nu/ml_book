@@ -771,7 +771,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 1,
+   "execution_count": 9,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -783,7 +783,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 7,
+   "execution_count": 10,
    "metadata": {},
    "outputs": [
     {
@@ -792,7 +792,7 @@
        "4"
       ]
      },
-     "execution_count": 7,
+     "execution_count": 10,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1006,6 +1006,115 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
+    "#### [NumPy] 分割ベクトルの抜き出し（スライス）とreshapeメソッド\n",
+    "NumPyにおいて2次元配列から分割ベクトルを抜き出すには，スライスを使って抜き出す．例えば，2次元の`ndarray`について`ndarray[a:b,c:d]`：2次元の`ndarray`について`a`行目から`b`行目**の手前**，`c`列目から`d`列目**の手前**という条件で2次元配列を抜き出す．よって，例えば3列目の分割列ベクトルを抜き出したい場合，`ndarray[:,2]`と指定することで抜き出すことができる．ここで，スライスで抜き出した後の配列の次元数は，最小のものに置き換えられる点に注意する必要がある．例えば`ndarray[:,2]`で分割列ベクトルを抜き出した結果は1次元配列となってしまい，列や行という概念がなくなってしまう．列や行という概念がなくなってしまうと，その先の線形代数演算がうまくいかずエラーになる要因となる．\n",
+    "\n",
+    "抜き出した1次元配列を2次元配列に変換するには，`ndarray.reshape()`メソッドで使用する( [Official](https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.reshape.html) )．以下に，1次元配列を行ベクトルまたは列ベクトルとしての2次元配列に変換する例を紹介する．\n",
+    "\n",
+    "- 1次元配列の`ndarray`に対して，`ndarray.reshape(-1,1)`：1次元配列を列ベクトルとしての2次元配列に変換する．\n",
+    "- 1次元配列の`ndarray`に対して，`ndarray.reshape(1,-1)`：1次元配列を行ベクトルとしての2次元配列に変換する．\n",
+    "\n",
+    "2次元配列に変換する場合，`reshape()`でとる引数は、(行，列)となり，何行何列の2次元配列にしたいかという情報を入力する．ここで，行または列を一つ定めると，残りの一つは一意に定まるため，わざわざ自分で計算して埋めたくない場合，`-1`を入力することで自動的に補完してくれる．例えば，要素が12個ある1次元配列を，$3\\times 4$行列に変換したい場合，素直に`reshape(3,4)`としてもよいが，行を3に指定すれば，列数がいくつになるかは自動的に4と定まるので，`reshape(3,-1)`として良い．(`reshape(-1,4)`も同様．)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [問題]\n",
+    "以下の行列$A$と列ベクトル$\\mathbf{x}$に対して，$A\\mathbf{x}$を行列の積で素直に計算した結果と，式(8)のように分割列ベクトルを使用して計算した結果が一致することを確認せよ．また，NumPyでも同様のことを行い，結果が一致することを確認せよ．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align*}\n",
+    "A=\n",
+    "\\begin{bmatrix}\n",
+    "1 & -2 & 3 \\\\\n",
+    "-4 & 5 & -6 \\\\\n",
+    "5 & -4 & 3 \\\\\n",
+    "-2 & 1 & 0\n",
+    "\\end{bmatrix}\n",
+    ",~\n",
+    "\\mathbf{x}=\n",
+    "\\begin{bmatrix}\n",
+    "-4 \\\\\n",
+    "6 \\\\\n",
+    "2\n",
+    "\\end{bmatrix}\n",
+    "\\end{align*}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**解答)**\n",
+    "\n",
+    "手計算は省略．NumPyで計算した結果は以下の通り．分割列ベクトルを取り出した時，1次元配列として抜き出されてしまうので，`reshape()`メソッドで列ベクトルに直していることに注意．また，$\\mathbf{x}$は列ベクトルなので2次元配列であることから，要素を抜き出す時には行と列両方を指定しないと抜き出せないということにも併せて注意．"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "\n",
+    "A = np.array([[1,-2,3],[-4,5,-6],[5,-4,3],[-2,1,0]])\n",
+    "x = np.array([[-4],[6],[2]])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([[-10],\n",
+       "       [ 34],\n",
+       "       [-38],\n",
+       "       [ 14]])"
+      ]
+     },
+     "execution_count": 12,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "A.dot(x)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([[-10],\n",
+       "       [ 34],\n",
+       "       [-38],\n",
+       "       [ 14]])"
+      ]
+     },
+     "execution_count": 13,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "A[:,0].reshape(-1,1)*x[0,0]+A[:,1].reshape(-1,1)*x[1,0]+A[:,2].reshape(-1,1)*x[2,0]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
     "行列やベクトルを演算した結果としてスカラー値を返す関数はいくらでもあるが，その中に重要な関数がいくつかある．代表的なものとして線形形式，二次形式がある．(線形形式は内積を再定義したものである．)"
    ]
   },
@@ -1096,7 +1205,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 1,
+   "execution_count": 14,
    "metadata": {},
    "outputs": [
     {
@@ -1106,7 +1215,7 @@
        "       [ 2,  0, -9]])"
       ]
      },
-     "execution_count": 1,
+     "execution_count": 14,
      "metadata": {},
      "output_type": "execute_result"
     }
