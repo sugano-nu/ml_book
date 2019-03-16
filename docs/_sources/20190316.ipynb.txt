@@ -1,0 +1,173 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# 機械学習の概念"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 機械学習の定義"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Arthur Samuel は，機械学習を以下のとおり定義している."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] 機械学習 (Arthur Samuel(1959))\n",
+    "**機械学習(machine learning)**とは，明示的にプログラミングしなくてもコンピュータに学習能力を与える研究分野のことである."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "では，学習とは何か．Tom Mitchellは，学習を，タスク，経験，性能指標を用いて，以下の通り定義している."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] 学習，タスク，経験，性能指標(Tom Mitchell(1998))\n",
+    "**性能指標(performance measure)**$P$で測定される，**タスク(task)**$T$における性能が**経験(experience)**$E$により改善されることを，そのタスク$T$のクラスおよび性能指標$P$に関して経験$E$から**学習(learn)**するという."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [問題]\n",
+    "以下の機械学習の各事例においてタスク$T$，経験$E$，性能指標$P$を答えなさい.\n",
+    "1. 将棋プログラムが，自身を相手に数万回もの対局を行い，どのような棋譜が勝つまたは負ける傾向になるかを学習していき，人間よりも将棋が強くなった.\n",
+    "1. 電子メールクライアントが，どの電子メールをスパムとしてフラグを立てるかどうかを判断しようとしている．人間がどの電子メールがスパムかを電子メールクライアントに逐一報告していくことにより，より正確にスパムであるかどうかの判断を行えるようになっていった.\n",
+    "1. 過去の天気データから，将来の天気を予測する."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**解答)**\n",
+    "\n",
+    "1. $T$は「将棋をさすこと」，$E$は「自身を相手に数万回もの対局を行なった経験」，$P$は「次の対戦で勝利する確率」.\n",
+    "1. $T$は「電子メールをスパムかどうか判断すること」，$E$は「各電子メールがスパムかどうかの報告内容」，$P$は「正しくスパムと判断できる確率」.\n",
+    "1. $T$は「将来の天気を予測すること」，$E$は「過去の天気データ」，$P$は「正しく天気を当てられる確率」."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 教師あり学習と教師なし学習"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "機械学習には，教師あり学習と教師なし学習がある．それぞれ以下の通り定義される."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] 教師あり学習\n",
+    "**教師あり学習(supervised learning)**とは，入力に対して正しい出力がわかるデータを用いた機械学習のことである．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] 教師なし学習\n",
+    "**教師なし学習(unsupervised learning)**とは，単にデータが与えられ，そのデータから何らかの構造関係を導出する機械学習のことである."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "教師あり学習は，回帰問題と分類問題に分けられる."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] 回帰問題\n",
+    "**回帰問題(regression problem)**とは，出力が連続値である教師あり学習のことである."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] 分類問題\n",
+    "**分類問題(classification problem)**とは，出力が離散値である教師あり学習のことである."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [問題]\n",
+    "以下の機械学習の各事例において教師あり学習か教師なし学習か答えなさい．また，教師あり学習の場合，それが回帰問題であるか分類問題であるかを答えなさい．\n",
+    "\n",
+    "1. 大量に在庫がある商品を抱えている．それが3ヶ月以内に何個売れるか予測する.\n",
+    "1. あるソフトウェアに使われている各ライセンスについて，それが正規ライセンスか不正ライセンスかを予測する.\n",
+    "1. 毎日何万ものニュースを集めてきて，関連する記事にグループ分けする.\n",
+    "1. ある人物の絵を見て，その人物の年齢を予測する.\n",
+    "1. 電子メールのやりとり履歴から，自動的にどれが密接な友人のグループかを特定する.\n",
+    "1. 2 つのマイクで拾った 2 人の声を解析して分離する (Cocktail Party Problem)."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**解答)**\n",
+    "\n",
+    "1. 教師あり学習の回帰問題. \n",
+    "1. 教師あり学習の分類問題. \n",
+    "1. 教師なし学習.\n",
+    "1. 教師あり学習の回帰問題. \n",
+    "1. 教師なし学習.\n",
+    "1. 教師なし学習."
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

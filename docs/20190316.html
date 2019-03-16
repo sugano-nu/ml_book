@@ -1,0 +1,321 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>機械学習の概念 &mdash; Machine Learning: Theory and Implementation 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="参考文献" href="reference.html" />
+    <link rel="prev" title="線形代数" href="20190225.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Machine Learning: Theory and Implementation
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="20190225.html">線形代数</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">機械学習の概念</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#機械学習の定義">機械学習の定義</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#[定義]-機械学習-(Arthur-Samuel(1959))">[定義] 機械学習 (Arthur Samuel(1959))</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#[定義]-学習，タスク，経験，性能指標(Tom-Mitchell(1998))">[定義] 学習，タスク，経験，性能指標(Tom Mitchell(1998))</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#[問題]">[問題]</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#教師あり学習と教師なし学習">教師あり学習と教師なし学習</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#[定義]-教師あり学習">[定義] 教師あり学習</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#[定義]-教師なし学習">[定義] 教師なし学習</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#[定義]-回帰問題">[定義] 回帰問題</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#[定義]-分類問題">[定義] 分類問題</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#[問題]">[問題]</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">参考文献</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Machine Learning: Theory and Implementation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>機械学習の概念</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/20190316.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="機械学習の概念">
+<h1>機械学習の概念<a class="headerlink" href="#機械学習の概念" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="機械学習の定義">
+<h2>機械学習の定義<a class="headerlink" href="#機械学習の定義" title="Permalink to this headline">¶</a></h2>
+<p>Arthur Samuel は，機械学習を以下のとおり定義している.</p>
+<div class="section" id="[定義]-機械学習-(Arthur-Samuel(1959))">
+<h3>[定義] 機械学習 (Arthur Samuel(1959))<a class="headerlink" href="#[定義]-機械学習-(Arthur-Samuel(1959))" title="Permalink to this headline">¶</a></h3>
+<p><strong>機械学習(machine learning)</strong>とは，明示的にプログラミングしなくてもコンピュータに学習能力を与える研究分野のことである.</p>
+<p>では，学習とは何か．Tom Mitchellは，学習を，タスク，経験，性能指標を用いて，以下の通り定義している.</p>
+</div>
+<div class="section" id="[定義]-学習，タスク，経験，性能指標(Tom-Mitchell(1998))">
+<h3>[定義] 学習，タスク，経験，性能指標(Tom Mitchell(1998))<a class="headerlink" href="#[定義]-学習，タスク，経験，性能指標(Tom-Mitchell(1998))" title="Permalink to this headline">¶</a></h3>
+<p><strong>性能指標(performance measure)</strong><span class="math notranslate nohighlight">\(P\)</span>で測定される，<strong>タスク(task)</strong><span class="math notranslate nohighlight">\(T\)</span>における性能が<strong>経験(experience)</strong><span class="math notranslate nohighlight">\(E\)</span>により改善されることを，そのタスク<span class="math notranslate nohighlight">\(T\)</span>のクラスおよび性能指標<span class="math notranslate nohighlight">\(P\)</span>に関して経験<span class="math notranslate nohighlight">\(E\)</span>から<strong>学習(learn)</strong>するという.</p>
+</div>
+<div class="section" id="[問題]">
+<h3>[問題]<a class="headerlink" href="#[問題]" title="Permalink to this headline">¶</a></h3>
+<p>以下の機械学習の各事例においてタスク<span class="math notranslate nohighlight">\(T\)</span>，経験<span class="math notranslate nohighlight">\(E\)</span>，性能指標<span class="math notranslate nohighlight">\(P\)</span>を答えなさい. 1. 将棋プログラムが，自身を相手に数万回もの対局を行い，どのような棋譜が勝つまたは負ける傾向になるかを学習していき，人間よりも将棋が強くなった. 1. 電子メールクライアントが，どの電子メールをスパムとしてフラグを立てるかどうかを判断しようとしている．人間がどの電子メールがスパムかを電子メールクライアントに逐一報告していくことにより，より正確にスパムであるかどうかの判断を行えるようになっていった.
+1. 過去の天気データから，将来の天気を予測する.</p>
+<p><strong>解答)</strong></p>
+<ol class="arabic simple">
+<li><span class="math notranslate nohighlight">\(T\)</span>は「将棋をさすこと」，<span class="math notranslate nohighlight">\(E\)</span>は「自身を相手に数万回もの対局を行なった経験」，<span class="math notranslate nohighlight">\(P\)</span>は「次の対戦で勝利する確率」.</li>
+<li><span class="math notranslate nohighlight">\(T\)</span>は「電子メールをスパムかどうか判断すること」，<span class="math notranslate nohighlight">\(E\)</span>は「各電子メールがスパムかどうかの報告内容」，<span class="math notranslate nohighlight">\(P\)</span>は「正しくスパムと判断できる確率」.</li>
+<li><span class="math notranslate nohighlight">\(T\)</span>は「将来の天気を予測すること」，<span class="math notranslate nohighlight">\(E\)</span>は「過去の天気データ」，<span class="math notranslate nohighlight">\(P\)</span>は「正しく天気を当てられる確率」.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="教師あり学習と教師なし学習">
+<h2>教師あり学習と教師なし学習<a class="headerlink" href="#教師あり学習と教師なし学習" title="Permalink to this headline">¶</a></h2>
+<p>機械学習には，教師あり学習と教師なし学習がある．それぞれ以下の通り定義される.</p>
+<div class="section" id="[定義]-教師あり学習">
+<h3>[定義] 教師あり学習<a class="headerlink" href="#[定義]-教師あり学習" title="Permalink to this headline">¶</a></h3>
+<p><strong>教師あり学習(supervised learning)</strong>とは，入力に対して正しい出力がわかるデータを用いた機械学習のことである．</p>
+</div>
+<div class="section" id="[定義]-教師なし学習">
+<h3>[定義] 教師なし学習<a class="headerlink" href="#[定義]-教師なし学習" title="Permalink to this headline">¶</a></h3>
+<p><strong>教師なし学習(unsupervised learning)</strong>とは，単にデータが与えられ，そのデータから何らかの構造関係を導出する機械学習のことである.</p>
+<p>教師あり学習は，回帰問題と分類問題に分けられる.</p>
+</div>
+<div class="section" id="[定義]-回帰問題">
+<h3>[定義] 回帰問題<a class="headerlink" href="#[定義]-回帰問題" title="Permalink to this headline">¶</a></h3>
+<p><strong>回帰問題(regression problem)</strong>とは，出力が連続値である教師あり学習のことである.</p>
+</div>
+<div class="section" id="[定義]-分類問題">
+<h3>[定義] 分類問題<a class="headerlink" href="#[定義]-分類問題" title="Permalink to this headline">¶</a></h3>
+<p><strong>分類問題(classification problem)</strong>とは，出力が離散値である教師あり学習のことである.</p>
+</div>
+<div class="section" id="[問題]">
+<h3>[問題]<a class="headerlink" href="#[問題]" title="Permalink to this headline">¶</a></h3>
+<p>以下の機械学習の各事例において教師あり学習か教師なし学習か答えなさい．また，教師あり学習の場合，それが回帰問題であるか分類問題であるかを答えなさい．</p>
+<ol class="arabic simple">
+<li>大量に在庫がある商品を抱えている．それが3ヶ月以内に何個売れるか予測する.</li>
+<li>あるソフトウェアに使われている各ライセンスについて，それが正規ライセンスか不正ライセンスかを予測する.</li>
+<li>毎日何万ものニュースを集めてきて，関連する記事にグループ分けする.</li>
+<li>ある人物の絵を見て，その人物の年齢を予測する.</li>
+<li>電子メールのやりとり履歴から，自動的にどれが密接な友人のグループかを特定する.</li>
+<li>2 つのマイクで拾った 2 人の声を解析して分離する (Cocktail Party Problem).</li>
+</ol>
+<p><strong>解答)</strong></p>
+<ol class="arabic simple">
+<li>教師あり学習の回帰問題.</li>
+<li>教師あり学習の分類問題.</li>
+<li>教師なし学習.</li>
+<li>教師あり学習の回帰問題.</li>
+<li>教師なし学習.</li>
+<li>教師なし学習.</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="reference.html" class="btn btn-neutral float-right" title="参考文献" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="20190225.html" class="btn btn-neutral" title="線形代数" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Keishi Okudera
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
