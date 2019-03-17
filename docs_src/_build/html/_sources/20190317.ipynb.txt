@@ -1,0 +1,285 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# 教師あり学習"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## トレーニングセット"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "教師あり学習は，特徴量と目的変数の組のデータを用いて学習する．学習に使用するデータをトレーニングセットという．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] トレーニングセット\n",
+    "$\\{(\\mathbf{x}^{(i)},y^{(i)})\\}_{i=1}^m \\subset (({\\cal X}_1 \\times {\\cal X}_2\\times \\cdots \\times{\\cal X}_n) \\times {\\cal Y})^m$を**トレーニングセット(training set)**という．ここで，$m$は**トレーニングサンプル数(number of training examples)**，$\\mathbf{x}^{(i)} \\in {\\cal X}_1 \\times {\\cal X}_2\\times \\cdots \\times {\\cal X}_n$は$i$番目の$n$個の**入力変数(input variables)**または**特徴量(features)**で，$\\mathbf{x}^{(i)}=(x_1^{(i)},x_2^{(i)},\\ldots,x_n^{(i)})^T$と表す．また，$y^{(i)} \\in {\\cal Y}$は$i$番目の**出力変数(output variable)**または**目的変数(target variable)**である．また，トレーニングセットの$i$番目の要素$(\\mathbf{x}^{(i)},y^{(i)})\\in ({\\cal X}_1 \\times {\\cal X}_2\\times \\cdots \\times{\\cal X}_n) \\times {\\cal Y}$を**トレーニングサンプル(training example)**という．また，入力変数のとる空間${\\cal X}_1 \\times {\\cal X}_2\\times \\cdots \\times{\\cal X}_n$を**入力変数空間(space of input values)**，出力変数のとる空間${\\cal Y}$を**出力変数空間(space of output values)**という．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**注意**\n",
+    "\n",
+    "一般的に(特段の加工をしていない)トレーニングセットには文字列なども含まれるため，特徴量のとりうる集合として数の集合を仮定していないことを明確にするために，単なる集合${\\cal X}_j$と表記している．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [問題]\n",
+    "次のトレーニングセットにおいて，$x_3^{(4)}, x_4^{(3)}, y^{(2)}, \\mathbf{x}^{(1)}$を答えよ．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "|  $i$  |  $x_1^{(i)}$  |  $x_2^{(i)}$   |  $x_3^{(i)}$  |  $x_4^{(i)}$  | $y^{(i)}$  |\n",
+    "| ---- | ---- | ---- | ---- | ---- | ---- |\n",
+    "|  1  |  2104  |  　5  |  　1  |  apple  |  460  |\n",
+    "|  2  |  1416  |  　5  |  　2  |   melon |  232  |\n",
+    "|  3  |  1534  |  　3  |  　2  |  lemon  |  315  |\n",
+    "|  4  |  852  |  　2  |  　1  |  tomato  |  178  |"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**解答)**\n",
+    "\n",
+    "$x_3^{(4)}=1,~x_4^{(3)}={\\rm lemon},~y^{(2)}=232,~\\mathbf{x}^{(1)}=(2104, 5, 1, {\\rm apple})^T$．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 仮説関数"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "教師あり学習を使って解きたいタスク$T$は，入力変数から出力変数を予測することであるが，それは言い換えると入力変数を引数として出力変数を出力する写像を設定することである．この写像を仮説関数という．仮説関数を以下で定義する．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] 仮説関数\n",
+    "入力変数$\\mathbf{x}$から出力変数$y$への写像$h:{\\cal X}_1 \\times {\\cal X}_2\\times \\cdots \\times{\\cal X}_n \\to {\\cal Y}$，すなわち$h_{\\mathbf{\\theta}}(\\mathbf{x})$を**仮説関数(hypothesis function)**という．ここで，$\\mathbf{\\theta}$は仮説関数の**パラメータ**である(パラメータは複数あることがほとんどなのでベクトルとしている)．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "すなわち，教師あり学習とは，仮説関数を設定し，トレーニングセットを用いて仮説関数の最適なパラメータを決定することといえる．最適なパラメータを決定できれば，そのパラメータをセットした仮説関数にデータを流し込むことで，そのデータに対する予測値を計算できる．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 線形回帰"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "仮説関数は自らで与える必要があるが，仮説関数の形によって，教師あり学習に特別な名前がつくものがある．例えば，仮説関数を線形関数とし，出力変数空間を${\\cal Y}=\\mathbb{R}$としたときは線形回帰という．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] 線形回帰\n",
+    "トレーニングセット$\\{(\\mathbf{x}^{(i)},y^{(i)})\\}_{i=1}^m \\subset (\\mathbb{R}^n \\times {\\cal Y})^m$について，${\\cal Y}=\\mathbb{R}$であり，かつ仮説関数が式(1)である教師あり学習を，特に**線形回帰(linear regression)**という．ここで，特徴量$\\mathbf{x}^{(i)}$は，常に1の値をとるような特徴量$x_0^{(i)}=1$を付して$\\mathbf{x}^{(i)}=(x_0^{(i)},x_1^{(i)},x_2^{(i)},\\ldots,x_n^{(i)})^T \\in 1 \\times \\mathbb{R}^n \\subset \\mathbb{R}^{n+1}$と置き直すこととする．また，$\\mathbf{\\theta}=(\\theta_0,\\theta_1,\\ldots,\\theta_n)^T \\in \\mathbb{R}^{n+1}$とする．\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "h_{\\mathbf{\\theta}}(\\mathbf{x}^{(i)}) &= \\theta_0 x_0^{(i)}+\\theta_1 x_1^{(i)} +\\theta_2 x_2^{(i)}+\\cdots + \\theta_n x_n^{(i)} \\nonumber \\\\\n",
+    "&= \\sum_{j=0}^n \\theta_j x_j^{(i)}\\nonumber \\\\\n",
+    "&= \\mathbf{\\theta}^T \\mathbf{x}^{(i)} \\tag{1}\n",
+    "\\end{align}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**注意**\n",
+    "\n",
+    "仮説関数の形より，線形回帰を用いるためには特徴量を引数にして数値計算を行う必要があるので，トレーニングセット$\\{(\\mathbf{x}^{(i)},y^{(i)})\\}_{i=1}^m \\subset (({\\cal X}_1 \\times {\\cal X}_2\\times \\cdots \\times{\\cal X}_n) \\times {\\cal Y})^m$に文字列が含まれる場合はそのまま適用できず，何らかの規則で数値に変換して$\\{(\\mathbf{x}^{(i)},y^{(i)})\\}_{i=1}^m \\subset (\\mathbb{R}^n \\times \\mathbb{R})^m$の形にしなければならない．このような変換を行う作業を**特徴量エンジニアリング(feature engineerring)**という．特徴量エンジニアリングの話は後で述べる．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [問題] \n",
+    "ある大学生について，1年次の成績で優をとった個数から2年次にいくつ優をとるのか予測したい．そこで，何人かの大学生の1年次の成績の優の個数$x_1$と2年次の成績の優の個数$y$を集めた．その結果が次表である．このとき，次の問いに答えよ．\n",
+    "\n",
+    "|  $x_1$  |  $y$  |\n",
+    "| ---- | ---- |\n",
+    "|  　3  |  　4  |\n",
+    "|  　2  |  　1  |\n",
+    "|  　4  |  　3  |\n",
+    "|  　0  |  　1  |\n",
+    "\n",
+    "1. $m$はいくつか．\n",
+    "1. 仮説関数として$h_{\\mathbf{\\theta}}(\\mathbf{x})=\\theta_0+\\theta_1 x_1$を設定し，本トレーニングセットを用いて線形回帰を行なった結果，パラメータは$\\theta_0=-1,~\\theta_1=2$となった．このとき，1年次の優の個数が6だった大学生の2年次の優の個数を予測せよ．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**解答)**\n",
+    "\n",
+    "1. $m=4$．\n",
+    "1. $h_{\\mathbf{\\theta}}(\\mathbf{x})=-1+2x_1$なので，$h_{\\mathbf{\\theta}}(6)=-1+2\\cdot 6=11$．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### 目的関数"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "さて，仮説関数のパラメータ$\\mathbf{\\theta}$をどう決めるかという問題がある．パラメータをでたらめに与えても良い予測値を返さないので，経験$E$のトレーニングセットを使って，性能指標$P$を高めるように仮説関数のパラメータを更新していくことが必要になる．この手順を学習アルゴリズムといい，性能指標を測る関数を目的関数という．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] 学習アルゴリズム，目的関数\n",
+    "性能指標を測る関数$J(\\mathbf{\\theta})$を**目的関数**または**コスト関数(cost function)**といい，この目的関数で測った性能指標が良くなるように仮説関数(のパラメータ$\\mathbf{\\theta}$)を更新していく手順を**学習アルゴリズム(learning algorithm)**という．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "回帰問題における性能指標としては，各トレーニングサンプル$(\\mathbf{x}^{(i)},y^{(i)})$における仮説関数$h_{\\mathbf{\\theta}}(\\mathbf{x}^{(i)})$と$y^{(i)}$の二乗誤差平均が考えられる．この二乗誤差平均を計算する目的関数を平均二乗誤差関数という．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] 平均二乗誤差関数\n",
+    "トレーニングセット$\\{(\\mathbf{x}^{(i)},y^{(i)})\\}_{i=1}^m \\subset ((1 \\times \\mathbb{R}^n) \\times \\mathbb{R})^m$について，式(2)で表される目的関数$J(\\mathbf{\\theta})$を**平均二乗誤差関数(mean squared error function)**という．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "J(\\mathbf{\\theta}) = \\frac{1}{2m}\\sum_{i=1}^m (h_{\\mathbf{\\theta}}(\\mathbf{x}^{(i)})-y^{(i)})^2 \\tag{2}\n",
+    "\\end{align}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**注意**\n",
+    "\n",
+    "$m$ではなく$2m$で割っているのは，微分したときに出てくる2が消えるようにしているからである．$m$でも特段の問題はない(同じ結果が得られる)．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [問題]\n",
+    "ある大学生について，1年次の成績で優をとった個数から2年次にいくつ優をとるのか予測したい．そこで，何人かの大学生の1年次の成績の優の個数$x_1$と2年次の成績の優の個数$y$を集めてトレーニングセット(下表)とし，仮説関数として$h_{\\mathbf{\\theta}}(\\mathbf{x})=\\theta_0+\\theta_1 x_1$を設定して線形回帰を行なうことにした．このとき，次の問いに答えよ．結果，パラメータは$\\theta_0=-1,~\\theta_1=2$となった．このとき，トレーニングセットにおける平均二乗誤差$J(\\mathbf{\\theta})$を求めよ．\n",
+    "\n",
+    "|  $x_1$  |  $y$  |\n",
+    "| ---- | ---- |\n",
+    "|  　3  |  　4  |\n",
+    "|  　2  |  　1  |\n",
+    "|  　4  |  　3  |\n",
+    "|  　0  |  　1  |\n",
+    "\n",
+    "1. 平均二乗誤差関数$J(\\mathbf{\\theta})$を書き下し，$\\theta_0,~\\theta_1$の関数として表せ(引数がわかりやすいように$J(\\theta_0, \\theta_1)$と書くことにする)．\n",
+    "1. 線形回帰の結果，パラメータは$\\theta_0=-1,~\\theta_1=2$となった．このときの平均二乗誤差関数$J(-1, 2)$の値を求めよ．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**解答)**\n",
+    "\n",
+    "1. 平均二乗誤差関数の定義に，与えられた仮説関数とトレーニングセットを具体的に代入すると，\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "J(\\theta_0, \\theta_1) &=\\frac{1}{2\\cdot 4}\\sum_{i=1}^4 (\\theta_0+\\theta_1 x_1^{(i)}-y^{(i)})^2 \\\\\n",
+    "&=\\frac{1}{8}\\left((\\theta_0+3\\theta_1-4)^2+(\\theta_0+2\\theta_1-1)^2+(\\theta_0+4\\theta_1-3)^2+(\\theta_0-1)^2\\right) \\\\\n",
+    "&=\\frac{1}{8}(4\\theta_0^2+29\\theta_1^2+18\\theta_0\\theta_1-18\\theta_0-52\\theta_1+27)\n",
+    "\\end{align}\n",
+    "$$\n",
+    "\n",
+    "2. 実際に$\\theta_0=-1, \\theta_1=2$を代入して計算すると，$J(-1, 2)=\\frac{25}{8}$となる．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**注意**\n",
+    "\n",
+    "学習アルゴリズムにおいては，動かす文字はパラメータ$\\theta$であり，トレーニングセット$\\mathbf{x}^{(i)},y^{(i)}$ではない．トレーニングセットを所与のものとして，目的関数$J(\\theta)$についてパラメータ$\\theta$を色々動かして良くなるような$\\theta$を見つけることが学習アルゴリズムの目的である．"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

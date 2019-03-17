@@ -1,0 +1,428 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>教師あり学習 &mdash; Machine Learning: Theory and Implementation 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Machine Learning: Theory and Implementation
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../20190225.html">線形代数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../20190316.html">機械学習の概念</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../20190317.html">教師あり学習</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference.html">参考文献</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Machine Learning: Theory and Implementation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>教師あり学習</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/.ipynb_checkpoints/20190317-checkpoint.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="教師あり学習">
+<h1>教師あり学習<a class="headerlink" href="#教師あり学習" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="トレーニングセット">
+<h2>トレーニングセット<a class="headerlink" href="#トレーニングセット" title="Permalink to this headline">¶</a></h2>
+<p>教師あり学習は，特徴量と目的変数の組のデータを用いて学習する．学習に使用するデータをトレーニングセットという．</p>
+<div class="section" id="[定義]-トレーニングセット">
+<h3>[定義] トレーニングセット<a class="headerlink" href="#[定義]-トレーニングセット" title="Permalink to this headline">¶</a></h3>
+<p><span class="math notranslate nohighlight">\(\{(\mathbf{x}^{(i)},y^{(i)})\}_{i=1}^m \subset (({\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n) \times {\cal Y})^m\)</span>を<strong>トレーニングセット(training set)</strong>という．ここで，<span class="math notranslate nohighlight">\(m\)</span>は<strong>トレーニングサンプル数(number of training examples)</strong>，<span class="math notranslate nohighlight">\(\mathbf{x}^{(i)} \in {\cal X}_1 \times {\cal X}_2\times \cdots \times {\cal X}_n\)</span>は<span class="math notranslate nohighlight">\(i\)</span>番目の<span class="math notranslate nohighlight">\(n\)</span>個の<strong>入力変数(input
+variables)</strong>または<strong>特徴量(features)</strong>で，<span class="math notranslate nohighlight">\(\mathbf{x}^{(i)}=(x_1^{(i)},x_2^{(i)},\ldots,x_n^{(i)})^T\)</span>と表す．また，<span class="math notranslate nohighlight">\(y^{(i)} \in {\cal Y}\)</span>は<span class="math notranslate nohighlight">\(i\)</span>番目の<strong>出力変数(output variable)</strong>または<strong>目的変数(target variable)</strong>である．また，トレーニングセットの<span class="math notranslate nohighlight">\(i\)</span>番目の要素<span class="math notranslate nohighlight">\((\mathbf{x}^{(i)},y^{(i)})\in ({\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n) \times {\cal Y}\)</span>を<strong>トレーニングサンプル(training
+example)</strong>という．また，入力変数のとる空間<span class="math notranslate nohighlight">\({\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n\)</span>を<strong>入力変数空間(space of input values)</strong>，出力変数のとる空間<span class="math notranslate nohighlight">\({\cal Y}\)</span>を<strong>出力変数空間(space of output values)</strong>という．</p>
+<p><strong>注意</strong></p>
+<p>一般的に(特段の加工をしていない)トレーニングセットには文字列なども含まれるため，特徴量のとりうる集合として数の集合を仮定していないことを明確にするために，単なる集合<span class="math notranslate nohighlight">\({\cal X}_j\)</span>と表記している．</p>
+</div>
+<div class="section" id="[問題]">
+<h3>[問題]<a class="headerlink" href="#[問題]" title="Permalink to this headline">¶</a></h3>
+<p>次のトレーニングセットにおいて，<span class="math notranslate nohighlight">\(x_3^{(4)}, x_4^{(3)}, y^{(2)}, \mathbf{x}^{(1)}\)</span>を答えよ．</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+<col width="16%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><span class="math notranslate nohighlight">\(i\)</span></th>
+<th class="head"><span class="math notranslate nohighlight">\(x_1^{(i)}\)</span></th>
+<th class="head"><span class="math notranslate nohighlight">\(x_2^{(i)}\)</span></th>
+<th class="head"><span class="math notranslate nohighlight">\(x_3^{(i)}\)</span></th>
+<th class="head"><span class="math notranslate nohighlight">\(x_4^{(i)}\)</span></th>
+<th class="head"><span class="math notranslate nohighlight">\(y^{(i)}\)</span></th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>2104</td>
+<td>5</td>
+<td>1</td>
+<td>apple</td>
+<td>460</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>1416</td>
+<td>5</td>
+<td>2</td>
+<td>melon</td>
+<td>232</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>1534</td>
+<td>3</td>
+<td>2</td>
+<td>lemon</td>
+<td>315</td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>852</td>
+<td>2</td>
+<td>1</td>
+<td>tomato</td>
+<td>178</td>
+</tr>
+</tbody>
+</table>
+<p><strong>解答)</strong></p>
+<p><span class="math notranslate nohighlight">\(x_3^{(4)}=1,~x_4^{(3)}={\rm lemon},~y^{(2)}=232,~\mathbf{x}^{(1)}=(2104, 5, 1, {\rm apple})^T\)</span>．</p>
+</div>
+</div>
+<div class="section" id="仮説関数">
+<h2>仮説関数<a class="headerlink" href="#仮説関数" title="Permalink to this headline">¶</a></h2>
+<p>教師あり学習を使って解きたいタスク<span class="math notranslate nohighlight">\(T\)</span>は，入力変数から出力変数を予測することであるが，それは言い換えると入力変数を引数として出力変数を出力する写像を設定することである．この写像を仮説関数という．仮説関数を以下で定義する．</p>
+<div class="section" id="[定義]-仮説関数">
+<h3>[定義] 仮説関数<a class="headerlink" href="#[定義]-仮説関数" title="Permalink to this headline">¶</a></h3>
+<p>入力変数<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>から出力変数<span class="math notranslate nohighlight">\(y\)</span>への写像<span class="math notranslate nohighlight">\(h:{\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n \to {\cal Y}\)</span>，すなわち<span class="math notranslate nohighlight">\(h_{\mathbf{\theta}}(\mathbf{x})\)</span>を<strong>仮説関数(hypothesis function)</strong>という．ここで，<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>は仮説関数の<strong>パラメータ</strong>である(パラメータは複数あることがほとんどなのでベクトルとしている)．</p>
+<p>すなわち，教師あり学習とは，仮説関数を設定し，トレーニングセットを用いて仮説関数の最適なパラメータを決定することといえる．最適なパラメータを決定できれば，そのパラメータをセットした仮説関数にデータを流し込むことで，そのデータに対する予測値を計算できる．</p>
+</div>
+</div>
+<div class="section" id="線形回帰">
+<h2>線形回帰<a class="headerlink" href="#線形回帰" title="Permalink to this headline">¶</a></h2>
+<p>仮説関数は自らで与える必要があるが，仮説関数の形によって，教師あり学習に特別な名前がつくものがある．例えば，仮説関数を線形関数とし，出力変数空間を<span class="math notranslate nohighlight">\({\cal Y}=\mathbb{R}\)</span>としたときは線形回帰という．</p>
+<div class="section" id="[定義]-線形回帰">
+<h3>[定義] 線形回帰<a class="headerlink" href="#[定義]-線形回帰" title="Permalink to this headline">¶</a></h3>
+<p>トレーニングセット<span class="math notranslate nohighlight">\(\{(\mathbf{x}^{(i)},y^{(i)})\}_{i=1}^m \subset (\mathbb{R}^n \times {\cal Y})^m\)</span>について，<span class="math notranslate nohighlight">\({\cal Y}=\mathbb{R}\)</span>であり，かつ仮説関数が式(1)である教師あり学習を，特に<strong>線形回帰(linear
+regression)</strong>という．ここで，特徴量<span class="math notranslate nohighlight">\(\mathbf{x}^{(i)}\)</span>は，常に1の値をとるような特徴量<span class="math notranslate nohighlight">\(x_0^{(i)}=1\)</span>を付して<span class="math notranslate nohighlight">\(\mathbf{x}^{(i)}=(x_0^{(i)},x_1^{(i)},x_2^{(i)},\ldots,x_n^{(i)})^T \in 1 \times \mathbb{R}^n \subset \mathbb{R}^{n+1}\)</span>と置き直すこととする．また，<span class="math notranslate nohighlight">\(\mathbf{\theta}=(\theta_0,\theta_1,\ldots,\theta_n)^T \in \mathbb{R}^{n+1}\)</span>とする．</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+h_{\mathbf{\theta}}(\mathbf{x}^{(i)}) &amp;= \theta_0 x_0^{(i)}+\theta_1 x_1^{(i)} +\theta_2 x_2^{(i)}+\cdots + \theta_n x_n^{(i)} \nonumber \\
+&amp;= \sum_{j=0}^n \theta_j x_j^{(i)}\nonumber \\
+&amp;= \mathbf{\theta}^T \mathbf{x}^{(i)} \tag{1}
+\end{align}\end{split}\]</div>
+<p><strong>注意</strong></p>
+<p>仮説関数の形より，線形回帰を用いるためには特徴量を引数にして数値計算を行う必要があるので，トレーニングセット<span class="math notranslate nohighlight">\(\{(\mathbf{x}^{(i)},y^{(i)})\}_{i=1}^m \subset (({\cal X}_1 \times {\cal X}_2\times \cdots \times{\cal X}_n) \times {\cal Y})^m\)</span>に文字列が含まれる場合はそのまま適用できず，何らかの規則で数値に変換して<span class="math notranslate nohighlight">\(\{(\mathbf{x}^{(i)},y^{(i)})\}_{i=1}^m \subset (\mathbb{R}^n \times \mathbb{R})^m\)</span>の形にしなければならない．このような変換を行う作業を<strong>特徴量エンジニアリング(feature
+engineerring)</strong>という．特徴量エンジニアリングの話は後で述べる．</p>
+</div>
+<div class="section" id="[問題]">
+<h3>[問題]<a class="headerlink" href="#[問題]" title="Permalink to this headline">¶</a></h3>
+<p>ある大学生について，1年次の成績で優をとった個数から2年次にいくつ優をとるのか予測したい．そこで，何人かの大学生の1年次の成績の優の個数<span class="math notranslate nohighlight">\(x_1\)</span>と2年次の成績の優の個数<span class="math notranslate nohighlight">\(y\)</span>を集めた．その結果が次表である．このとき，次の問いに答えよ．</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="54%" />
+<col width="46%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><span class="math notranslate nohighlight">\(x_1\)</span></th>
+<th class="head"><span class="math notranslate nohighlight">\(y\)</span></th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>3</td>
+<td>4</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>3</td>
+</tr>
+<tr class="row-odd"><td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<ol class="arabic simple">
+<li><span class="math notranslate nohighlight">\(m\)</span>はいくつか．</li>
+<li>仮説関数として<span class="math notranslate nohighlight">\(h_{\mathbf{\theta}}(\mathbf{x})=\theta_0+\theta_1 x_1\)</span>を設定し，本トレーニングセットを用いて線形回帰を行なった結果，パラメータは<span class="math notranslate nohighlight">\(\theta_0=-1,~\theta_1=2\)</span>となった．このとき，1年次の優の個数が6だった大学生の2年次の優の個数を予測せよ．</li>
+</ol>
+<p><strong>解答)</strong></p>
+<ol class="arabic simple">
+<li><span class="math notranslate nohighlight">\(m=4\)</span>．</li>
+<li><span class="math notranslate nohighlight">\(h_{\mathbf{\theta}}(\mathbf{x})=-1+2x_1\)</span>なので，<span class="math notranslate nohighlight">\(h_{\mathbf{\theta}}(6)=-1+2\cdot 6=11\)</span>．</li>
+</ol>
+<div class="section" id="目的関数">
+<h4>目的関数<a class="headerlink" href="#目的関数" title="Permalink to this headline">¶</a></h4>
+<p>さて，仮説関数のパラメータ<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>をどう決めるかという問題がある．パラメータをでたらめに与えても良い予測値を返さないので，経験<span class="math notranslate nohighlight">\(E\)</span>のトレーニングセットを使って，性能指標<span class="math notranslate nohighlight">\(P\)</span>を高めるように仮説関数のパラメータを更新していくことが必要になる．この手順を学習アルゴリズムといい，性能指標を測る関数を目的関数という．</p>
+</div>
+</div>
+<div class="section" id="[定義]-学習アルゴリズム，目的関数">
+<h3>[定義] 学習アルゴリズム，目的関数<a class="headerlink" href="#[定義]-学習アルゴリズム，目的関数" title="Permalink to this headline">¶</a></h3>
+<p>性能指標を測る関数<span class="math notranslate nohighlight">\(J(\mathbf{\theta})\)</span>を<strong>目的関数</strong>または<strong>コスト関数(cost function)</strong>といい，この目的関数で測った性能指標が良くなるように仮説関数(のパラメータ<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>)を更新していく手順を<strong>学習アルゴリズム(learning algorithm)</strong>という．</p>
+<p>回帰問題における性能指標としては，各トレーニングサンプル<span class="math notranslate nohighlight">\((\mathbf{x}^{(i)},y^{(i)})\)</span>における仮説関数<span class="math notranslate nohighlight">\(h_{\mathbf{\theta}}(\mathbf{x}^{(i)})\)</span>と<span class="math notranslate nohighlight">\(y^{(i)}\)</span>の二乗誤差平均が考えられる．この二乗誤差平均を計算する目的関数を平均二乗誤差関数という．</p>
+</div>
+<div class="section" id="[定義]-平均二乗誤差関数">
+<h3>[定義] 平均二乗誤差関数<a class="headerlink" href="#[定義]-平均二乗誤差関数" title="Permalink to this headline">¶</a></h3>
+<p>トレーニングセット<span class="math notranslate nohighlight">\(\{(\mathbf{x}^{(i)},y^{(i)})\}_{i=1}^m \subset ((1 \times \mathbb{R}^n) \times \mathbb{R})^m\)</span>について，式(2)で表される目的関数<span class="math notranslate nohighlight">\(J(\mathbf{\theta})\)</span>を<strong>平均二乗誤差関数(mean squared error function)</strong>という．</p>
+<div class="math notranslate nohighlight">
+\[\begin{align}
+J(\mathbf{\theta}) = \frac{1}{2m}\sum_{i=1}^m (h_{\mathbf{\theta}}(\mathbf{x}^{(i)})-y^{(i)})^2 \tag{2}
+\end{align}\]</div>
+<p><strong>注意</strong></p>
+<p><span class="math notranslate nohighlight">\(m\)</span>ではなく<span class="math notranslate nohighlight">\(2m\)</span>で割っているのは，微分したときに出てくる2が消えるようにしているからである．<span class="math notranslate nohighlight">\(m\)</span>でも特段の問題はない(同じ結果が得られる)．</p>
+</div>
+<div class="section" id="[問題]">
+<h3>[問題]<a class="headerlink" href="#[問題]" title="Permalink to this headline">¶</a></h3>
+<p>ある大学生について，1年次の成績で優をとった個数から2年次にいくつ優をとるのか予測したい．そこで，何人かの大学生の1年次の成績の優の個数<span class="math notranslate nohighlight">\(x_1\)</span>と2年次の成績の優の個数<span class="math notranslate nohighlight">\(y\)</span>を集めてトレーニングセット(下表)とし，仮説関数として<span class="math notranslate nohighlight">\(h_{\mathbf{\theta}}(\mathbf{x})=\theta_0+\theta_1 x_1\)</span>を設定して線形回帰を行なうことにした．このとき，次の問いに答えよ．結果，パラメータは<span class="math notranslate nohighlight">\(\theta_0=-1,~\theta_1=2\)</span>となった．このとき，トレーニングセットにおける平均二乗誤差<span class="math notranslate nohighlight">\(J(\mathbf{\theta})\)</span>を求めよ．</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="54%" />
+<col width="46%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><span class="math notranslate nohighlight">\(x_1\)</span></th>
+<th class="head"><span class="math notranslate nohighlight">\(y\)</span></th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>3</td>
+<td>4</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>3</td>
+</tr>
+<tr class="row-odd"><td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<ol class="arabic simple">
+<li>平均二乗誤差関数<span class="math notranslate nohighlight">\(J(\mathbf{\theta})\)</span>を書き下し，<span class="math notranslate nohighlight">\(\theta_0,~\theta_1\)</span>の関数として表せ(引数がわかりやすいように<span class="math notranslate nohighlight">\(J(\theta_0, \theta_1)\)</span>と書くことにする)．</li>
+<li>線形回帰の結果，パラメータは<span class="math notranslate nohighlight">\(\theta_0=-1,~\theta_1=2\)</span>となった．このときの平均二乗誤差関数<span class="math notranslate nohighlight">\(J(-1, 2)\)</span>の値を求めよ．</li>
+</ol>
+<p><strong>解答)</strong></p>
+<ol class="arabic simple">
+<li>平均二乗誤差関数の定義に，与えられた仮説関数とトレーニングセットを具体的に代入すると，</li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+J(\theta_0, \theta_1) &amp;=\frac{1}{2\cdot 4}\sum_{i=1}^4 (\theta_0+\theta_1 x_1^{(i)}-y^{(i)})^2 \\
+&amp;=\frac{1}{8}\left((\theta_0+3\theta_1-4)^2+(\theta_0+2\theta_1-1)^2+(\theta_0+4\theta_1-3)^2+(\theta_0-1)^2\right) \\
+&amp;=\frac{1}{8}(4\theta_0^2+29\theta_1^2+18\theta_0\theta_1-18\theta_0-52\theta_1+27)
+\end{align}\end{split}\]</div>
+<ol class="arabic simple" start="2">
+<li>実際に<span class="math notranslate nohighlight">\(\theta_0=-1, \theta_1=2\)</span>を代入して計算すると，<span class="math notranslate nohighlight">\(J(-1, 2)=\frac{25}{8}\)</span>となる．</li>
+</ol>
+<p><strong>注意</strong></p>
+<p>学習アルゴリズムにおいては，動かす文字はパラメータ<span class="math notranslate nohighlight">\(\theta\)</span>であり，トレーニングセット<span class="math notranslate nohighlight">\(\mathbf{x}^{(i)},y^{(i)}\)</span>ではない．トレーニングセットを所与のものとして，目的関数<span class="math notranslate nohighlight">\(J(\theta)\)</span>についてパラメータ<span class="math notranslate nohighlight">\(\theta\)</span>を色々動かして良くなるような<span class="math notranslate nohighlight">\(\theta\)</span>を見つけることが学習アルゴリズムの目的である．</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Keishi Okudera
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
