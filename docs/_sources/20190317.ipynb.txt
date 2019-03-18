@@ -166,7 +166,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "### 目的関数"
+    "## 目的関数"
    ]
   },
   {
@@ -258,6 +258,156 @@
     "**注意**\n",
     "\n",
     "学習アルゴリズムにおいては，動かす文字はパラメータ$\\theta$であり，トレーニングセット$\\mathbf{x}^{(i)},y^{(i)}$ではない．トレーニングセットを所与のものとして，目的関数$J(\\theta)$についてパラメータ$\\theta$を色々動かして良くなるような$\\theta$を見つけることが学習アルゴリズムの目的である．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 最急降下法"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "「性能指標が良くなるように仮説関数のパラメータ$\\mathbf{\\theta}$をアップデートしていく」とはどういうことか．目的関数が平均二乗誤差関数の場合，その平均二乗誤差がどんどん小さくなっていくことが，性能指標が良くなっていくといえる．すなわち，目的関数を最小にするパラメータ$\\mathbf{\\theta}$を見つければよい．それを見つけるための手法が学習アルゴリズムである．\n",
+    "\n",
+    "学習アルゴリズムの中で一般的なものとして最急降下法がある．最急降下法とは，目的関数$J(\\mathbf{\\theta})$のグラフ上に初期値として適当に点を打ち(すなわちパラメータ$\\mathbf{\\theta}$として具体的に何か適当な初期値を決め），その点から周辺を見渡してもっとも勾配が急な方向に一定程度進み，進んだ後の点からまた周辺を見渡してもっとも勾配が急な方向に一定程度進み，，，を繰り返して，どこを見渡しても勾配がないような点を探す方法である．\n",
+    "\n",
+    "最急降下法を行うためには，関数上のある点について勾配が急な方向はどの方向であるかを計算しなければならない．勾配が最も急な方向を向くベクトルを勾配ベクトルといい，以下で定義される．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] 勾配ベクトル\n",
+    "$k$次元ベクトル$\\mathbf{\\theta}=(\\theta_1,\\theta_2,\\ldots,\\theta_k)^T$からスカラー値に写る関数$f(\\mathbf{\\theta})$，すなわち$f:\\mathbf{\\theta} \\in \\mathbb{R}^k \\to \\mathbb{R}$である関数$f(\\mathbf{\\theta})$において，**勾配ベクトル**$\\nabla_{\\mathbf{\\theta}}f=\\frac{\\partial f}{\\partial \\mathbf{\\theta}}\\in \\mathbb{R}^k$は次式で定義される．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "\\nabla_{\\mathbf{\\theta}}f = \\frac{\\partial f}{\\partial \\mathbf{\\theta}} = \n",
+    "\\begin{bmatrix}\n",
+    "\\frac{\\partial f}{\\partial \\theta_1} \\\\[5pt]\n",
+    "\\frac{\\partial f}{\\partial \\theta_2} \\\\[3pt]\n",
+    "\\vdots \\\\[5pt]\n",
+    "\\frac{\\partial f}{\\partial \\theta_k}\n",
+    "\\end{bmatrix}\n",
+    "\\end{align}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "本当に勾配ベクトル方向が，勾配が最も急な方向を指しているのか，2次元を例に示したのが次の問題である．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [問題]\n",
+    "$f:\\mathbb{R}^2 \\to \\mathbb{R}$の関数$f(x,y)$のある点$P(x,y)$における最大勾配方向が勾配ベクトルの方向と同方向であることを示せ．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**解答)**\n",
+    "\n",
+    "勾配とは，関数$f$の変化度合いであり，勾配が最大ということは，関数の変化度合いが最も大きいということである．点$P(x,y)$と，そこから微小量$\\Delta x$，$\\Delta y$だけ動かした点$Q(x+\\Delta x,y+\\Delta y)$においてそれぞれ関数値を求めて差をとったものを変化度合い$\\Delta f$とすると，$\\overrightarrow{PQ}=\\overrightarrow{OQ}-\\overrightarrow{OP}=(\\Delta x,\\Delta y)$に注意して，以下の通り変形できる．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align*}\n",
+    "\\Delta f &= f(x+\\Delta x,y+\\Delta y)-f(x,y) \\\\\n",
+    "&= f(x+\\Delta x,y+\\Delta y) -f(x,y+\\Delta y)+f(x,y+\\Delta y) -f(x,y) \\\\\n",
+    "&= \\frac{f(x+\\Delta x,y+\\Delta y) -f(x,y+\\Delta y)}{\\Delta x}\\Delta x +\\frac{f(x,y+\\Delta y) -f(x,y)}{\\Delta y}\\Delta y \\\\\n",
+    "&\\fallingdotseq \\frac{\\partial f}{\\partial x}\\Delta x +\\frac{\\partial f}{\\partial y}\\Delta y \\\\\n",
+    "&= \\nabla f \\cdot (\\Delta x,\\Delta y) \\\\\n",
+    "&= \\nabla f \\cdot \\overrightarrow{PQ}\n",
+    "\\end{align*}\n",
+    "$$\n",
+    "\n",
+    "すなわちこれは，関数の変化度合いは勾配ベクトルと点$P$から点$Q$への方向ベクトル，すなわち微小量を動かした方向のベクトルの内積となっている．ここで，角度の定義より，\n",
+    "\n",
+    "$$\n",
+    "\\begin{align*}\n",
+    "\\Delta f &= ||\\nabla f||||\\overrightarrow{PQ}||\\cos \\theta\n",
+    "\\end{align*}\n",
+    "$$\n",
+    "\n",
+    "となる．ここで，$\\theta$は，$\\nabla f$と$\\overrightarrow{PQ}$のなす角である．関数の変化度合い$\\Delta f$が最大となるのは，$\\cos \\theta =1$，すなわち$\\theta =0$となる場合である．これはつまり$\\nabla f$と$\\overrightarrow{PQ}$が同じ方向を向いているときに関数の変化度合い$\\Delta f$が最大となるということである．以上より，点$P$から関数の変化度合い$\\Delta f$が最大となるように進むためには(点$Q$をとるためには)，勾配ベクトルの方向に進めばよいということである．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "これで勾配が最も急な方向が勾配ベクトル方向であることがわかったので，それを用いて最急降下法を以下の通り定義する．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] 最急降下法\n",
+    "関数$J(\\mathbf{\\theta})$を最小とする$\\mathbf{\\theta}$を次の手順で見つけるアルゴリズムを，**最急降下法(gradient descent algorithm)**という．ここで，$\\alpha (>0)$を**学習率(learning rate)**といい，勾配が最大の方向にどの程度移動させるかの強さを表す．\n",
+    "\n",
+    "1. トレーニングセット$\\{(\\mathbf{x}^{(i)},y^{(i)})\\}_{i=1}^m$，仮説関数$h_{\\mathbf{\\theta}}(\\mathbf{x})$，目的関数$J(\\mathbf{\\theta)}$を用意．\n",
+    "2. $\\alpha \\gets $初期値，$\\mathbf{\\theta} \\gets $初期値\n",
+    "3. 以下を$\\mathbf{\\theta}$が収束するまでまたは有限回繰り返し\n",
+    "    1. $\\{(\\mathbf{x}^{(i)},y^{(i)})\\}_{i=1}^m$を代入して$J(\\mathbf{\\theta)}$を計算\n",
+    "    2. $\\nabla_{\\mathbf{\\theta}}J$を計算\n",
+    "    3. $\\mathbf{\\theta} \\gets \\mathbf{\\theta}-\\alpha \\nabla_{\\mathbf{\\theta}}J$　(パラメータ$\\theta_0,\\theta_1\\ldots $は同タイミングで更新)\n",
+    "4. 得られた$\\mathbf{\\theta}$が$J(\\mathbf{\\theta})$を最小とする$\\mathbf{\\theta}$となる．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [問題]\n",
+    "$x_0^{(i)}=1$も含め特徴量が$n+1$個のトレーニングセット$\\{(\\mathbf{x}^{(i)},y^{(i)})\\}_{i=1}^m$の線形回帰において，目的関数$J(\\mathbf{\\theta})$を平均二乗誤差関数としたとき，$\\nabla_{\\mathbf{\\theta}}J$を計算せよ．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**解答)**\n",
+    "\n",
+    "$\\nabla_{\\mathbf{\\theta}}J$の$j$番目の要素$\\frac{\\partial J}{\\partial \\theta_j}$を計算すると以下となる．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align*}\n",
+    "\\frac{\\partial J}{\\partial \\theta_j}&= \\frac{1}{2m}\\sum_{i=1}^m \\frac{\\partial }{\\partial \\theta_j}(h_{\\mathbf{\\theta}}(\\mathbf{x}^{(i)})-y^{(i)})^2 \\\\\n",
+    "&=\\frac{1}{2m}\\sum_{i=1}^m 2(h_{\\mathbf{\\theta}}(\\mathbf{x}^{(i)})-y^{(i)})\\frac{\\partial }{\\partial \\theta_j}h_{\\mathbf{\\theta}}(\\mathbf{x}^{(i)})\\\\\n",
+    "&= \\frac{1}{m}\\sum_{i=1}^m (h_{\\mathbf{\\theta}}(\\mathbf{x}^{(i)})-y^{(i)})x_j^{(i)}\n",
+    "\\end{align*}\n",
+    "$$\n",
+    "\n",
+    "$j=0$のときは$\\frac{\\partial }{\\partial \\theta_0}h_{\\mathbf{\\theta}}(\\mathbf{x}^{(i)})=1$であることに注意してまとめると，\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "\\nabla_{\\mathbf{\\theta}}J =\\frac{1}{m}\n",
+    "\\begin{bmatrix}\n",
+    "\\sum_{i=1}^m (h_{\\mathbf{\\theta}}(\\mathbf{x}^{(i)})-y^{(i)}) \\\\[3pt]\n",
+    "\\sum_{i=1}^m (h_{\\mathbf{\\theta}}(\\mathbf{x}^{(i)})-y^{(i)})x_1^{(i)} \\\\[3pt]\n",
+    "\\sum_{i=1}^m (h_{\\mathbf{\\theta}}(\\mathbf{x}^{(i)})-y^{(i)})x_2^{(i)} \\\\[3pt]\n",
+    "\\vdots \\\\[3pt]\n",
+    "\\sum_{i=1}^m (h_{\\mathbf{\\theta}}(\\mathbf{x}^{(i)})-y^{(i)})x_j^{(i)} \\\\[3pt]\n",
+    "\\vdots \\\\[3pt]\n",
+    "\\sum_{i=1}^m (h_{\\mathbf{\\theta}}(\\mathbf{x}^{(i)})-y^{(i)})x_n^{(i)} \\\\[3pt]\n",
+    "\\end{bmatrix}\\label{simpleJ}\n",
+    "\\end{align}\n",
+    "$$\n",
+    "\n",
+    "となる（$\\nabla_{\\mathbf{\\theta}}J$は$n+1$次元ベクトルである）．"
    ]
   }
  ],

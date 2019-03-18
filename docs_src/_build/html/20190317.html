@@ -94,12 +94,19 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#線形回帰">線形回帰</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#[定義]-線形回帰">[定義] 線形回帰</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#[問題]">[問題]</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#目的関数">目的関数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#[問題]">[問題]</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#目的関数">目的関数</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#[定義]-学習アルゴリズム，目的関数">[定義] 学習アルゴリズム，目的関数</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#[定義]-平均二乗誤差関数">[定義] 平均二乗誤差関数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#[問題]">[問題]</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#最急降下法">最急降下法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#[定義]-勾配ベクトル">[定義] 勾配ベクトル</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#[問題]">[問題]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#[定義]-最急降下法">[定義] 最急降下法</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#[問題]">[問題]</a></li>
 </ul>
 </li>
@@ -326,11 +333,11 @@ engineerring)</strong>という．特徴量エンジニアリングの話は後�
 <li><span class="math notranslate nohighlight">\(m=4\)</span>．</li>
 <li><span class="math notranslate nohighlight">\(h_{\mathbf{\theta}}(\mathbf{x})=-1+2x_1\)</span>なので，<span class="math notranslate nohighlight">\(h_{\mathbf{\theta}}(6)=-1+2\cdot 6=11\)</span>．</li>
 </ol>
+</div>
+</div>
 <div class="section" id="目的関数">
-<h4>目的関数<a class="headerlink" href="#目的関数" title="Permalink to this headline">¶</a></h4>
+<h2>目的関数<a class="headerlink" href="#目的関数" title="Permalink to this headline">¶</a></h2>
 <p>さて，仮説関数のパラメータ<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>をどう決めるかという問題がある．パラメータをでたらめに与えても良い予測値を返さないので，経験<span class="math notranslate nohighlight">\(E\)</span>のトレーニングセットを使って，性能指標<span class="math notranslate nohighlight">\(P\)</span>を高めるように仮説関数のパラメータを更新していくことが必要になる．この手順を学習アルゴリズムといい，性能指標を測る関数を目的関数という．</p>
-</div>
-</div>
 <div class="section" id="[定義]-学習アルゴリズム，目的関数">
 <h3>[定義] 学習アルゴリズム，目的関数<a class="headerlink" href="#[定義]-学習アルゴリズム，目的関数" title="Permalink to this headline">¶</a></h3>
 <p>性能指標を測る関数<span class="math notranslate nohighlight">\(J(\mathbf{\theta})\)</span>を<strong>目的関数</strong>または<strong>コスト関数(cost function)</strong>といい，この目的関数で測った性能指標が良くなるように仮説関数(のパラメータ<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>)を更新していく手順を<strong>学習アルゴリズム(learning algorithm)</strong>という．</p>
@@ -393,6 +400,91 @@ J(\theta_0, \theta_1) &amp;=\frac{1}{2\cdot 4}\sum_{i=1}^4 (\theta_0+\theta_1 x_
 </ol>
 <p><strong>注意</strong></p>
 <p>学習アルゴリズムにおいては，動かす文字はパラメータ<span class="math notranslate nohighlight">\(\theta\)</span>であり，トレーニングセット<span class="math notranslate nohighlight">\(\mathbf{x}^{(i)},y^{(i)}\)</span>ではない．トレーニングセットを所与のものとして，目的関数<span class="math notranslate nohighlight">\(J(\theta)\)</span>についてパラメータ<span class="math notranslate nohighlight">\(\theta\)</span>を色々動かして良くなるような<span class="math notranslate nohighlight">\(\theta\)</span>を見つけることが学習アルゴリズムの目的である．</p>
+</div>
+</div>
+<div class="section" id="最急降下法">
+<h2>最急降下法<a class="headerlink" href="#最急降下法" title="Permalink to this headline">¶</a></h2>
+<p>「性能指標が良くなるように仮説関数のパラメータ<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>をアップデートしていく」とはどういうことか．目的関数が平均二乗誤差関数の場合，その平均二乗誤差がどんどん小さくなっていくことが，性能指標が良くなっていくといえる．すなわち，目的関数を最小にするパラメータ<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>を見つければよい．それを見つけるための手法が学習アルゴリズムである．</p>
+<p>学習アルゴリズムの中で一般的なものとして最急降下法がある．最急降下法とは，目的関数<span class="math notranslate nohighlight">\(J(\mathbf{\theta})\)</span>のグラフ上に初期値として適当に点を打ち(すなわちパラメータ<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>として具体的に何か適当な初期値を決め），その点から周辺を見渡してもっとも勾配が急な方向に一定程度進み，進んだ後の点からまた周辺を見渡してもっとも勾配が急な方向に一定程度進み，，，を繰り返して，どこを見渡しても勾配がないような点を探す方法である．</p>
+<p>最急降下法を行うためには，関数上のある点について勾配が急な方向はどの方向であるかを計算しなければならない．勾配が最も急な方向を向くベクトルを勾配ベクトルといい，以下で定義される．</p>
+<div class="section" id="[定義]-勾配ベクトル">
+<h3>[定義] 勾配ベクトル<a class="headerlink" href="#[定義]-勾配ベクトル" title="Permalink to this headline">¶</a></h3>
+<p><span class="math notranslate nohighlight">\(k\)</span>次元ベクトル<span class="math notranslate nohighlight">\(\mathbf{\theta}=(\theta_1,\theta_2,\ldots,\theta_k)^T\)</span>からスカラー値に写る関数<span class="math notranslate nohighlight">\(f(\mathbf{\theta})\)</span>，すなわち<span class="math notranslate nohighlight">\(f:\mathbf{\theta} \in \mathbb{R}^k \to \mathbb{R}\)</span>である関数<span class="math notranslate nohighlight">\(f(\mathbf{\theta})\)</span>において，<strong>勾配ベクトル</strong><span class="math notranslate nohighlight">\(\nabla_{\mathbf{\theta}}f=\frac{\partial f}{\partial \mathbf{\theta}}\in \mathbb{R}^k\)</span>は次式で定義される．</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+\nabla_{\mathbf{\theta}}f = \frac{\partial f}{\partial \mathbf{\theta}} =
+\begin{bmatrix}
+\frac{\partial f}{\partial \theta_1} \\[5pt]
+\frac{\partial f}{\partial \theta_2} \\[3pt]
+\vdots \\[5pt]
+\frac{\partial f}{\partial \theta_k}
+\end{bmatrix}
+\end{align}\end{split}\]</div>
+<p>本当に勾配ベクトル方向が，勾配が最も急な方向を指しているのか，2次元を例に示したのが次の問題である．</p>
+</div>
+<div class="section" id="[問題]">
+<h3>[問題]<a class="headerlink" href="#[問題]" title="Permalink to this headline">¶</a></h3>
+<p><span class="math notranslate nohighlight">\(f:\mathbb{R}^2 \to \mathbb{R}\)</span>の関数<span class="math notranslate nohighlight">\(f(x,y)\)</span>のある点<span class="math notranslate nohighlight">\(P(x,y)\)</span>における最大勾配方向が勾配ベクトルの方向と同方向であることを示せ．</p>
+<p><strong>解答)</strong></p>
+<p>勾配とは，関数<span class="math notranslate nohighlight">\(f\)</span>の変化度合いであり，勾配が最大ということは，関数の変化度合いが最も大きいということである．点<span class="math notranslate nohighlight">\(P(x,y)\)</span>と，そこから微小量<span class="math notranslate nohighlight">\(\Delta x\)</span>，<span class="math notranslate nohighlight">\(\Delta y\)</span>だけ動かした点<span class="math notranslate nohighlight">\(Q(x+\Delta x,y+\Delta y)\)</span>においてそれぞれ関数値を求めて差をとったものを変化度合い<span class="math notranslate nohighlight">\(\Delta f\)</span>とすると，<span class="math notranslate nohighlight">\(\overrightarrow{PQ}=\overrightarrow{OQ}-\overrightarrow{OP}=(\Delta x,\Delta y)\)</span>に注意して，以下の通り変形できる．</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+\Delta f &amp;= f(x+\Delta x,y+\Delta y)-f(x,y) \\
+&amp;= f(x+\Delta x,y+\Delta y) -f(x,y+\Delta y)+f(x,y+\Delta y) -f(x,y) \\
+&amp;= \frac{f(x+\Delta x,y+\Delta y) -f(x,y+\Delta y)}{\Delta x}\Delta x +\frac{f(x,y+\Delta y) -f(x,y)}{\Delta y}\Delta y \\
+&amp;\fallingdotseq \frac{\partial f}{\partial x}\Delta x +\frac{\partial f}{\partial y}\Delta y \\
+&amp;= \nabla f \cdot (\Delta x,\Delta y) \\
+&amp;= \nabla f \cdot \overrightarrow{PQ}
+\end{align*}\end{split}\]</div>
+<p>すなわちこれは，関数の変化度合いは勾配ベクトルと点<span class="math notranslate nohighlight">\(P\)</span>から点<span class="math notranslate nohighlight">\(Q\)</span>への方向ベクトル，すなわち微小量を動かした方向のベクトルの内積となっている．ここで，角度の定義より，</p>
+<div class="math notranslate nohighlight">
+\[\begin{align*}
+\Delta f &amp;= ||\nabla f||||\overrightarrow{PQ}||\cos \theta
+\end{align*}\]</div>
+<p>となる．ここで，<span class="math notranslate nohighlight">\(\theta\)</span>は，<span class="math notranslate nohighlight">\(\nabla f\)</span>と<span class="math notranslate nohighlight">\(\overrightarrow{PQ}\)</span>のなす角である．関数の変化度合い<span class="math notranslate nohighlight">\(\Delta f\)</span>が最大となるのは，<span class="math notranslate nohighlight">\(\cos \theta =1\)</span>，すなわち<span class="math notranslate nohighlight">\(\theta =0\)</span>となる場合である．これはつまり<span class="math notranslate nohighlight">\(\nabla f\)</span>と<span class="math notranslate nohighlight">\(\overrightarrow{PQ}\)</span>が同じ方向を向いているときに関数の変化度合い<span class="math notranslate nohighlight">\(\Delta f\)</span>が最大となるということである．以上より，点<span class="math notranslate nohighlight">\(P\)</span>から関数の変化度合い<span class="math notranslate nohighlight">\(\Delta f\)</span>が最大となるように進むためには(点<span class="math notranslate nohighlight">\(Q\)</span>をとるためには)，勾配ベクトルの方向に進めばよいということである．</p>
+<p>これで勾配が最も急な方向が勾配ベクトル方向であることがわかったので，それを用いて最急降下法を以下の通り定義する．</p>
+</div>
+<div class="section" id="[定義]-最急降下法">
+<h3>[定義] 最急降下法<a class="headerlink" href="#[定義]-最急降下法" title="Permalink to this headline">¶</a></h3>
+<p>関数<span class="math notranslate nohighlight">\(J(\mathbf{\theta})\)</span>を最小とする<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>を次の手順で見つけるアルゴリズムを，<strong>最急降下法(gradient descent algorithm)</strong>という．ここで，<span class="math notranslate nohighlight">\(\alpha (&gt;0)\)</span>を<strong>学習率(learning rate)</strong>といい，勾配が最大の方向にどの程度移動させるかの強さを表す．</p>
+<ol class="arabic simple">
+<li>トレーニングセット<span class="math notranslate nohighlight">\(\{(\mathbf{x}^{(i)},y^{(i)})\}_{i=1}^m\)</span>，仮説関数<span class="math notranslate nohighlight">\(h_{\mathbf{\theta}}(\mathbf{x})\)</span>，目的関数<span class="math notranslate nohighlight">\(J(\mathbf{\theta)}\)</span>を用意．</li>
+<li>$:nbsphinx-math:<cite>alpha `:nbsphinx-math:</cite>gets <cite>:math:`初期値，</cite><span class="math">\mathbf{\theta}</span> :nbsphinx-math:<a href="#id18"><span class="problematic" id="id19">`</span></a>gets <a href="#id20"><span class="problematic" id="id21">`</span></a>$初期値</li>
+<li>以下を<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>が収束するまでまたは有限回繰り返し<ol class="arabic">
+<li><span class="math notranslate nohighlight">\(\{(\mathbf{x}^{(i)},y^{(i)})\}_{i=1}^m\)</span>を代入して<span class="math notranslate nohighlight">\(J(\mathbf{\theta)}\)</span>を計算</li>
+<li><span class="math notranslate nohighlight">\(\nabla_{\mathbf{\theta}}J\)</span>を計算</li>
+<li><span class="math notranslate nohighlight">\(\mathbf{\theta} \gets \mathbf{\theta}-\alpha \nabla_{\mathbf{\theta}}J\)</span>　(パラメータ$:nbsphinx-math:<cite>theta</cite>_0,:nbsphinx-math:<cite>theta</cite>_1:nbsphinx-math:<a href="#id22"><span class="problematic" id="id23">`</span></a>ldots <a href="#id24"><span class="problematic" id="id25">`</span></a>$は同タイミングで更新)</li>
+</ol>
+</li>
+<li>得られた<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>が<span class="math notranslate nohighlight">\(J(\mathbf{\theta})\)</span>を最小とする<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>となる．</li>
+</ol>
+</div>
+<div class="section" id="[問題]">
+<h3>[問題]<a class="headerlink" href="#[問題]" title="Permalink to this headline">¶</a></h3>
+<p><span class="math notranslate nohighlight">\(x_0^{(i)}=1\)</span>も含め特徴量が<span class="math notranslate nohighlight">\(n+1\)</span>個のトレーニングセット<span class="math notranslate nohighlight">\(\{(\mathbf{x}^{(i)},y^{(i)})\}_{i=1}^m\)</span>の線形回帰において，目的関数<span class="math notranslate nohighlight">\(J(\mathbf{\theta})\)</span>を平均二乗誤差関数としたとき，<span class="math notranslate nohighlight">\(\nabla_{\mathbf{\theta}}J\)</span>を計算せよ．</p>
+<p><strong>解答)</strong></p>
+<p><span class="math notranslate nohighlight">\(\nabla_{\mathbf{\theta}}J\)</span>の<span class="math notranslate nohighlight">\(j\)</span>番目の要素<span class="math notranslate nohighlight">\(\frac{\partial J}{\partial \theta_j}\)</span>を計算すると以下となる．</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+\frac{\partial J}{\partial \theta_j}&amp;= \frac{1}{2m}\sum_{i=1}^m \frac{\partial }{\partial \theta_j}(h_{\mathbf{\theta}}(\mathbf{x}^{(i)})-y^{(i)})^2 \\
+&amp;=\frac{1}{2m}\sum_{i=1}^m 2(h_{\mathbf{\theta}}(\mathbf{x}^{(i)})-y^{(i)})\frac{\partial }{\partial \theta_j}h_{\mathbf{\theta}}(\mathbf{x}^{(i)})\\
+&amp;= \frac{1}{m}\sum_{i=1}^m (h_{\mathbf{\theta}}(\mathbf{x}^{(i)})-y^{(i)})x_j^{(i)}
+\end{align*}\end{split}\]</div>
+<p><span class="math notranslate nohighlight">\(j=0\)</span>のときは<span class="math notranslate nohighlight">\(\frac{\partial }{\partial \theta_0}h_{\mathbf{\theta}}(\mathbf{x}^{(i)})=1\)</span>であることに注意してまとめると，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+\nabla_{\mathbf{\theta}}J =\frac{1}{m}
+\begin{bmatrix}
+\sum_{i=1}^m (h_{\mathbf{\theta}}(\mathbf{x}^{(i)})-y^{(i)}) \\[3pt]
+\sum_{i=1}^m (h_{\mathbf{\theta}}(\mathbf{x}^{(i)})-y^{(i)})x_1^{(i)} \\[3pt]
+\sum_{i=1}^m (h_{\mathbf{\theta}}(\mathbf{x}^{(i)})-y^{(i)})x_2^{(i)} \\[3pt]
+\vdots \\[3pt]
+\sum_{i=1}^m (h_{\mathbf{\theta}}(\mathbf{x}^{(i)})-y^{(i)})x_j^{(i)} \\[3pt]
+\vdots \\[3pt]
+\sum_{i=1}^m (h_{\mathbf{\theta}}(\mathbf{x}^{(i)})-y^{(i)})x_n^{(i)} \\[3pt]
+\end{bmatrix}\label{simpleJ}
+\end{align}\end{split}\]</div>
+<p>となる（<span class="math notranslate nohighlight">\(\nabla_{\mathbf{\theta}}J\)</span>は<span class="math notranslate nohighlight">\(n+1\)</span>次元ベクトルである）．</p>
 </div>
 </div>
 </div>
