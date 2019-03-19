@@ -451,9 +451,144 @@ J(\theta_0, \theta_1) &amp;=\frac{1}{2\cdot 4}\sum_{i=1}^4 (\theta_0+\theta_1 x_
 \sum_{i=1}^m (h_{\mathbf{\theta}}(\mathbf{x}^{(i)})-y^{(i)})x_j^{(i)} \\[3pt]
 \vdots \\[3pt]
 \sum_{i=1}^m (h_{\mathbf{\theta}}(\mathbf{x}^{(i)})-y^{(i)})x_n^{(i)} \\[3pt]
-\end{bmatrix}\label{simpleJ}
+\end{bmatrix}\tag{3}
 \end{align}\end{split}\]</div>
 <p>となる（<span class="math notranslate nohighlight">\(\nabla_{\mathbf{\theta}}J\)</span>は<span class="math notranslate nohighlight">\(n+1\)</span>次元ベクトルである）．</p>
+</div>
+</div>
+<div class="section" id="デザイン行列">
+<h2>デザイン行列<a class="headerlink" href="#デザイン行列" title="Permalink to this headline">¶</a></h2>
+<p>最急降下法アルゴリズムは， 式(3)を用いて<span class="math notranslate nohighlight">\(\nabla_{\mathbf{\theta}}J\)</span>の各要素に対して逐次計算を行っていけば単純に実装できるが，各要素に対して和の計算を行い，反復していくことは少々ややこしい．行列計算を容易に行えるプログラミング言語で実装する場合には，できるだけ逐次計算をしないように，行列計算やベクトル計算を用いて工夫して実装することが簡潔かつバグも少ない．ここでは，デザイン行列を定義し，行列計算により<span class="math notranslate nohighlight">\(\nabla_{\mathbf{\theta}}J\)</span>を計算できることを示す．</p>
+<div class="section" id="[定義]-デザイン行列">
+<h3>[定義] デザイン行列<a class="headerlink" href="#[定義]-デザイン行列" title="Permalink to this headline">¶</a></h3>
+<p><span class="math notranslate nohighlight">\(x_0^{(i)}=1\)</span>も含め特徴量が<span class="math notranslate nohighlight">\(n+1\)</span>個のトレーニングセット<span class="math notranslate nohighlight">\(\{(\mathbf{x}^{(i)},y^{(i)})\}_{i=1}^m\subset ((1 \times \mathbb{R}^n) \times \mathbb{R})^m\)</span>において，式(4)で定義する行列<span class="math notranslate nohighlight">\(X \in \mathbb{R}^{m\times (n+1)}\)</span>を<strong>デザイン行列(design matrix)</strong>という．デザイン行列は，特徴量<span class="math notranslate nohighlight">\(\mathbf{x}^{(i)}\)</span>を転置してサンプル数の分縦に並べたもので表される．ここで，特徴量として<span class="math notranslate nohighlight">\(x_0=1\)</span>が加わっていることに注意する．</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+X =
+\begin{bmatrix}
+\mbox{------} &amp; {\mathbf{x}^{(1)}}^T &amp; \mbox{------} \\
+\mbox{------} &amp; {\mathbf{x}^{(2)}}^T &amp; \mbox{------} \\
+ &amp; \vdots &amp; \\
+\mbox{------} &amp; {\mathbf{x}^{(m)}}^T &amp; \mbox{------}
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 &amp; x_1^{(1)} &amp; x_2^{(1)} &amp; \cdots &amp; x_n^{(1)} \\
+1 &amp; x_1^{(2)} &amp; x_2^{(2)} &amp; \cdots &amp; x_n^{(2)} \\
+\vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots \\
+1 &amp; x_1^{(m)} &amp; x_2^{(m)} &amp; \cdots &amp; x_n^{(m)}
+\end{bmatrix} \tag{4}
+\end{align}\end{split}\]</div>
+</div>
+<div class="section" id="[問題]">
+<h3>[問題]<a class="headerlink" href="#[問題]" title="Permalink to this headline">¶</a></h3>
+<p>次のトレーニングセットにおいて，デザイン行列<span class="math notranslate nohighlight">\(X\)</span>を答えよ．</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+<col width="16%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><span class="math notranslate nohighlight">\(i\)</span></th>
+<th class="head"><span class="math notranslate nohighlight">\(x_1^{(i)}\)</span></th>
+<th class="head"><span class="math notranslate nohighlight">\(x_2^{(i)}\)</span></th>
+<th class="head"><span class="math notranslate nohighlight">\(x_3^{(i)}\)</span></th>
+<th class="head"><span class="math notranslate nohighlight">\(x_4^{(i)}\)</span></th>
+<th class="head"><span class="math notranslate nohighlight">\(y^{(i)}\)</span></th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>2104</td>
+<td>5</td>
+<td>1</td>
+<td>45</td>
+<td>460</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>1416</td>
+<td>3</td>
+<td>2</td>
+<td>40</td>
+<td>232</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>1534</td>
+<td>3</td>
+<td>2</td>
+<td>30</td>
+<td>315</td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>852</td>
+<td>2</td>
+<td>1</td>
+<td>36</td>
+<td>178</td>
+</tr>
+</tbody>
+</table>
+<p><strong>解答)</strong></p>
+<p>サンプル数が4つで，特徴量が<span class="math notranslate nohighlight">\(x_0=1\)</span>を含めると5つなので，<span class="math notranslate nohighlight">\(X\)</span>は以下のような<span class="math notranslate nohighlight">\(4\times 5\)</span>次元の行列となる．</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+X=
+\begin{bmatrix}
+1 &amp; 2104 &amp; 5 &amp; 1 &amp; 45 \\
+1 &amp; 1416 &amp; 3 &amp; 2 &amp; 40 \\
+1 &amp; 1534 &amp; 3 &amp; 2 &amp; 30 \\
+1 &amp; 852  &amp; 2 &amp; 1 &amp; 36
+\end{bmatrix}
+\end{align*}\end{split}\]</div>
+<p>デザイン行列を使うと，予測値である線形回帰の仮説関数のベクトルを簡潔に表すことができ，1発の線形代数計算で予測値を計算できる．</p>
+</div>
+<div class="section" id="[問題]">
+<h3>[問題]<a class="headerlink" href="#[問題]" title="Permalink to this headline">¶</a></h3>
+<p><span class="math notranslate nohighlight">\(x_0^{(i)}=1\)</span>も含め特徴量が<span class="math notranslate nohighlight">\(n+1\)</span>個のトレーニングセット<span class="math notranslate nohighlight">\(\{(\mathbf{x}^{(i)},y^{(i)})\}_{i=1}^m\)</span>における線形回帰問題を考える．このとき，<span class="math notranslate nohighlight">\((h_{\mathbf{\theta}}(\mathbf{x}^{(1)}),h_{\mathbf{\theta}}(\mathbf{x}^{(2)}),\ldots,h_{\mathbf{\theta}}(\mathbf{x}^{(m)}))^T\)</span>を<span class="math notranslate nohighlight">\(X\)</span>，<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>を用いて表せ．</p>
+<p><strong>解答)</strong></p>
+<p>線形代数の式(7)より，以下のように変形すれば<span class="math notranslate nohighlight">\(X\)</span>と<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>を用いて表すことができる．</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+\begin{bmatrix}
+h_{\mathbf{\theta}}(\mathbf{x}^{(1)}) \\
+h_{\mathbf{\theta}}(\mathbf{x}^{(2)}) \\
+\vdots \\
+h_{\mathbf{\theta}}(\mathbf{x}^{(m)})
+\end{bmatrix}
+=
+\begin{bmatrix}
+\mathbf{\theta}^T\mathbf{x}^{(1)} \\
+\mathbf{\theta}^T \mathbf{x}^{(2)}\\
+\vdots \\
+\mathbf{\theta}^T \mathbf{x}^{(m)}
+\end{bmatrix}
+=
+\begin{bmatrix}
+{\mathbf{x}^{(1)}}^T\mathbf{\theta} \\
+{\mathbf{x}^{(2)}}^T\mathbf{\theta} \\
+\vdots \\
+{\mathbf{x}^{(m)}}^T\mathbf{\theta}
+\end{bmatrix}
+=
+\begin{bmatrix}
+\mbox{------} &amp; {\mathbf{x}^{(1)}}^T &amp; \mbox{------} \\
+\mbox{------} &amp; {\mathbf{x}^{(2)}}^T &amp; \mbox{------} \\
+ &amp; \vdots &amp; \\
+\mbox{------} &amp; {\mathbf{x}^{(m)}}^T &amp; \mbox{------}
+\end{bmatrix}
+\begin{bmatrix}
+| \\[-2pt]
+| \\
+\mathbf{\theta} \\
+| \\[-2pt]
+|
+\end{bmatrix}
+=X \mathbf{\theta} \label{lr_hypo}
+\end{align}\end{split}\]</div>
 </div>
 </div>
 </div>

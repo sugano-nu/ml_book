@@ -403,11 +403,157 @@
     "\\sum_{i=1}^m (h_{\\mathbf{\\theta}}(\\mathbf{x}^{(i)})-y^{(i)})x_j^{(i)} \\\\[3pt]\n",
     "\\vdots \\\\[3pt]\n",
     "\\sum_{i=1}^m (h_{\\mathbf{\\theta}}(\\mathbf{x}^{(i)})-y^{(i)})x_n^{(i)} \\\\[3pt]\n",
-    "\\end{bmatrix}\\label{simpleJ}\n",
+    "\\end{bmatrix}\\tag{3}\n",
     "\\end{align}\n",
     "$$\n",
     "\n",
     "となる（$\\nabla_{\\mathbf{\\theta}}J$は$n+1$次元ベクトルである）．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## デザイン行列"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "最急降下法アルゴリズムは， 式(3)を用いて$\\nabla_{\\mathbf{\\theta}}J$の各要素に対して逐次計算を行っていけば単純に実装できるが，各要素に対して和の計算を行い，反復していくことは少々ややこしい．行列計算を容易に行えるプログラミング言語で実装する場合には，できるだけ逐次計算をしないように，行列計算やベクトル計算を用いて工夫して実装することが簡潔かつバグも少ない．ここでは，デザイン行列を定義し，行列計算により$\\nabla_{\\mathbf{\\theta}}J$を計算できることを示す．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定義] デザイン行列\n",
+    "$x_0^{(i)}=1$も含め特徴量が$n+1$個のトレーニングセット$\\{(\\mathbf{x}^{(i)},y^{(i)})\\}_{i=1}^m\\subset ((1 \\times \\mathbb{R}^n) \\times \\mathbb{R})^m$において，式(4)で定義する行列$X \\in \\mathbb{R}^{m\\times (n+1)}$を**デザイン行列(design matrix)**という．デザイン行列は，特徴量$\\mathbf{x}^{(i)}$を転置してサンプル数の分縦に並べたもので表される．ここで，特徴量として$x_0=1$が加わっていることに注意する．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "X = \n",
+    "\\begin{bmatrix}\n",
+    "\\mbox{------} & {\\mathbf{x}^{(1)}}^T & \\mbox{------} \\\\\n",
+    "\\mbox{------} & {\\mathbf{x}^{(2)}}^T & \\mbox{------} \\\\\n",
+    " & \\vdots & \\\\\n",
+    "\\mbox{------} & {\\mathbf{x}^{(m)}}^T & \\mbox{------}\n",
+    "\\end{bmatrix}\n",
+    "=\n",
+    "\\begin{bmatrix}\n",
+    "1 & x_1^{(1)} & x_2^{(1)} & \\cdots & x_n^{(1)} \\\\\n",
+    "1 & x_1^{(2)} & x_2^{(2)} & \\cdots & x_n^{(2)} \\\\\n",
+    "\\vdots & \\vdots & \\vdots & \\vdots & \\vdots \\\\\n",
+    "1 & x_1^{(m)} & x_2^{(m)} & \\cdots & x_n^{(m)} \n",
+    "\\end{bmatrix} \\tag{4}\n",
+    "\\end{align}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [問題]\n",
+    "次のトレーニングセットにおいて，デザイン行列$X$を答えよ．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "| $i$ | $x_1^{(i)}$ | $x_2^{(i)}$ | $x_3^{(i)}$ | $x_4^{(i)}$ | $y^{(i)}$ |\n",
+    "|-----|-----|-----|-----|-----|-----|\n",
+    "| 1 | 　2104 | 　5 | 　1 | 　45 | 　460 |\n",
+    "| 2 | 　1416 | 　3 | 　2 | 　40 | 　232 |\n",
+    "| 3 | 　1534 | 　3 | 　2 | 　30 | 　315 |\n",
+    "| 4 | 　852  | 　2 | 　1 | 　36 | 　178 |"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**解答)**\n",
+    "\n",
+    "サンプル数が4つで，特徴量が$x_0=1$を含めると5つなので，$X$は以下のような$4\\times 5$次元の行列となる．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align*}\n",
+    "X=\n",
+    "\\begin{bmatrix}\n",
+    "1 & 2104 & 5 & 1 & 45 \\\\\n",
+    "1 & 1416 & 3 & 2 & 40 \\\\\n",
+    "1 & 1534 & 3 & 2 & 30 \\\\\n",
+    "1 & 852  & 2 & 1 & 36 \n",
+    "\\end{bmatrix}\n",
+    "\\end{align*}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "デザイン行列を使うと，予測値である線形回帰の仮説関数のベクトルを簡潔に表すことができ，1発の線形代数計算で予測値を計算できる．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [問題]\n",
+    "$x_0^{(i)}=1$も含め特徴量が$n+1$個のトレーニングセット$\\{(\\mathbf{x}^{(i)},y^{(i)})\\}_{i=1}^m$における線形回帰問題を考える．このとき，$(h_{\\mathbf{\\theta}}(\\mathbf{x}^{(1)}),h_{\\mathbf{\\theta}}(\\mathbf{x}^{(2)}),\\ldots,h_{\\mathbf{\\theta}}(\\mathbf{x}^{(m)}))^T$を$X$，$\\mathbf{\\theta}$を用いて表せ．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**解答)**\n",
+    "\n",
+    "線形代数の式(7)より，以下のように変形すれば$X$と$\\mathbf{\\theta}$を用いて表すことができる．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "\\begin{bmatrix}\n",
+    "h_{\\mathbf{\\theta}}(\\mathbf{x}^{(1)}) \\\\\n",
+    "h_{\\mathbf{\\theta}}(\\mathbf{x}^{(2)}) \\\\\n",
+    "\\vdots \\\\\n",
+    "h_{\\mathbf{\\theta}}(\\mathbf{x}^{(m)})\n",
+    "\\end{bmatrix}\n",
+    "=\n",
+    "\\begin{bmatrix}\n",
+    "\\mathbf{\\theta}^T\\mathbf{x}^{(1)} \\\\\n",
+    "\\mathbf{\\theta}^T \\mathbf{x}^{(2)}\\\\\n",
+    "\\vdots \\\\\n",
+    "\\mathbf{\\theta}^T \\mathbf{x}^{(m)}\n",
+    "\\end{bmatrix}\n",
+    "=\n",
+    "\\begin{bmatrix}\n",
+    "{\\mathbf{x}^{(1)}}^T\\mathbf{\\theta} \\\\\n",
+    "{\\mathbf{x}^{(2)}}^T\\mathbf{\\theta} \\\\\n",
+    "\\vdots \\\\\n",
+    "{\\mathbf{x}^{(m)}}^T\\mathbf{\\theta}\n",
+    "\\end{bmatrix}\n",
+    "=\n",
+    "\\begin{bmatrix}\n",
+    "\\mbox{------} & {\\mathbf{x}^{(1)}}^T & \\mbox{------} \\\\\n",
+    "\\mbox{------} & {\\mathbf{x}^{(2)}}^T & \\mbox{------} \\\\\n",
+    " & \\vdots & \\\\\n",
+    "\\mbox{------} & {\\mathbf{x}^{(m)}}^T & \\mbox{------}\n",
+    "\\end{bmatrix}\n",
+    "\\begin{bmatrix}\n",
+    "| \\\\[-2pt]\n",
+    "| \\\\\n",
+    "\\mathbf{\\theta} \\\\\n",
+    "| \\\\[-2pt]\n",
+    "|\n",
+    "\\end{bmatrix}\n",
+    "=X \\mathbf{\\theta} \\label{lr_hypo}\n",
+    "\\end{align}\n",
+    "$$"
    ]
   }
  ],
