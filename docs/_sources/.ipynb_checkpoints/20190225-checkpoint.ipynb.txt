@@ -1252,7 +1252,7 @@
     "$$\n",
     "\\begin{align}\n",
     "\\mathbf{x}^TA\\mathbf{x}&= \\sum_{i=1}^n\\sum_{j=1}^n a_{ij}x_ix_j\\\\\n",
-    "&=a_{ii}x_i^2+\\sum_{\\substack{j=1\\\\j\\neq i}}^n a_{ij}x_ix_j+\\sum_{\\substack{k=1\\\\k\\neq i}}^n a_{ki}x_kx_i+\\sum_{\\substack{j,k\\\\j\\neq i\\\\k\\neq i}}a_{kj}x_kx_j \\label{quadform}\n",
+    "&=a_{ii}x_i^2+\\sum_{\\substack{j=1\\\\j\\neq i}}^n a_{ij}x_ix_j+\\sum_{\\substack{k=1\\\\k\\neq i}}^n a_{ki}x_kx_i+\\sum_{\\substack{j,k\\\\j\\neq i\\\\k\\neq i}}a_{kj}x_kx_j \\tag{12}\n",
     "\\end{align}\n",
     "$$"
    ]

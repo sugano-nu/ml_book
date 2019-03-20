@@ -324,7 +324,7 @@ J(\mathbf{\theta}) = \frac{1}{2m}\sum_{i=1}^m (h_{\mathbf{\theta}}(\mathbf{x}^{(
 </div>
 <div class="section" id="[問題]">
 <h3>[問題]<a class="headerlink" href="#[問題]" title="Permalink to this headline">¶</a></h3>
-<p>ある大学生について，1年次の成績で優をとった個数から2年次にいくつ優をとるのか予測したい．そこで，何人かの大学生の1年次の成績の優の個数<span class="math notranslate nohighlight">\(x_1\)</span>と2年次の成績の優の個数<span class="math notranslate nohighlight">\(y\)</span>を集めてトレーニングセット(下表)とし，仮説関数として<span class="math notranslate nohighlight">\(h_{\mathbf{\theta}}(\mathbf{x})=\theta_0+\theta_1 x_1\)</span>を設定して線形回帰を行なうことにした．このとき，次の問いに答えよ．結果，パラメータは<span class="math notranslate nohighlight">\(\theta_0=-1,~\theta_1=2\)</span>となった．このとき，トレーニングセットにおける平均二乗誤差<span class="math notranslate nohighlight">\(J(\mathbf{\theta})\)</span>を求めよ．</p>
+<p>ある大学生について，1年次の成績で優をとった個数から2年次にいくつ優をとるのか予測したい．そこで，何人かの大学生の1年次の成績の優の個数<span class="math notranslate nohighlight">\(x_1\)</span>と2年次の成績の優の個数<span class="math notranslate nohighlight">\(y\)</span>を集めてトレーニングセット(下表)とし，仮説関数として<span class="math notranslate nohighlight">\(h_{\mathbf{\theta}}(\mathbf{x})=\theta_0+\theta_1 x_1\)</span>を設定して線形回帰を行なうことにした．このとき，次の問いに答えよ．</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="54%" />
@@ -417,10 +417,10 @@ J(\theta_0, \theta_1) &amp;=\frac{1}{2\cdot 4}\sum_{i=1}^4 (\theta_0+\theta_1 x_
 <h3>[定義] 最急降下法<a class="headerlink" href="#[定義]-最急降下法" title="Permalink to this headline">¶</a></h3>
 <p>関数<span class="math notranslate nohighlight">\(J(\mathbf{\theta})\)</span>を最小とする<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>を次の手順で見つけるアルゴリズムを，<strong>最急降下法(gradient descent algorithm)</strong>という．ここで，<span class="math notranslate nohighlight">\(\alpha (&gt;0)\)</span>を<strong>学習率(learning rate)</strong>といい，勾配が最大の方向にどの程度移動させるかの強さを表す．</p>
 <ol class="arabic simple">
-<li>トレーニングセット<span class="math notranslate nohighlight">\(\{(\mathbf{x}^{(i)},y^{(i)})\}_{i=1}^m\)</span>，仮説関数<span class="math notranslate nohighlight">\(h_{\mathbf{\theta}}(\mathbf{x})\)</span>，目的関数<span class="math notranslate nohighlight">\(J(\mathbf{\theta)}\)</span>を用意．</li>
+<li>トレーニングセット<span class="math notranslate nohighlight">\(\{(\mathbf{x}^{(i)},y^{(i)})\}_{i=1}^m\)</span>，仮説関数<span class="math notranslate nohighlight">\(h_{\mathbf{\theta}}(\mathbf{x})\)</span>，目的関数<span class="math notranslate nohighlight">\(J(\mathbf{\theta})\)</span>を用意．</li>
 <li>$:nbsphinx-math:<cite>alpha `:nbsphinx-math:</cite>gets <cite>:math:`初期値，</cite><span class="math">\mathbf{\theta}</span> :nbsphinx-math:<a href="#id18"><span class="problematic" id="id19">`</span></a>gets <a href="#id20"><span class="problematic" id="id21">`</span></a>$初期値</li>
 <li>以下を<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>が収束するまでまたは有限回繰り返し<ol class="arabic">
-<li><span class="math notranslate nohighlight">\(\{(\mathbf{x}^{(i)},y^{(i)})\}_{i=1}^m\)</span>を代入して<span class="math notranslate nohighlight">\(J(\mathbf{\theta)}\)</span>を計算</li>
+<li><span class="math notranslate nohighlight">\(\{(\mathbf{x}^{(i)},y^{(i)})\}_{i=1}^m\)</span>を代入して<span class="math notranslate nohighlight">\(J(\mathbf{\theta})\)</span>を計算</li>
 <li><span class="math notranslate nohighlight">\(\nabla_{\mathbf{\theta}}J\)</span>を計算</li>
 <li><span class="math notranslate nohighlight">\(\mathbf{\theta} \gets \mathbf{\theta}-\alpha \nabla_{\mathbf{\theta}}J\)</span>　(パラメータ$:nbsphinx-math:<cite>theta</cite>_0,:nbsphinx-math:<cite>theta</cite>_1:nbsphinx-math:<a href="#id22"><span class="problematic" id="id23">`</span></a>ldots <a href="#id24"><span class="problematic" id="id25">`</span></a>$は同タイミングで更新)</li>
 </ol>
@@ -587,7 +587,93 @@ h_{\mathbf{\theta}}(\mathbf{x}^{(m)})
 | \\[-2pt]
 |
 \end{bmatrix}
-=X \mathbf{\theta} \label{lr_hypo}
+=X \mathbf{\theta} \tag{5}
+\end{align}\end{split}\]</div>
+<p>この結果を用いることで，目的関数を平均二乗誤差関数とした線形回帰問題において，目的関数をより簡潔に表すことができる．</p>
+</div>
+<div class="section" id="[問題]">
+<h3>[問題]<a class="headerlink" href="#[問題]" title="Permalink to this headline">¶</a></h3>
+<p><span class="math notranslate nohighlight">\(x_0^{(i)}=1\)</span>も含め特徴量が<span class="math notranslate nohighlight">\(n+1\)</span>個のトレーニングセット<span class="math notranslate nohighlight">\(\{(\mathbf{x}^{(i)},y^{(i)})\}_{i=1}^m\)</span>における線形回帰問題において，目的関数<span class="math notranslate nohighlight">\(J(\mathbf{\theta})\)</span>を平均二乗誤差関数とする．このとき，<span class="math notranslate nohighlight">\(J(\mathbf{\theta})\)</span>を<span class="math notranslate nohighlight">\(X\)</span>，<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>，<span class="math notranslate nohighlight">\(\mathbf{y}\)</span>を用いて表せ．ここで，<span class="math notranslate nohighlight">\(\mathbf{y}=(y^{(1)},y^{(2)},\ldots,y^{(m)})^T\)</span>とする．</p>
+<p>****解答)****</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+J(\mathbf{\theta})&amp;= \frac{1}{2m}\sum_{i=1}^m (h_{\mathbf{\theta}}(\mathbf{x}^{(i)})-y^{(i)})^2 \nonumber \\
+&amp;=\frac{1}{2m}
+\begin{bmatrix}
+h_{\mathbf{\theta}}(\mathbf{x}^{(1)})-y^{(1)} &amp; h_{\mathbf{\theta}}(\mathbf{x}^{(2)})-y^{(2)} &amp; \cdots &amp; h_{\mathbf{\theta}}(\mathbf{x}^{(m)})-y^{(m)}
+\end{bmatrix}
+\begin{bmatrix}
+h_{\mathbf{\theta}}(\mathbf{x}^{(1)})-y^{(1)} \\
+h_{\mathbf{\theta}}(\mathbf{x}^{(2)})-y^{(2)} \\
+\vdots \\
+h_{\mathbf{\theta}}(\mathbf{x}^{(m)})-y^{(m)}
+\end{bmatrix}\nonumber
+\end{align}\end{split}\]</div>
+<p>となるが，ここで，式(5)を用いると</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+\begin{bmatrix}
+h_{\mathbf{\theta}}(\mathbf{x}^{(1)})-y^{(1)} \\
+h_{\mathbf{\theta}}(\mathbf{x}^{(2)})-y^{(2)} \\
+\vdots \\
+h_{\mathbf{\theta}}(\mathbf{x}^{(m)})-y^{(m)}
+\end{bmatrix}
+=
+\begin{bmatrix}
+h_{\mathbf{\theta}}(\mathbf{x}^{(1)}) \\
+h_{\mathbf{\theta}}(\mathbf{x}^{(2)}) \\
+\vdots \\
+h_{\mathbf{\theta}}(\mathbf{x}^{(m)})
+\end{bmatrix}
+-
+\begin{bmatrix}
+y^{(1)} \\
+y^{(2)} \\
+\vdots \\
+y^{(m)}
+\end{bmatrix}
+=X\mathbf{\theta}-\mathbf{y} \nonumber
+\end{align}\end{split}\]</div>
+<p>となるため，</p>
+<div class="math notranslate nohighlight">
+\[\begin{align}
+J(\mathbf{\theta})&amp;= \frac{1}{2m}(X\mathbf{\theta}-\mathbf{y})^T(X\mathbf{\theta}-\mathbf{y}) \label{lr_cost}
+\end{align}\]</div>
+<p>これで目的関数を簡潔に書けたので，最後にそれを微分して<span class="math notranslate nohighlight">\(\nabla_{\mathbf{\theta}}J\)</span>を求める．ここで，線形形式，二次形式の勾配ベクトルを使用するので事前に述べておく．</p>
+</div>
+<div class="section" id="[定理]">
+<h3>[定理]<a class="headerlink" href="#[定理]" title="Permalink to this headline">¶</a></h3>
+<p><span class="math notranslate nohighlight">\(n\)</span>次元列ベクトル<span class="math notranslate nohighlight">\(\mathbf{x}，\mathbf{a}\)</span>，<span class="math notranslate nohighlight">\(n\times n\)</span>行列<span class="math notranslate nohighlight">\(A\)</span>に対して，次式が成り立つ．</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+\nabla_{\mathbf{x}}(\mathbf{a}^T \mathbf{x})&amp;=\nabla_{\mathbf{x}}(\mathbf{x}^T \mathbf{a})=\mathbf{a}\\
+\nabla_{\mathbf{x}}(\mathbf{x}^T A\mathbf{x})&amp;=(A+A^T)\mathbf{x}
+\end{align}\end{split}\]</div>
+<p><strong>証明)</strong></p>
+<p>線形形式の勾配ベクトルの証明は略．二次形式の勾配ベクトルは線形代数の式(12)から計算すると楽である．式(12)において，<span class="math notranslate nohighlight">\(x_i\)</span>における偏微分を計算すると以下となる．変形の最後は，<span class="math notranslate nohighlight">\(A=\{a_{ij}\}\)</span>の転置行列を<span class="math notranslate nohighlight">\(A^T=\{a'_{ij}\}\)</span>としたとき，<span class="math notranslate nohighlight">\(a_{ki}=a'_{ik}\)</span>であることを使用している．</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+\frac{\partial }{\partial x_i}(\mathbf{x}^T A\mathbf{x})&amp;=\frac{\partial }{\partial x_i}\left(a_{ii}x_i^2+\sum_{\substack{j=1\\j\neq i}}^n a_{ij}x_ix_j+\sum_{\substack{k=1\\k\neq i}}^n a_{ki}x_kx_i+\sum_{\substack{j,k\\j\neq i\\k\neq i}}a_{kj}x_kx_j\right)    \\
+&amp;=2a_{ii}x_i+\sum_{\substack{j=1\\j\neq i}}^n a_{ij}x_j+\sum_{\substack{k=1\\k\neq i}}^n a_{ki}x_k\\
+&amp;=\sum_{j=1}^na_{ij}x_j+\sum_{k=1}^na_{ki}x_k\\
+&amp;=\sum_{j=1}^na_{ij}x_j+\sum_{k=1}^na'_{ik}x_k
+\end{align*}\end{split}\]</div>
+<p>第1項について，<span class="math notranslate nohighlight">\(x_1〜x_n\)</span>についての結果を列ベクトルとして並べると，線形代数の式(8)の形が現れ，その結果は<span class="math notranslate nohighlight">\(A\mathbf{x}\)</span>となる．第2項についても同様であり，その結果は<span class="math notranslate nohighlight">\(A^T\mathbf{x}\)</span>となる．以上より，<span class="math notranslate nohighlight">\(\nabla_{\mathbf{x}}(\mathbf{x}^T A\mathbf{x})=A\mathbf{x}+A^T\mathbf{x}=(A+A^T)\mathbf{x}\)</span>である．</p>
+</div>
+<div class="section" id="[問題]">
+<h3>[問題]<a class="headerlink" href="#[問題]" title="Permalink to this headline">¶</a></h3>
+<p><span class="math notranslate nohighlight">\(x_0^{(i)}=1\)</span>も含め特徴量が<span class="math notranslate nohighlight">\(n+1\)</span>個のトレーニングセット<span class="math notranslate nohighlight">\(\{(\mathbf{x}^{(i)},y^{(i)})\}_{i=1}^m\)</span>における線形回帰問題において，目的関数<span class="math notranslate nohighlight">\(J(\mathbf{\theta})\)</span>を平均二乗誤差関数とする．このとき，<span class="math notranslate nohighlight">\(\nabla_{\mathbf{\theta}}J\)</span>を<span class="math notranslate nohighlight">\(m\)</span>，<span class="math notranslate nohighlight">\(X\)</span>，<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>，<span class="math notranslate nohighlight">\(\mathbf{y}\)</span>で表せ．</p>
+<p><strong>解答)</strong></p>
+<p><span class="math notranslate nohighlight">\(X^TX\)</span>は対称行列であることに注意すると，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+\nabla_{\mathbf{\theta}}J&amp;=\nabla_{\mathbf{\theta}}\left(\frac{1}{2m}(X\mathbf{\theta}-\mathbf{y})^T(X\mathbf{\theta}-\mathbf{y})\right) \nonumber\\
+&amp;=\nabla_{\mathbf{\theta}}\left(\frac{1}{2m}\left((X\mathbf{\theta})^T(X\mathbf{\theta})-(X\mathbf{\theta})^T\mathbf{y}-\mathbf{y}^T(X\mathbf{\theta})+\mathbf{y}^T\mathbf{y}\right)\right)\nonumber\\
+&amp;=\nabla_{\mathbf{\theta}}\left(\frac{1}{2m}\left((X\mathbf{\theta})^T(X\mathbf{\theta})-2(X\mathbf{\theta})^T\mathbf{y}+\mathbf{y}^T\mathbf{y}\right)\right)\nonumber\\
+&amp;=\nabla_{\mathbf{\theta}}\left(\frac{1}{2m}\left( \mathbf{\theta}^TX^TX\mathbf{\theta}-2\mathbf{\theta}^TX^T\mathbf{y}+\mathbf{y}^T\mathbf{y} \right)\right) \nonumber\\
+&amp;=\frac{1}{2m}\left(\nabla_{\mathbf{\theta}}(\mathbf{\theta}^TX^TX\mathbf{\theta})-2\nabla_{\mathbf{\theta}}(\mathbf{\theta}^TX^T\mathbf{y})+\nabla_{\mathbf{\theta}}(\mathbf{y}^T\mathbf{y})\right)\nonumber\\
+&amp;=\frac{1}{2m}\left(2X^TX\mathbf{\theta}-2X^T\mathbf{y}\right)\nonumber \\
+&amp;=\frac{1}{m}\left(X^TX\mathbf{\theta}-X^T\mathbf{y}\right) \label{LRglad}
 \end{align}\end{split}\]</div>
 </div>
 </div>

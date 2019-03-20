@@ -219,7 +219,7 @@
    "metadata": {},
    "source": [
     "#### [問題]\n",
-    "ある大学生について，1年次の成績で優をとった個数から2年次にいくつ優をとるのか予測したい．そこで，何人かの大学生の1年次の成績の優の個数$x_1$と2年次の成績の優の個数$y$を集めてトレーニングセット(下表)とし，仮説関数として$h_{\\mathbf{\\theta}}(\\mathbf{x})=\\theta_0+\\theta_1 x_1$を設定して線形回帰を行なうことにした．このとき，次の問いに答えよ．結果，パラメータは$\\theta_0=-1,~\\theta_1=2$となった．このとき，トレーニングセットにおける平均二乗誤差$J(\\mathbf{\\theta})$を求めよ．\n",
+    "ある大学生について，1年次の成績で優をとった個数から2年次にいくつ優をとるのか予測したい．そこで，何人かの大学生の1年次の成績の優の個数$x_1$と2年次の成績の優の個数$y$を集めてトレーニングセット(下表)とし，仮説関数として$h_{\\mathbf{\\theta}}(\\mathbf{x})=\\theta_0+\\theta_1 x_1$を設定して線形回帰を行なうことにした．このとき，次の問いに答えよ．\n",
     "\n",
     "|  $x_1$  |  $y$  |\n",
     "| ---- | ---- |\n",
@@ -357,10 +357,10 @@
     "#### [定義] 最急降下法\n",
     "関数$J(\\mathbf{\\theta})$を最小とする$\\mathbf{\\theta}$を次の手順で見つけるアルゴリズムを，**最急降下法(gradient descent algorithm)**という．ここで，$\\alpha (>0)$を**学習率(learning rate)**といい，勾配が最大の方向にどの程度移動させるかの強さを表す．\n",
     "\n",
-    "1. トレーニングセット$\\{(\\mathbf{x}^{(i)},y^{(i)})\\}_{i=1}^m$，仮説関数$h_{\\mathbf{\\theta}}(\\mathbf{x})$，目的関数$J(\\mathbf{\\theta)}$を用意．\n",
+    "1. トレーニングセット$\\{(\\mathbf{x}^{(i)},y^{(i)})\\}_{i=1}^m$，仮説関数$h_{\\mathbf{\\theta}}(\\mathbf{x})$，目的関数$J(\\mathbf{\\theta})$を用意．\n",
     "2. $\\alpha \\gets $初期値，$\\mathbf{\\theta} \\gets $初期値\n",
     "3. 以下を$\\mathbf{\\theta}$が収束するまでまたは有限回繰り返し\n",
-    "    1. $\\{(\\mathbf{x}^{(i)},y^{(i)})\\}_{i=1}^m$を代入して$J(\\mathbf{\\theta)}$を計算\n",
+    "    1. $\\{(\\mathbf{x}^{(i)},y^{(i)})\\}_{i=1}^m$を代入して$J(\\mathbf{\\theta})$を計算\n",
     "    2. $\\nabla_{\\mathbf{\\theta}}J$を計算\n",
     "    3. $\\mathbf{\\theta} \\gets \\mathbf{\\theta}-\\alpha \\nabla_{\\mathbf{\\theta}}J$　(パラメータ$\\theta_0,\\theta_1\\ldots $は同タイミングで更新)\n",
     "4. 得られた$\\mathbf{\\theta}$が$J(\\mathbf{\\theta})$を最小とする$\\mathbf{\\theta}$となる．"
@@ -551,7 +551,152 @@
     "| \\\\[-2pt]\n",
     "|\n",
     "\\end{bmatrix}\n",
-    "=X \\mathbf{\\theta} \\label{lr_hypo}\n",
+    "=X \\mathbf{\\theta} \\tag{5}\n",
+    "\\end{align}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "この結果を用いることで，目的関数を平均二乗誤差関数とした線形回帰問題において，目的関数をより簡潔に表すことができる．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [問題]\n",
+    "$x_0^{(i)}=1$も含め特徴量が$n+1$個のトレーニングセット$\\{(\\mathbf{x}^{(i)},y^{(i)})\\}_{i=1}^m$における線形回帰問題において，目的関数$J(\\mathbf{\\theta})$を平均二乗誤差関数とする．このとき，$J(\\mathbf{\\theta})$を$X$，$\\mathbf{\\theta}$，$\\mathbf{y}$を用いて表せ．ここで，$\\mathbf{y}=(y^{(1)},y^{(2)},\\ldots,y^{(m)})^T$とする．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "****解答)****\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "J(\\mathbf{\\theta})&= \\frac{1}{2m}\\sum_{i=1}^m (h_{\\mathbf{\\theta}}(\\mathbf{x}^{(i)})-y^{(i)})^2 \\nonumber \\\\\n",
+    "&=\\frac{1}{2m}\n",
+    "\\begin{bmatrix}\n",
+    "h_{\\mathbf{\\theta}}(\\mathbf{x}^{(1)})-y^{(1)} & h_{\\mathbf{\\theta}}(\\mathbf{x}^{(2)})-y^{(2)} & \\cdots & h_{\\mathbf{\\theta}}(\\mathbf{x}^{(m)})-y^{(m)}\n",
+    "\\end{bmatrix}\n",
+    "\\begin{bmatrix}\n",
+    "h_{\\mathbf{\\theta}}(\\mathbf{x}^{(1)})-y^{(1)} \\\\\n",
+    "h_{\\mathbf{\\theta}}(\\mathbf{x}^{(2)})-y^{(2)} \\\\\n",
+    "\\vdots \\\\\n",
+    "h_{\\mathbf{\\theta}}(\\mathbf{x}^{(m)})-y^{(m)}\n",
+    "\\end{bmatrix}\\nonumber\n",
+    "\\end{align}\n",
+    "$$\n",
+    "\n",
+    "となるが，ここで，式(5)を用いると\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "\\begin{bmatrix}\n",
+    "h_{\\mathbf{\\theta}}(\\mathbf{x}^{(1)})-y^{(1)} \\\\\n",
+    "h_{\\mathbf{\\theta}}(\\mathbf{x}^{(2)})-y^{(2)} \\\\\n",
+    "\\vdots \\\\\n",
+    "h_{\\mathbf{\\theta}}(\\mathbf{x}^{(m)})-y^{(m)}\n",
+    "\\end{bmatrix}\n",
+    "=\n",
+    "\\begin{bmatrix}\n",
+    "h_{\\mathbf{\\theta}}(\\mathbf{x}^{(1)}) \\\\\n",
+    "h_{\\mathbf{\\theta}}(\\mathbf{x}^{(2)}) \\\\\n",
+    "\\vdots \\\\\n",
+    "h_{\\mathbf{\\theta}}(\\mathbf{x}^{(m)})\n",
+    "\\end{bmatrix}\n",
+    "-\n",
+    "\\begin{bmatrix}\n",
+    "y^{(1)} \\\\\n",
+    "y^{(2)} \\\\\n",
+    "\\vdots \\\\\n",
+    "y^{(m)}\n",
+    "\\end{bmatrix}\n",
+    "=X\\mathbf{\\theta}-\\mathbf{y} \\nonumber\n",
+    "\\end{align}\n",
+    "$$\n",
+    "\n",
+    "となるため，\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "J(\\mathbf{\\theta})&= \\frac{1}{2m}(X\\mathbf{\\theta}-\\mathbf{y})^T(X\\mathbf{\\theta}-\\mathbf{y}) \\label{lr_cost}\n",
+    "\\end{align}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "これで目的関数を簡潔に書けたので，最後にそれを微分して$\\nabla_{\\mathbf{\\theta}}J$を求める．ここで，線形形式，二次形式の勾配ベクトルを使用するので事前に述べておく．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [定理]\n",
+    "$n$次元列ベクトル$\\mathbf{x}，\\mathbf{a}$，$n\\times n$行列$A$に対して，次式が成り立つ．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "\\nabla_{\\mathbf{x}}(\\mathbf{a}^T \\mathbf{x})&=\\nabla_{\\mathbf{x}}(\\mathbf{x}^T \\mathbf{a})=\\mathbf{a}\\\\\n",
+    "\\nabla_{\\mathbf{x}}(\\mathbf{x}^T A\\mathbf{x})&=(A+A^T)\\mathbf{x}\n",
+    "\\end{align}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**証明)**\n",
+    "\n",
+    "線形形式の勾配ベクトルの証明は略．二次形式の勾配ベクトルは線形代数の式(12)から計算すると楽である．式(12)において，$x_i$における偏微分を計算すると以下となる．変形の最後は，$A=\\{a_{ij}\\}$の転置行列を$A^T=\\{a'_{ij}\\}$としたとき，$a_{ki}=a'_{ik}$であることを使用している．\n",
+    "\n",
+    "$$\n",
+    "\\begin{align*}\n",
+    "\\frac{\\partial }{\\partial x_i}(\\mathbf{x}^T A\\mathbf{x})&=\\frac{\\partial }{\\partial x_i}\\left(a_{ii}x_i^2+\\sum_{\\substack{j=1\\\\j\\neq i}}^n a_{ij}x_ix_j+\\sum_{\\substack{k=1\\\\k\\neq i}}^n a_{ki}x_kx_i+\\sum_{\\substack{j,k\\\\j\\neq i\\\\k\\neq i}}a_{kj}x_kx_j\\right) \t\\\\\n",
+    "&=2a_{ii}x_i+\\sum_{\\substack{j=1\\\\j\\neq i}}^n a_{ij}x_j+\\sum_{\\substack{k=1\\\\k\\neq i}}^n a_{ki}x_k\\\\\n",
+    "&=\\sum_{j=1}^na_{ij}x_j+\\sum_{k=1}^na_{ki}x_k\\\\\n",
+    "&=\\sum_{j=1}^na_{ij}x_j+\\sum_{k=1}^na'_{ik}x_k\n",
+    "\\end{align*}\n",
+    "$$\n",
+    "\n",
+    "第1項について，$x_1〜x_n$についての結果を列ベクトルとして並べると，線形代数の式(8)の形が現れ，その結果は$A\\mathbf{x}$となる．第2項についても同様であり，その結果は$A^T\\mathbf{x}$となる．以上より，$\\nabla_{\\mathbf{x}}(\\mathbf{x}^T A\\mathbf{x})=A\\mathbf{x}+A^T\\mathbf{x}=(A+A^T)\\mathbf{x}$である．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [問題]\n",
+    "$x_0^{(i)}=1$も含め特徴量が$n+1$個のトレーニングセット$\\{(\\mathbf{x}^{(i)},y^{(i)})\\}_{i=1}^m$における線形回帰問題において，目的関数$J(\\mathbf{\\theta})$を平均二乗誤差関数とする．このとき，$\\nabla_{\\mathbf{\\theta}}J$を$m$，$X$，$\\mathbf{\\theta}$，$\\mathbf{y}$で表せ．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**解答)**\n",
+    "\n",
+    "$X^TX$は対称行列であることに注意すると，\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "\\nabla_{\\mathbf{\\theta}}J&=\\nabla_{\\mathbf{\\theta}}\\left(\\frac{1}{2m}(X\\mathbf{\\theta}-\\mathbf{y})^T(X\\mathbf{\\theta}-\\mathbf{y})\\right) \\nonumber\\\\\n",
+    "&=\\nabla_{\\mathbf{\\theta}}\\left(\\frac{1}{2m}\\left((X\\mathbf{\\theta})^T(X\\mathbf{\\theta})-(X\\mathbf{\\theta})^T\\mathbf{y}-\\mathbf{y}^T(X\\mathbf{\\theta})+\\mathbf{y}^T\\mathbf{y}\\right)\\right)\\nonumber\\\\\n",
+    "&=\\nabla_{\\mathbf{\\theta}}\\left(\\frac{1}{2m}\\left((X\\mathbf{\\theta})^T(X\\mathbf{\\theta})-2(X\\mathbf{\\theta})^T\\mathbf{y}+\\mathbf{y}^T\\mathbf{y}\\right)\\right)\\nonumber\\\\\n",
+    "&=\\nabla_{\\mathbf{\\theta}}\\left(\\frac{1}{2m}\\left( \\mathbf{\\theta}^TX^TX\\mathbf{\\theta}-2\\mathbf{\\theta}^TX^T\\mathbf{y}+\\mathbf{y}^T\\mathbf{y} \\right)\\right) \\nonumber\\\\\n",
+    "&=\\frac{1}{2m}\\left(\\nabla_{\\mathbf{\\theta}}(\\mathbf{\\theta}^TX^TX\\mathbf{\\theta})-2\\nabla_{\\mathbf{\\theta}}(\\mathbf{\\theta}^TX^T\\mathbf{y})+\\nabla_{\\mathbf{\\theta}}(\\mathbf{y}^T\\mathbf{y})\\right)\\nonumber\\\\\n",
+    "&=\\frac{1}{2m}\\left(2X^TX\\mathbf{\\theta}-2X^T\\mathbf{y}\\right)\\nonumber \\\\\n",
+    "&=\\frac{1}{m}\\left(X^TX\\mathbf{\\theta}-X^T\\mathbf{y}\\right) \\label{LRglad}\n",
     "\\end{align}\n",
     "$$"
    ]
