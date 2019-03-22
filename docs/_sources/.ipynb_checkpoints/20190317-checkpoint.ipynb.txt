@@ -575,7 +575,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "****解答)****\n",
+    "**解答)**\n",
     "\n",
     "$$\n",
     "\\begin{align}\n",
@@ -699,6 +699,209 @@
     "&=\\frac{1}{m}\\left(X^TX\\mathbf{\\theta}-X^T\\mathbf{y}\\right) \\label{LRglad}\n",
     "\\end{align}\n",
     "$$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Pandas, Numpy, Matplotlibによるスクラッチ実装"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "以上で線形回帰で必要なパーツは揃ったので，これらのパーツを実際にPythonにて実装していきながら，線形回帰とはどういうものかを掴んでいく."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## kaggle APIによるデータのダウンロード"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "まずはデータを準備する．データはkaggleのコンペティションのデータセットを使用する．そのために，まずはkaggleのアカウントを作成し，kaggle APIのパッケージをインストールする．アカウントの作成やkaggle APIのインストールの詳細は省略するが，インターネットで検索すれば情報は容易に取得可能である(なお，kaggle APIの公式ドキュメントは[URL](https://www.kaggle.com/docs/api)を参照)．以降，kaggle APIが使用可能な状態であることを前提とする．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "さて，早速kaggle APIから使用するデータをダウンロードする．ダウンロードするデータは，kaggleの初心者向けコンペである[House Prices: Advanced Regression Techniques](https://www.kaggle.com/c/house-prices-advanced-regression-techniques/)とする．\n",
+    "\n",
+    "これから，kaggle APIを用いて，これを今使用しているnotebookが格納されているフォルダの中に新しく作成したサブフォルダ`house_data`の中にダウンロードすることを行う．\n",
+    "\n",
+    "Jupyterは，ターミナルを開かずとも，その場でbashコマンドを実行することができる．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [Jupyter] エクスクラメーションによるbashコマンドの実行\n",
+    "\n",
+    "エクスクラメーション`!`を文頭につけることでbashコマンドを実行することができる．なお，bashのカレントディレクトリはbashコマンドを打ち込んでいるnotebookが格納されているフォルダである．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "以下のコマンドで，カレントディレクトリとなるフォルダの中に，サブフォルダ`house_data`を作成する．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [bash] フォルダの作成\n",
+    "フォルダを作成するには，`mkdir フォルダ名`を実行する．なお，以下の`./`とは，「カレントディレクトリの」という意味だと思えば問題ない．"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "!mkdir ./house_data"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "作成したフォルダにHouse Prices: Advanced Regression Techniquesのデータをダウンロードする．まずは，kaggle APIで，開催中のコンペティションのリストを表示する(もちろん実行時期によって出力は異なる)．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [kaggle API] 開催中のコンペティションのリストを表示\n",
+    "開催中のコンペティションのリストを表示するには，`kaggle competitions list`を実行する．"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {
+    "scrolled": false
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "ref                                            deadline             category            reward  teamCount  userHasEntered  \r\n",
+      "---------------------------------------------  -------------------  ---------------  ---------  ---------  --------------  \r\n",
+      "digit-recognizer                               2030-01-01 00:00:00  Getting Started  Knowledge       2573            True  \r\n",
+      "titanic                                        2030-01-01 00:00:00  Getting Started  Knowledge      10333            True  \r\n",
+      "house-prices-advanced-regression-techniques    2030-01-01 00:00:00  Getting Started  Knowledge       4067            True  \r\n",
+      "imagenet-object-localization-challenge         2029-12-31 07:00:00  Research         Knowledge         36           False  \r\n",
+      "competitive-data-science-predict-future-sales  2019-12-31 23:59:00  Playground           Kudos       2571           False  \r\n",
+      "two-sigma-financial-news                       2019-07-15 23:59:00  Featured          $100,000       2927            True  \r\n",
+      "aerial-cactus-identification                   2019-07-08 23:59:00  Playground       Knowledge        146           False  \r\n",
+      "LANL-Earthquake-Prediction                     2019-06-03 23:59:00  Research           $50,000       1922            True  \r\n",
+      "tmdb-box-office-prediction                     2019-05-30 23:59:00  Playground       Knowledge        477           False  \r\n",
+      "dont-overfit-ii                                2019-05-07 23:59:00  Playground            Swag       1215           False  \r\n",
+      "data-science-for-good-careervillage            2019-04-23 23:59:00  Analytics          $15,000          0           False  \r\n",
+      "gendered-pronoun-resolution                    2019-04-22 23:59:00  Research           $25,000        479            True  \r\n",
+      "career-con-2019                                2019-04-11 23:59:00  Recruitment           Swag        728           False  \r\n",
+      "santander-customer-transaction-prediction      2019-04-10 23:59:00  Featured           $65,000       6888           False  \r\n",
+      "mens-machine-learning-competition-2019         2019-04-09 23:59:00  Featured           $25,000        871           False  \r\n",
+      "histopathologic-cancer-detection               2019-03-30 23:59:00  Playground       Knowledge       1031           False  \r\n",
+      "petfinder-adoption-prediction                  2019-03-28 23:59:00  Featured           $25,000       1901            True  \r\n",
+      "womens-machine-learning-competition-2019       2019-03-22 15:00:00  Featured           $25,000        461           False  \r\n",
+      "vsb-power-line-fault-detection                 2019-03-21 23:59:00  Featured           $25,000       1485            True  \r\n",
+      "microsoft-malware-prediction                   2019-03-13 23:59:00  Research           $25,000       2426            True  \r\n"
+     ]
+    }
+   ],
+   "source": [
+    "!kaggle competitions list"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "ダウンロードしたいのは`house-prices-advanced-regression-techniques`である．これをカレントディレクトリ直下に作成した`house_data`フォルダにダウンロードするには，以下を実行する．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [kaggle API] 指定したコンペのデータを任意のフォルダにダウンロード\n",
+    "指定したコンペのデータを任意のフォルダにダウンロードするには，`kaggle competitions download -c コンペ名 -p フォルダ`を実行する．"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Downloading sample_submission.csv to ./house_data\n",
+      "  0%|                                               | 0.00/31.2k [00:00<?, ?B/s]\n",
+      "100%|██████████████████████████████████████| 31.2k/31.2k [00:00<00:00, 16.8MB/s]\n",
+      "Downloading test.csv to ./house_data\n",
+      "  0%|                                                | 0.00/441k [00:00<?, ?B/s]\n",
+      "100%|████████████████████████████████████████| 441k/441k [00:00<00:00, 6.01MB/s]\n",
+      "Downloading train.csv to ./house_data\n",
+      "  0%|                                                | 0.00/450k [00:00<?, ?B/s]\n",
+      "100%|████████████████████████████████████████| 450k/450k [00:00<00:00, 13.8MB/s]\n",
+      "Downloading data_description.txt to ./house_data\n",
+      "  0%|                                               | 0.00/13.1k [00:00<?, ?B/s]\n",
+      "100%|██████████████████████████████████████| 13.1k/13.1k [00:00<00:00, 16.9MB/s]\n"
+     ]
+    }
+   ],
+   "source": [
+    "!kaggle competitions download -c house-prices-advanced-regression-techniques -p ./house_data"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "確かにダウンロードできているかを確認してみる．"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### [bash] 任意のフォルダに格納されているファイルを確認する\n",
+    "任意のフォルダに格納されているファイルを確認するには，`ls フォルダ`を実行する．"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "data_description.txt  test.csv\r\n",
+      "sample_submission.csv train.csv\r\n"
+     ]
+    }
+   ],
+   "source": [
+    "!ls ./house_data"
    ]
   }
  ],

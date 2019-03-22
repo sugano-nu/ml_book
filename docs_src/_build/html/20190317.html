@@ -119,6 +119,15 @@
 <li class="toctree-l3"><a class="reference internal" href="#[問題]">[問題]</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#Pandas,-Numpy,-Matplotlibによるスクラッチ実装">Pandas, Numpy, Matplotlibによるスクラッチ実装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#kaggle-APIによるデータのダウンロード">kaggle APIによるデータのダウンロード</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#[Jupyter]-エクスクラメーションによるbashコマンドの実行">[Jupyter] エクスクラメーションによるbashコマンドの実行</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#[bash]-フォルダの作成">[bash] フォルダの作成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#[kaggle-API]-開催中のコンペティションのリストを表示">[kaggle API] 開催中のコンペティションのリストを表示</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#[kaggle-API]-指定したコンペのデータを任意のフォルダにダウンロード">[kaggle API] 指定したコンペのデータを任意のフォルダにダウンロード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#[bash]-任意のフォルダに格納されているファイルを確認する">[bash] 任意のフォルダに格納されているファイルを確認する</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="reference.html">参考文献</a></li>
@@ -188,6 +197,204 @@
             
   
 <style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 5ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
 /* CSS overrides for sphinx_rtd_theme */
 
 /* 24px margin */
@@ -634,7 +841,7 @@ h_{\mathbf{\theta}}(\mathbf{x}^{(m)})
 <div class="section" id="[問題]">
 <h3>[問題]<a class="headerlink" href="#[問題]" title="Permalink to this headline">¶</a></h3>
 <p><span class="math notranslate nohighlight">\(x_0^{(i)}=1\)</span>も含め特徴量が<span class="math notranslate nohighlight">\(n+1\)</span>個のトレーニングセット<span class="math notranslate nohighlight">\(\{(\mathbf{x}^{(i)},y^{(i)})\}_{i=1}^m\)</span>における線形回帰問題において，目的関数<span class="math notranslate nohighlight">\(J(\mathbf{\theta})\)</span>を平均二乗誤差関数とする．このとき，<span class="math notranslate nohighlight">\(J(\mathbf{\theta})\)</span>を<span class="math notranslate nohighlight">\(X\)</span>，<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>，<span class="math notranslate nohighlight">\(\mathbf{y}\)</span>を用いて表せ．ここで，<span class="math notranslate nohighlight">\(\mathbf{y}=(y^{(1)},y^{(2)},\ldots,y^{(m)})^T\)</span>とする．</p>
-<p>****解答)****</p>
+<p><strong>解答)</strong></p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{align}
 J(\mathbf{\theta})&amp;= \frac{1}{2m}\sum_{i=1}^m (h_{\mathbf{\theta}}(\mathbf{x}^{(i)})-y^{(i)})^2 \nonumber \\
@@ -715,6 +922,134 @@ J(\mathbf{\theta})&amp;= \frac{1}{2m}(X\mathbf{\theta}-\mathbf{y})^T(X\mathbf{\t
 &amp;=\frac{1}{2m}\left(2X^TX\mathbf{\theta}-2X^T\mathbf{y}\right)\nonumber \\
 &amp;=\frac{1}{m}\left(X^TX\mathbf{\theta}-X^T\mathbf{y}\right) \label{LRglad}
 \end{align}\end{split}\]</div>
+</div>
+</div>
+<div class="section" id="Pandas,-Numpy,-Matplotlibによるスクラッチ実装">
+<h2>Pandas, Numpy, Matplotlibによるスクラッチ実装<a class="headerlink" href="#Pandas,-Numpy,-Matplotlibによるスクラッチ実装" title="Permalink to this headline">¶</a></h2>
+<p>以上で線形回帰で必要なパーツは揃ったので，これらのパーツを実際にPythonにて実装していきながら，線形回帰とはどういうものかを掴んでいく.</p>
+</div>
+<div class="section" id="kaggle-APIによるデータのダウンロード">
+<h2>kaggle APIによるデータのダウンロード<a class="headerlink" href="#kaggle-APIによるデータのダウンロード" title="Permalink to this headline">¶</a></h2>
+<p>まずはデータを準備する．データはkaggleのコンペティションのデータセットを使用する．そのために，まずはkaggleのアカウントを作成し，kaggle APIのパッケージをインストールする．アカウントの作成やkaggle APIのインストールの詳細は省略するが，インターネットで検索すれば情報は容易に取得可能である(なお，kaggle APIの公式ドキュメントは<a class="reference external" href="https://www.kaggle.com/docs/api">URL</a>を参照)．以降，kaggle APIが使用可能な状態であることを前提とする．</p>
+<p>さて，早速kaggle APIから使用するデータをダウンロードする．ダウンロードするデータは，kaggleの初心者向けコンペである<a class="reference external" href="https://www.kaggle.com/c/house-prices-advanced-regression-techniques/">House Prices: Advanced Regression Techniques</a>とする．</p>
+<p>これから，kaggle APIを用いて，これを今使用しているnotebookが格納されているフォルダの中に新しく作成したサブフォルダ<code class="docutils literal notranslate"><span class="pre">house_data</span></code>の中にダウンロードすることを行う．</p>
+<p>Jupyterは，ターミナルを開かずとも，その場でbashコマンドを実行することができる．</p>
+<div class="section" id="[Jupyter]-エクスクラメーションによるbashコマンドの実行">
+<h3>[Jupyter] エクスクラメーションによるbashコマンドの実行<a class="headerlink" href="#[Jupyter]-エクスクラメーションによるbashコマンドの実行" title="Permalink to this headline">¶</a></h3>
+<p>エクスクラメーション<code class="docutils literal notranslate"><span class="pre">!</span></code>を文頭につけることでbashコマンドを実行することができる．なお，bashのカレントディレクトリはbashコマンドを打ち込んでいるnotebookが格納されているフォルダである．</p>
+<p>以下のコマンドで，カレントディレクトリとなるフォルダの中に，サブフォルダ<code class="docutils literal notranslate"><span class="pre">house_data</span></code>を作成する．</p>
+</div>
+<div class="section" id="[bash]-フォルダの作成">
+<h3>[bash] フォルダの作成<a class="headerlink" href="#[bash]-フォルダの作成" title="Permalink to this headline">¶</a></h3>
+<p>フォルダを作成するには，<code class="docutils literal notranslate"><span class="pre">mkdir</span> <span class="pre">フォルダ名</span></code>を実行する．なお，以下の<code class="docutils literal notranslate"><span class="pre">./</span></code>とは，「カレントディレクトリの」という意味だと思えば問題ない．</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span>mkdir ./house_data
+</pre></div>
+</div>
+</div>
+<p>作成したフォルダにHouse Prices: Advanced Regression Techniquesのデータをダウンロードする．まずは，kaggle APIで，開催中のコンペティションのリストを表示する(もちろん実行時期によって出力は異なる)．</p>
+</div>
+<div class="section" id="[kaggle-API]-開催中のコンペティションのリストを表示">
+<h3>[kaggle API] 開催中のコンペティションのリストを表示<a class="headerlink" href="#[kaggle-API]-開催中のコンペティションのリストを表示" title="Permalink to this headline">¶</a></h3>
+<p>開催中のコンペティションのリストを表示するには，<code class="docutils literal notranslate"><span class="pre">kaggle</span> <span class="pre">competitions</span> <span class="pre">list</span></code>を実行する．</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span>kaggle competitions list
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+ref                                            deadline             category            reward  teamCount  userHasEntered
+---------------------------------------------  -------------------  ---------------  ---------  ---------  --------------
+digit-recognizer                               2030-01-01 00:00:00  Getting Started  Knowledge       2573            True
+titanic                                        2030-01-01 00:00:00  Getting Started  Knowledge      10333            True
+house-prices-advanced-regression-techniques    2030-01-01 00:00:00  Getting Started  Knowledge       4067            True
+imagenet-object-localization-challenge         2029-12-31 07:00:00  Research         Knowledge         36           False
+competitive-data-science-predict-future-sales  2019-12-31 23:59:00  Playground           Kudos       2571           False
+two-sigma-financial-news                       2019-07-15 23:59:00  Featured          $100,000       2927            True
+aerial-cactus-identification                   2019-07-08 23:59:00  Playground       Knowledge        146           False
+LANL-Earthquake-Prediction                     2019-06-03 23:59:00  Research           $50,000       1922            True
+tmdb-box-office-prediction                     2019-05-30 23:59:00  Playground       Knowledge        477           False
+dont-overfit-ii                                2019-05-07 23:59:00  Playground            Swag       1215           False
+data-science-for-good-careervillage            2019-04-23 23:59:00  Analytics          $15,000          0           False
+gendered-pronoun-resolution                    2019-04-22 23:59:00  Research           $25,000        479            True
+career-con-2019                                2019-04-11 23:59:00  Recruitment           Swag        728           False
+santander-customer-transaction-prediction      2019-04-10 23:59:00  Featured           $65,000       6888           False
+mens-machine-learning-competition-2019         2019-04-09 23:59:00  Featured           $25,000        871           False
+histopathologic-cancer-detection               2019-03-30 23:59:00  Playground       Knowledge       1031           False
+petfinder-adoption-prediction                  2019-03-28 23:59:00  Featured           $25,000       1901            True
+womens-machine-learning-competition-2019       2019-03-22 15:00:00  Featured           $25,000        461           False
+vsb-power-line-fault-detection                 2019-03-21 23:59:00  Featured           $25,000       1485            True
+microsoft-malware-prediction                   2019-03-13 23:59:00  Research           $25,000       2426            True
+</pre></div></div>
+</div>
+<p>ダウンロードしたいのは<code class="docutils literal notranslate"><span class="pre">house-prices-advanced-regression-techniques</span></code>である．これをカレントディレクトリ直下に作成した<code class="docutils literal notranslate"><span class="pre">house_data</span></code>フォルダにダウンロードするには，以下を実行する．</p>
+</div>
+<div class="section" id="[kaggle-API]-指定したコンペのデータを任意のフォルダにダウンロード">
+<h3>[kaggle API] 指定したコンペのデータを任意のフォルダにダウンロード<a class="headerlink" href="#[kaggle-API]-指定したコンペのデータを任意のフォルダにダウンロード" title="Permalink to this headline">¶</a></h3>
+<p>指定したコンペのデータを任意のフォルダにダウンロードするには，<code class="docutils literal notranslate"><span class="pre">kaggle</span> <span class="pre">competitions</span> <span class="pre">download</span> <span class="pre">-c</span> <span class="pre">コンペ名</span> <span class="pre">-p</span> <span class="pre">フォルダ</span></code>を実行する．</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span>kaggle competitions download -c house-prices-advanced-regression-techniques -p ./house_data
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Downloading sample_submission.csv to ./house_data
+  0%|                                               | 0.00/31.2k [00:00&lt;?, ?B/s]
+100%|██████████████████████████████████████| 31.2k/31.2k [00:00&lt;00:00, 16.8MB/s]
+Downloading test.csv to ./house_data
+  0%|                                                | 0.00/441k [00:00&lt;?, ?B/s]
+100%|████████████████████████████████████████| 441k/441k [00:00&lt;00:00, 6.01MB/s]
+Downloading train.csv to ./house_data
+  0%|                                                | 0.00/450k [00:00&lt;?, ?B/s]
+100%|████████████████████████████████████████| 450k/450k [00:00&lt;00:00, 13.8MB/s]
+Downloading data_description.txt to ./house_data
+  0%|                                               | 0.00/13.1k [00:00&lt;?, ?B/s]
+100%|██████████████████████████████████████| 13.1k/13.1k [00:00&lt;00:00, 16.9MB/s]
+</pre></div></div>
+</div>
+<p>確かにダウンロードできているかを確認してみる．</p>
+</div>
+<div class="section" id="[bash]-任意のフォルダに格納されているファイルを確認する">
+<h3>[bash] 任意のフォルダに格納されているファイルを確認する<a class="headerlink" href="#[bash]-任意のフォルダに格納されているファイルを確認する" title="Permalink to this headline">¶</a></h3>
+<p>任意のフォルダに格納されているファイルを確認するには，<code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">フォルダ</span></code>を実行する．</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span>ls ./house_data
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+data_description.txt  test.csv
+sample_submission.csv train.csv
+</pre></div></div>
+</div>
 </div>
 </div>
 </div>
